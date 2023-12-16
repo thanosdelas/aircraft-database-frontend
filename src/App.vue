@@ -1,7 +1,5 @@
-<script setup>
-  import Main from './components/Main.vue'
-</script>
-
 <template>
-  <Main></Main>
+  <RouterLink to="/">Home</RouterLink>
+  <RouterLink to="/aircraft-database">Aircraft Database</RouterLink>
+  <RouterView></RouterView>
 </template>
