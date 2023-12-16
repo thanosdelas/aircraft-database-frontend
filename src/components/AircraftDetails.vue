@@ -9,8 +9,20 @@
         <div class="muted">{{ column }}</div>
         <div>{{ aircraft[column] }}</div>
       </div>
-      <div class="summary">{{ summary }}</div>
+      <div class="summary">
+        <div class="loader-wrapper" v-if="!summary">
+          <div>loading summary ...</div>
+          <div>
+            <span class="loader"></span>
+          </div>
+        </div>
+        {{ summary }}
+      </div>
       <div class="images-wrapper">
+        <div class="loader-wrapper" v-if="!images">
+          <span>loading images ...</span>
+          <span class="loader"></span>
+        </div>
         <div class="entry" v-for="image in images">
           <img :src="image" />
         </div>
@@ -40,7 +52,6 @@
 
     try{
       const results = await searchAircraftModel();
-
       if(results.query.search.length === 0){
         alert('Could not find anything');
         return null;
@@ -49,8 +60,14 @@
       const title = results.query.search[0].title;
       const pageId = results.query.search[0].pageid;
 
+      //
+      // Load Summary
+      //
       summary.value = await contentSummary(pageId);
 
+      //
+      // Load Images
+      //
       const imageFilenames = await fetchImageFilenames(title, pageId);
       if(imageFilenames.length === 0){
         alert('Could not find any images');
@@ -63,8 +80,6 @@
         alert('Could not find any images');
         return false;
       }
-
-      console.log(imageURLs);
 
       images.value = imageURLs;
     }
@@ -223,5 +238,33 @@
   .summary{
     background: #1b1b1a;
     padding: 10px;
+  }
+  .loader-wrapper{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .loader-wrapper div{
+    display: block;
+  }
+  .loader{
+    width: 27px;
+    height: 1px;
+    border: 1px solid #FFF;
+    /*border-bottom-color: #FF3D00;*/
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation .5s linear infinite;
+  }
+  @keyframes rotation{
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
   }
 </style>
