@@ -32,6 +32,8 @@
   });
 
   async function login(){
+    message.value = null;
+
     if(!email.value || !password.value){
       return null;
     }
