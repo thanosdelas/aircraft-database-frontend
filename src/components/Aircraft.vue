@@ -1,7 +1,7 @@
 <template>
   <h1>Aircraft Database</h1>
 
-  <button @click="fetchNews">Fetch Aircraft</button>
+  <button @click="fetchAircraft">Fetch Aircraft</button>
 
   <div class="aircraft-wrapper">
     <div
@@ -24,19 +24,25 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, onMounted } from 'vue'
-  import AircraftDetails from './AircraftDetails.vue'
+  import { ref, onMounted } from 'vue';
+
+  import Authentication from '@/services/authentication';
+  import AircraftDetails from './AircraftDetails.vue';
 
   onMounted(() => {
-    return fetchNews();
+    return fetchAircraft();
   });
 
   const API_URL = `http://localhost:3000/api/aircraft`
   const aircraftData = ref(null);
   const selectedAircraft = ref(false)
 
-  async function fetchNews(){
-    const response = await fetch(API_URL);
+  async function fetchAircraft(){
+    const authentication = new Authentication();
+
+    const response = await fetch(API_URL, {
+      headers: authentication.headers()
+    });
     const data = await response.json();
 
     console.log(data);
