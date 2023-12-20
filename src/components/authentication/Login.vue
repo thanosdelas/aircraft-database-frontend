@@ -1,17 +1,19 @@
 <template>
-  <h1>Login</h1>
+  <div v-if="allowLogin">
+    <h1>Login</h1>
 
-  <div>{{ message }}</div>
+    <div>{{ message }}</div>
 
-  <div>
-    email: <input v-model="email" @keyup.enter="login">
+    <div>
+      email: <input v-model="email" @keyup.enter="login">
+    </div>
+
+    <div>
+      password; <input v-model="password" @keyup.enter="login">
+    </div>
+
+    <button @click='login'>Log In</button>
   </div>
-
-  <div>
-    password; <input v-model="password" @keyup.enter="login">
-  </div>
-
-  <button @click='login'>Log In</button>
 </template>
 
 <script setup lang="ts">
@@ -21,14 +23,26 @@
   import { API_BASE_URL } from '@/main.js';
   import Authentication from '@/services/authentication';
 
+  const allowLogin = ref(false);
   const email = ref(null);
   const password = ref(null);
   const message = ref(null);
   const router = useRouter();
 
+  let authentication = null;
+
   onMounted(() => {
     email.value = 'test1@example.com';
     password.value = 'test';
+
+    authentication = new Authentication();
+    authentication.isLoggedIn().then((isLoggedIn) => {
+      if(isLoggedIn === true){
+        return router.push({ path: '/' });
+      }
+
+      allowLogin.value = true;
+    });
   });
 
   async function login(){
@@ -55,7 +69,6 @@
       const results = await response.json();
 
       if(results.status === 'ok' && results.access_token){
-        const authentication = new Authentication();
         authentication.saveAccessToken(results.access_token);
 
         return router.push({ path: '/' });

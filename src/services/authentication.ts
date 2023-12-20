@@ -1,3 +1,5 @@
+import { API_BASE_URL } from '@/main.js';
+
 export default class Authentication{
   public headers(): any{
     let headers = {};
@@ -13,6 +15,43 @@ export default class Authentication{
 
   public saveAccessToken(accessToken): void{
     document.cookie = `access_token=${accessToken}`;
+  }
+
+  public async isLoggedIn(): boolean{
+    const accessToken: string = this.findAccessToken();
+
+    if(accessToken.length === 0){
+      return false;
+    }
+
+    return await this.verifyToken(accessToken);
+  }
+
+  private async verifyToken(accessToken){
+    const API_URL = `${ API_BASE_URL }/api/authentication/verify_token`;
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        access_token: accessToken,
+      })
+    }
+
+    try{
+      const response = await fetch(API_URL, requestOptions);
+      const results = await response.json();
+
+      if(results.status === 'ok'){
+        return true;
+      }
+
+      return false;
+    }
+    catch(error){
+      return false;
+    }
   }
 
   private findAccessToken(): string{
