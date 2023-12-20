@@ -36,7 +36,7 @@
       return null;
     }
 
-    const API_URL = `${ API_BASE_URL }/api/auth/login`;
+    const API_URL = `${ API_BASE_URL }/api/authentication/login`;
     const requestOptions = {
       method: 'POST',
       headers: {
