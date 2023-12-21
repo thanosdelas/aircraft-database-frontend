@@ -1,7 +1,7 @@
 <template>
-  <RouterLink to="/">Home</RouterLink>
-  <RouterLink to="/aircraft-database">Aircraft Database</RouterLink>
-  <RouterLink to="/authentication/login">Login</RouterLink>
-
-  <RouterView></RouterView>
+  <MainNavigationMenu></MainNavigationMenu>
 </template>
+
+<script setup>
+  import MainNavigationMenu from './components/navigation/MainNavigationMenu.vue';
+</script>
