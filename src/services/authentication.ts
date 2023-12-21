@@ -2,7 +2,7 @@ import { API_BASE_URL } from '@/main.js';
 
 export default class Authentication{
   public headers(): any{
-    let headers = {};
+    let headers: any = {};
 
     const accessToken: string = this.findAccessToken();
 
@@ -13,11 +13,11 @@ export default class Authentication{
     return headers;
   }
 
-  public saveAccessToken(accessToken): void{
+  public saveAccessToken(accessToken: string): void{
     document.cookie = `access_token=${accessToken}`;
   }
 
-  public async isLoggedIn(): boolean{
+  public async isLoggedIn(): Promise<boolean>{
     const accessToken: string = this.findAccessToken();
 
     if(accessToken.length === 0){
@@ -27,7 +27,7 @@ export default class Authentication{
     return await this.verifyToken(accessToken);
   }
 
-  private async verifyToken(accessToken){
+  private async verifyToken(accessToken: string){
     const API_URL = `${ API_BASE_URL }/api/authentication/verify_token`;
     const requestOptions = {
       method: 'POST',
