@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite & tsc --watch --noEmit",
     "build": "vite build",
     "preview": "vite preview"
   },
@@ -14,6 +14,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.5.1",
+    "typescript": "^5.3.3",
     "vite": "^5.0.5"
   }
 }
