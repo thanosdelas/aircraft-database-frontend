@@ -1,7 +1,3 @@
 <template>
-  <MainNavigationMenu></MainNavigationMenu>
+  <RouterView></RouterView>
 </template>
-
-<script setup>
-  import MainNavigationMenu from './components/navigation/MainNavigationMenu.vue';
-</script>

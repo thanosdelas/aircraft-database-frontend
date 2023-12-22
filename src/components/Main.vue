@@ -1,4 +1,7 @@
 <template>
-  <h1>Aircraft Database</h1>
-  <p>Welcome to aircraft database repository.</p>
+  <MainNavigationMenu></MainNavigationMenu>
 </template>
+
+<script setup>
+  import MainNavigationMenu from '@/components/navigation/MainNavigationMenu.vue';
+</script>
