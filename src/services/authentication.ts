@@ -1,4 +1,5 @@
 import { API_BASE_URL } from '@/main.js';
+import { store } from '@/store/store.js'
 
 export default class Authentication{
   public headers(): any{
@@ -13,8 +14,15 @@ export default class Authentication{
     return headers;
   }
 
+  public logout(){
+    store.authentication.loggedIn = false;
+    document.cookie = "access_token=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+  }
+
   public saveAccessToken(accessToken: string): void{
-    document.cookie = `access_token=${accessToken}`;
+    console.log("Store is");
+    store.authentication.loggedIn = true;
+    document.cookie = `access_token=${accessToken}; SameSite=None; Secure`;
   }
 
   public async isLoggedIn(): Promise<boolean>{
@@ -44,6 +52,7 @@ export default class Authentication{
       const results = await response.json();
 
       if(results.status === 'ok'){
+        store.authentication.loggedIn = true;
         return true;
       }
 

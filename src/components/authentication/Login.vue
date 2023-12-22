@@ -21,6 +21,7 @@
   import { useRouter, useRoute } from 'vue-router'
 
   import { API_BASE_URL } from '@/main.js';
+  import { store } from '@/store/store.js'
   import Authentication from '@/services/authentication';
 
   const allowLogin = ref(false);
@@ -68,9 +69,11 @@
       const response = await fetch(API_URL, requestOptions);
       const results = await response.json();
 
-      if(results.status === 'ok' && results.access_token){
-        authentication.saveAccessToken(results.access_token);
+      if(results.status === 'ok' && results.data.access_token){
+        authentication.saveAccessToken(results.data.access_token);
 
+        console.log("Store before routing is");
+        console.log(store.authentication.loggedIn);
         return router.push({ path: '/' });
       }
 

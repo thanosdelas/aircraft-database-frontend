@@ -7,6 +7,7 @@ import Main from './components/Main.vue';
 import Aircraft from './components/Aircraft.vue';
 import NotFound from './components/NotFound.vue';
 import Login from './components/authentication/Login.vue';
+import Logout from './components/authentication/Logout.vue';
 
 export const API_BASE_URL = 'http://localhost:3000';
 
@@ -14,6 +15,7 @@ const routes = [
   { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound },
   { path: '/', component: Main },
   { path: '/authentication/login', component: Login },
+  { path: '/authentication/logout', component: Logout },
   { path: '/aircraft-database', component: Aircraft },
 ];
 
