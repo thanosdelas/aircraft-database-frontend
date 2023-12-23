@@ -1,14 +1,14 @@
 <template>
-  <div class="navigation-menu">
+  <div class="navigation-menu-admin">
     <Logo></Logo>
-    <RouterLink to="/">Home</RouterLink>
-    <RouterLink to="/aircraft-database">Aircraft Database</RouterLink>
+    <RouterLink to="/admin">Admin Panel</RouterLink>
+    <RouterLink to="/admin/aircraft-database">Aircraft Database</RouterLink>
+    <RouterLink to="/">Public Website</RouterLink>
+
     <div v-if="authenticationCheckLoading" class="loading-text">checking authentication status ...</div>
     <div v-if="!authenticationCheckLoading">
       <RouterLink to="/authentication/login" v-if="!store.authentication.loggedIn">Login</RouterLink>
-
       <div v-if="store.authentication.loggedIn">
-        <RouterLink to="/admin/aircraft-database">Admin</RouterLink>
         <RouterLink to="/authentication/logout">Logout</RouterLink>
       </div>
     </div>
@@ -37,10 +37,10 @@
 </script>
 
 <style type="text/css">
-  .navigation-menu{
+  .navigation-menu-admin{
     display: flex;
     align-items: center;
-    background: #222;
+    background: #4$$;
     padding: 5px;
   }
   .loading-text{

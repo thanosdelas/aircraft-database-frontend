@@ -1,4 +1,7 @@
 <template>
-  <h1>Aircraft Database Admin Panel</h1>
-  <p>Should be for authorized users only.</p>
+  <AdminNavigationMenu></AdminNavigationMenu>
 </template>
+
+<script setup>
+  import AdminNavigationMenu from '@/components/admin/navigation/AdminNavigationMenu.vue';
+</script>

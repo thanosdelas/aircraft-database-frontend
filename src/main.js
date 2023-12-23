@@ -10,6 +10,7 @@ import NotFound from './components/NotFound.vue';
 import Login from './components/authentication/Login.vue';
 import Logout from './components/authentication/Logout.vue';
 import AdminMain from './components/admin/AdminMain.vue';
+import AdminHomePage from './components/admin/AdminHomePage.vue';
 import AdminAircraft from './components/admin/AdminAircraft.vue';
 
 export const API_BASE_URL = 'http://localhost:3000';
@@ -30,7 +31,8 @@ const routes = [
     path: '/admin',
     component: AdminMain,
     children: [
-      { path: '/admin/aircraft', component: AdminAircraft }
+      { path: '/admin', component: AdminHomePage },
+      { path: '/admin/aircraft-database', component: AdminAircraft }
     ]
   },
 ];
