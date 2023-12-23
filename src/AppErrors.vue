@@ -3,7 +3,7 @@
   <h2>ERROR</h2>
 </template>
 
-<style>
+<style scoped>
   .errors{
     background: red;
     position: fixed;

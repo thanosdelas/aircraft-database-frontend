@@ -1,8 +1,5 @@
 <template>
   <h1>Aircraft Database</h1>
-
-  <button @click="fetchAircraft">Fetch Aircraft</button>
-
   <div class="aircraft-wrapper">
     <div
       class="aircraft-list-entry"
@@ -10,8 +7,6 @@
       v-for="aircraft in aircraftData"
       @click="visitArticle(aircraft)">
       <div>
-        <span>{{ aircraft.manufacturericao }}</span>
-        <span>{{ aircraft.manufacturername }}</span>
         <span>{{ aircraft.model }}</span>
       </div>
     </div>
@@ -66,7 +61,7 @@
   }
 </script>
 
-<style>
+<style scoped>
   .aircraft-wrapper{
     position: relative;
     overflow: hidden;

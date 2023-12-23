@@ -36,11 +36,11 @@
   });
 </script>
 
-<style type="text/css">
+<style scoped>
   .navigation-menu-admin{
     display: flex;
     align-items: center;
-    background: #4$$;
+    background: #222631;
     padding: 5px;
   }
   .loading-text{

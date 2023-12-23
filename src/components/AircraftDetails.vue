@@ -203,7 +203,7 @@
   }
 </script>
 
-<style>
+<style scoped>
   .aircraft-details{
     position: fixed;
     width: 45%;
@@ -223,7 +223,7 @@
   .details-entry{
     display: flex;
     justify-content: space-between;
-    background: #6e715e;
+    background: #49463e;
     padding: 10px;
   }
   .muted{
@@ -238,33 +238,5 @@
   .summary{
     background: #1b1b1a;
     padding: 10px;
-  }
-  .loader-wrapper{
-    display: flex;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-  }
-  .loader-wrapper div{
-    display: block;
-  }
-  .loader{
-    width: 27px;
-    height: 1px;
-    border: 1px solid #FFF;
-    /*border-bottom-color: #FF3D00;*/
-    border-radius: 50%;
-    display: inline-block;
-    box-sizing: border-box;
-    animation: rotation .5s linear infinite;
-  }
-  @keyframes rotation{
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
   }
 </style>
