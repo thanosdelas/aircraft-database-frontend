@@ -1,6 +1,10 @@
 <template>
   <h1>Aircraft Database</h1>
   <div class="aircraft-wrapper">
+    <div v-for="error in errors">
+      {{ error.message }}
+    </div>
+
     <div
       class="aircraft-list-entry"
       :class="{ active: selectedAircraft == aircraft }"
@@ -23,25 +27,28 @@
 
   import Authentication from '@/services/authentication';
   import AdminAircraftDetails from './AdminAircraftDetails.vue';
+  import AircraftApi from '@/services/aircraft-api';
 
   onMounted(() => {
     return fetchAircraft();
   });
 
-  const API_URL = `http://localhost:3000/api/aircraft`
+  const errors = ref(null);
   const aircraftData = ref(null);
   const selectedAircraft = ref(false)
 
   async function fetchAircraft(){
     const authentication = new Authentication();
+    const aircraftApi = new AircraftApi(authentication);
 
-    const response = await fetch(API_URL, {
-      headers: authentication.headers()
-    });
-    const data = await response.json();
+    const result = await aircraftApi.fetch();
 
-    console.log(data);
-    aircraftData.value = data;
+    if('errors' in result){
+      errors.value = result.errors
+      return null;
+    }
+
+    aircraftData.value = result;
   }
 
   function visitArticle(aircraft){

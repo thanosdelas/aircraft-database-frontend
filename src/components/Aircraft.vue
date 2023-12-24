@@ -21,6 +21,7 @@
 <script setup lang="ts">
   import { ref, onMounted } from 'vue';
 
+  import AircraftApi from '@/services/aircraft-api';
   import Authentication from '@/services/authentication';
   import AircraftDetails from './AircraftDetails.vue';
 
@@ -34,14 +35,16 @@
 
   async function fetchAircraft(){
     const authentication = new Authentication();
+    const aircraftApi = new AircraftApi(authentication);
 
-    const response = await fetch(API_URL, {
-      headers: authentication.headers()
-    });
-    const data = await response.json();
+    const result = await aircraftApi.fetch();
 
-    console.log(data);
-    aircraftData.value = data;
+    if('errors' in result){
+      errors.value = result.errors
+      return null;
+    }
+
+    aircraftData.value = result;
   }
 
   function visitArticle(aircraft){
