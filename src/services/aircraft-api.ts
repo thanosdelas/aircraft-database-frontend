@@ -19,25 +19,17 @@ export default class AircraftApi{
 
       if(response.status !== 200){
         this.errors.push({
-          code: response.status.toString(), 'message': 'Could not fetch aircraft data' });
-
-        return new Promise((resolve) => {
-          return resolve(this.fetchError());
+          code: response.status.toString(), message: 'Could not fetch aircraft data'
         });
+
+        return { errors: this.errors };
       }
 
       return response.json();
     }
     catch(error){
-      this.errors.push({ code: 'exception', 'message': error.message });
-
-      return new Promise((resolve) => {
-        return resolve(this.fetchError());
-      });
+      this.errors.push({ code: 'exception', message: error.message });
+      return { errors: this.errors };
     }
-  }
-
-  private fetchError(){
-    return { errors: this.errors }
   }
 }

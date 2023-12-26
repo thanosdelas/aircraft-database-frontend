@@ -20,7 +20,6 @@ export default class Authentication{
   }
 
   public saveAccessToken(accessToken: string): void{
-    console.log("Store is");
     store.authentication.loggedIn = true;
     document.cookie = `access_token=${accessToken}; SameSite=None; Secure`;
   }

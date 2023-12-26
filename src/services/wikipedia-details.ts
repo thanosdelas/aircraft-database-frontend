@@ -1,5 +1,12 @@
+import { Error } from '@/types/types'
+
 export class WikipediaDetails{
-  public async searchAircraftModel(data: any){
+  private errors: Error[] = [];
+
+  /**
+   * Search for Wikipedia titles by aircraft model
+   */
+  public async searchAircraftModel(data: any): Promise<any>{
     const searchTerm = `${ data.aircraft.model }`;
     const params = {
       format: 'json',
@@ -12,18 +19,37 @@ export class WikipediaDetails{
     const searchParams = new URLSearchParams(params);
     const API_URL = `https://en.wikipedia.org/w/api.php?${ searchParams.toString() }`
 
-    const response = await fetch(API_URL);
-    const results = await response.json();
-    console.log("Search term: ", searchTerm);
-    console.log("Results from searchAircraftModel: ", results);
+    try{
+      const response = await fetch(API_URL);
 
-    return results;
+      if(this.responseErrors(response)){
+        return { errors: this.errors };
+      }
+
+      const results = await response.json();
+
+      if(results.query.search.length === 0){
+        return {
+          errors: [{
+            code: 'error',
+            message: `No results found on wikipedia for: ${ searchTerm }`
+          }]
+        };
+      }
+
+      return results.query.search[0];
+    }
+    catch(error){
+      this.errors.push({ code: 'exception', 'message': error.message });
+
+      return { errors: this.errors };
+    }
   }
 
   /**
    * `https://en.wikipedia.org/w/api.php?origin=*&format=json&action=query&prop=extracts&exintro&explaintext&redirects=1&pageids=${pageId}`
    */
-  public async contentSummary(pageId: string): Promise<string>{
+  public async summary(pageId: string): Promise<any>{
     const params:any = {
       format: 'json',
       action: 'query',
@@ -38,14 +64,58 @@ export class WikipediaDetails{
     const searchParams = new URLSearchParams(params);
     const API_URL = `https://en.wikipedia.org/w/api.php?${ searchParams.toString() }`
 
-    const response = await fetch(API_URL);
-    const results = await response.json();
+    try{
+      const response = await fetch(API_URL);
 
-    if(pageId in results.query.pages){
-      return results.query.pages[pageId].extract
+      if(this.responseErrors(response)){
+        return { errors: this.errors };
+      }
+
+      const results = await response.json();
+
+      if(pageId in results.query.pages){
+        return { data: results.query.pages[pageId].extract }
+      }
+
+      this.errors.push({ code: 'error', 'message': `Could not find summary on Wikipedia with page id: ${ pageId }` });
+      return { error: results.query.pages[pageId].extract };
     }
+    catch(error){
+      this.errors.push({ code: 'exception', 'message': error.message });
+      return { errors: this.errors };
+    }
+  }
 
-    return '';
+  public async fetchImages(title: string, pageId: string): Promise<any>{
+    try{
+      const imageFilenames = await this.fetchImageFilenames(title, pageId);
+
+      if(imageFilenames.length === 0){
+        return {
+          errors: [{
+            code: 'error',
+            message: `No images found on wikipedia for title: ${ title }`
+          }]
+        };
+      }
+
+      const imageURLs = await this.fetchImageURLs(imageFilenames);
+
+      if(imageURLs.length === 0){
+        return {
+          errors: [{
+            code: 'error',
+            message: `No images found on wikipedia for title: ${ title }`
+          }]
+        };
+      }
+
+      return { data: imageURLs }
+    }
+    catch(error){
+      this.errors.push({ code: 'exception', 'message': error.message });
+      return { errors: this.errors };
+    }
   }
 
   private async fetchImageFilenames(title: string, pageId: string){
@@ -53,7 +123,7 @@ export class WikipediaDetails{
       format: 'json',
       action: 'query',
       origin: '*',
-      imlimit: '20',
+      imlimit: '50',
       prop: 'images',
       titles: title
     };
@@ -63,8 +133,6 @@ export class WikipediaDetails{
 
     const response = await fetch(API_URL);
     const results = await response.json();
-    console.log("[*] fetchImageFilenames: ", API_URL);
-    console.log("[*] fetchImageFilenames: ", results);
 
     let collectImages = [];
     for(let x = 0; x < results.query.pages[pageId].images.length; x++){
@@ -100,6 +168,8 @@ export class WikipediaDetails{
         !/flag/i.test(results.query.pages[key].imageinfo[0].url) &&
         !/edit/i.test(results.query.pages[key].imageinfo[0].url) &&
         !/commons-logo/i.test(results.query.pages[key].imageinfo[0].url) &&
+        !/question_mark/i.test(results.query.pages[key].imageinfo[0].url) &&
+        !/Question_book/i.test(results.query.pages[key].imageinfo[0].url) &&
         !/Aviacionavion/i.test(results.query.pages[key].imageinfo[0].url)
       ){
         images.push(results.query.pages[key].imageinfo[0].url)
@@ -107,5 +177,18 @@ export class WikipediaDetails{
     }
 
     return images.reverse();
+  }
+
+  private responseErrors(response: any): boolean{
+    if(response.status !== 200){
+      this.errors.push({
+        code: response.status,
+        message: response.statusText
+      });
+
+      return true;
+    }
+
+    return false
   }
 }

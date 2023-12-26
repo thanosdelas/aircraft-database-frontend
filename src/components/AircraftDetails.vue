@@ -10,7 +10,7 @@
         <div>{{ aircraft[column] }}</div>
       </div>
       <div class="summary">
-        <div class="loader-wrapper" v-if="!summary">
+        <div class="loader-wrapper" v-if="summaryLoading">
           <div>loading summary ...</div>
           <div>
             <span class="loader"></span>
@@ -19,7 +19,7 @@
         {{ summary }}
       </div>
       <div class="images-wrapper">
-        <div class="loader-wrapper" v-if="!images">
+        <div class="loader-wrapper" v-if="imagesLoading">
           <span>loading images ...</span>
           <span class="loader"></span>
         </div>
@@ -37,6 +37,8 @@
 
   const summary = ref(null)
   const images = ref(null);
+  const summaryLoading = ref(true);
+  const imagesLoading = ref(true);
   const data = defineProps(['aircraft']);
   const emits = defineEmits(['closeDetails']);
 
@@ -51,43 +53,37 @@
   async function loadWikipediaDetails(){
     const wikipedia = new WikipediaDetails();
 
-    try{
-      const results = await wikipedia.searchAircraftModel(data);
-      if(results.query.search.length === 0){
-        alert('Could not find anything');
-        return null;
-      }
-
-      const title = results.query.search[0].title;
-      const pageId = results.query.search[0].pageid;
-
-      //
-      // Load Summary
-      //
-      summary.value = await wikipedia.contentSummary(pageId);
-
-      //
-      // Load Images
-      //
-      const imageFilenames = await wikipedia.fetchImageFilenames(title, pageId);
-      if(imageFilenames.length === 0){
-        alert('Could not find any images');
-        return false;
-      }
-
-      const imageURLs = await wikipedia.fetchImageURLs(imageFilenames);
-
-      if(imageURLs.length === 0){
-        alert('Could not find any images');
-        return false;
-      }
-
-      images.value = imageURLs;
+    const result = await wikipedia.searchAircraftModel(data);
+    if('errors' in result){
+      summaryLoading.value = false;
+      imagesLoading.value = false;
+      console.log("Render errors: ", result);
+      return null;
     }
-    catch(error){
-      console.log("Could not fetch results from Wikipedia");
-      console.log(error);
+
+    const title = result.title;
+    const pageId = result.pageid;
+
+    //
+    // Load Summary
+    //
+    const summaryResult = await wikipedia.summary(pageId);
+    summaryLoading.value = false;
+    if('data' in summaryResult){ summary.value = summaryResult.data; }
+    if('errors' in summaryResult){ summary.value = 'Could not find summary'; }
+
+    //
+    // Load Images
+    //
+    const imagesResult = await wikipedia.fetchImages(title, pageId);
+    imagesLoading.value = false;
+
+    if('errors' in imagesResult){
+      imagesError.value = 'No images found';
+      return null;
     }
+
+    images.value = imagesResult.data
   }
 </script>
 
