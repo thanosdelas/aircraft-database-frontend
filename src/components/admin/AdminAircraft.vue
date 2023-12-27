@@ -24,7 +24,7 @@
 
 <script setup lang="ts">
   import { ref, onMounted } from 'vue';
-
+  import { HttpRequest } from '@/services/http-request';
   import Authentication from '@/services/authentication';
   import AdminAircraftDetails from './AdminAircraftDetails.vue';
   import AircraftApi from '@/services/aircraft-api';
@@ -38,8 +38,9 @@
   const selectedAircraft = ref(false)
 
   async function fetchAircraft(){
+    const httpRequest = new HttpRequest();
     const authentication = new Authentication();
-    const aircraftApi = new AircraftApi(authentication);
+    const aircraftApi = new AircraftApi(httpRequest, authentication);
 
     const result = await aircraftApi.fetch();
 

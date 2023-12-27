@@ -1,35 +1,18 @@
-import { Aircraft, Error } from '@/types/types'
+import { HttpRequest } from '@/services/http-request';
 import Authentication from '@/services/authentication';
 
 export default class AircraftApi{
-  private data: Aircraft[];
-  private errors: Error[];
+  private httpRequest: HttpRequest;
   private authentication: Authentication;
 
-  constructor(authentication: Authentication){
-    this.data = [];
-    this.errors = [];
+  constructor(httpRequest: HttpRequest, authentication: Authentication){
+    this.httpRequest = httpRequest;
     this.authentication = authentication;
   }
 
   public async fetch(): Promise<any>{
-    try{
-      const API_URL = `http://localhost:3000/api/aircraft`
-      const response = await fetch(API_URL, { headers: this.authentication.headers() });
+    const API_URL = `http://localhost:3000/api/aircraft`;
 
-      if(response.status !== 200){
-        this.errors.push({
-          code: response.status.toString(), message: 'Could not fetch aircraft data'
-        });
-
-        return { errors: this.errors };
-      }
-
-      return response.json();
-    }
-    catch(error){
-      this.errors.push({ code: 'exception', message: error.message });
-      return { errors: this.errors };
-    }
+    return await this.httpRequest.get(API_URL, this.authentication.headers());
   }
 }

@@ -33,6 +33,7 @@
 
 <script setup>
   import { ref, onMounted } from 'vue';
+  import { HttpRequest } from '@/services/http-request';
   import { WikipediaDetails } from '@/services/wikipedia-details';
 
   const summary = ref(null)
@@ -51,7 +52,8 @@
   });
 
   async function loadWikipediaDetails(){
-    const wikipedia = new WikipediaDetails();
+    const httpRequest = new HttpRequest();
+    const wikipedia = new WikipediaDetails(httpRequest);
 
     const result = await wikipedia.searchAircraftModel(data);
     if('errors' in result){
