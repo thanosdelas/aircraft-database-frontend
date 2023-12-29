@@ -1,4 +1,4 @@
-import { Error } from '@/types/types'
+import { Error, WikipediaImage } from '@/types/types'
 import { HttpRequest } from '@/services/http-request';
 
 export class WikipediaDetails{
@@ -139,7 +139,7 @@ export class WikipediaDetails{
   }
 
   private async fetchImageURLs(imageFilenames: string[]){
-    const images: string[] = [];
+    const images: WikipediaImage[] = [];
 
     const params = {
       format: 'json',
@@ -172,7 +172,10 @@ export class WikipediaDetails{
         !/Question_book/i.test(response.query.pages[key].imageinfo[0].url) &&
         !/Aviacionavion/i.test(response.query.pages[key].imageinfo[0].url)
       ){
-        images.push(response.query.pages[key].imageinfo[0].url)
+        images.push({
+          title: response.query.pages[key].title,
+          url: response.query.pages[key].imageinfo[0].url
+        })
       }
     }
 

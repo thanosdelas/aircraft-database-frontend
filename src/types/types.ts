@@ -9,3 +9,8 @@ export interface Error{
   code: string;
   message: string;
 }
+
+export interface WikipediaImage{
+  title: string;
+  url: string;
+}
