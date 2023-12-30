@@ -1,12 +1,16 @@
+<style scoped>@import './styles.css';</style>
 <template>
   <div class="aircraft-details">
     <div class="header">
-      <button @click="$emit('closeDetails')">Close</button>
-      <button @click="editEnable" v-if="!editMode">Edit</button>
-      <button @click="editDisable" v-if="editMode">Cancel</button>
-    </div>
+      <h2>{{ aircraft.model }}</h2>
 
-    <h2>{{ aircraft.model }}</h2>
+      <div class="actions">
+        <button @click="$emit('closeDetails')">Close</button>
+        <button @click="editEnable" v-if="!editMode">Edit</button>
+        <button @click="editDisable" v-if="editMode">Cancel</button>
+        <button @click="saveImages" v-if="editMode">Save</button>
+      </div>
+    </div>
 
     <div v-if="loadDetailsErrors" class="error-wrapper">
       <div v-for="error in loadDetailsErrors">
@@ -37,13 +41,11 @@
         </div>
 
         <div v-if="editMode" class="edit-images">
-          Please select images to import
+          <span style="color: black;">Please select images to import</span>
 
           <div v-for="error in saveImageErrors">
             {{ error.message }}
           </div>
-
-          <button @click="saveImages">Save</button>
         </div>
 
         <div class="images">
@@ -136,84 +138,3 @@
     images.value = JSON.parse(JSON.stringify(adminAircraftDetails.getImages()));
   }
 </script>
-
-<style scoped>
-  .error-wrapper{
-    background: #942d2d;
-    padding: 20px;
-  }
-
-  .aircraft-details{
-    position: fixed;
-    width: 45%;
-    background: #333;
-    top: 0;
-    height: 100%;
-    right: 0;
-    overflow-y: scroll;
-  }
-  .edit-mode{
-    border: 10px solid #be6236;
-  }
-  .aircraft-details .header{
-    display: flex;
-    align-items: center;
-    flex-direction: row-reverse;
-  }
-  .aircraft-details .header button{
-    margin-left: 10px;
-  }
-  .aircraft-details img{
-    width: 100%;
-  }
-  .details-wrapper{
-    display: block;
-  }
-  .details-entry{
-    display: flex;
-    justify-content: space-between;
-    background: #49463e;
-    padding: 10px;
-  }
-  .muted{
-    opacity: .6;
-    margin-right: 10px;
-  }
-  .images-wrapper{
-    display: block;
-  }
-  .images{
-    display: grid;
-    grid-gap: 10px;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  }
-  .images .entry{
-    display: block;
-    position: relative;
-  }
-  .images .entry.selected{
-    padding: 10px;
-    background: #7ed54b;
-  }
-  .images .entry.saved{
-  }
-  .image-saved-label{
-    background: rgb(159 239 45 / 44%);
-    color: #000;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    text-align: center;
-    display: table;
-    vertical-align: middle;
-    padding: 20px;
-  }
-  .summary{
-    background: #1b1b1a;
-    padding: 10px;
-  }
-  .edit-images{
-    background: #be6236;
-    padding: 20px;
-  }
-</style>

@@ -1,0 +1,102 @@
+.error-wrapper{
+  background: #942d2d;
+  padding: 20px;
+}
+.aircraft-details{
+  position: fixed;
+  width: 45%;
+  background: #222222;
+  top: 0;
+  height: 100%;
+  right: 0;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  border-left: 1px solid #5d5d5d;
+}
+.edit-mode{
+  border: 10px solid #da5616;
+
+}
+.aircraft-details .header{
+  background: #000;
+  position: fixed;
+  z-index: 9000;
+  width: 45%;
+  height: 125px;
+  text-align: left;
+  display: block;
+  padding: 10px;
+  border-bottom: 1px solid #919191;
+}
+.aircraft-details .header .actions{
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
+}
+.aircraft-details .header button{
+  margin-left: 10px;
+}
+.aircraft-details img{
+  width: 100%;
+}
+.details-wrapper{
+  display: block;
+  margin-top: 140px;
+}
+.details-entry{
+  display: flex;
+  justify-content: space-between;
+  background: #49463e;
+  padding: 10px;
+}
+.muted{
+  opacity: .6;
+  margin-right: 10px;
+}
+.images-wrapper{
+  display: block;
+}
+.images{
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  padding: 10px;
+}
+.images .entry{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #FFFFFF;
+  border: 2px dashed #FFF;
+  padding: 10px;
+  transition: all .5s;
+}
+.images .entry.selected{
+  padding: 10px;
+/*  background: #7ed54b;*/
+  border: 2px dashed #000;
+  background: #EEEEEE;
+  opacity: .5;
+  box-shadow: 0 0 10px #FFF;
+}
+.images .entry.saved{
+}
+.image-saved-label{
+  background: rgb(159 239 45 / 44%);
+  color: #000;
+/*  position: absolute;*/
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+/*  display: table;*/
+/*  vertical-align: middle;*/
+  padding: 20px;
+}
+.summary{
+  background: #1b1b1a;
+  padding: 10px;
+}
+.edit-images{
+  background: #da5616;
+  padding: 20px;
+}

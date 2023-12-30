@@ -82,9 +82,12 @@
     overflow: hidden;
     cursor: pointer;
     border-bottom: 1px dashed #5d5947;
+    transition: all .3s;
   }
   .aircraft-list-entry.active{
-    background: #496973;
+    background: #9fef2d;
+    color: #000;
+    padding: 5px;
   }
   .aircraft-list-entry span{
     margin-right: 10px;
