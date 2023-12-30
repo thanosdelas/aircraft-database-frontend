@@ -40,7 +40,8 @@
   margin-left: 10px;
 }
 .aircraft-details img{
-  width: 100%;
+  max-width: 100%;
+  width: 250px;
 }
 .details-wrapper{
   display: block;
@@ -70,9 +71,9 @@
   overflow: hidden;
   display: flex;
   align-items: center;
+  flex-direction: column;
   background: #FFFFFF;
   border: 2px dashed #FFF;
-  padding: 10px;
   transition: all .5s;
 }
 .images .entry .inner{

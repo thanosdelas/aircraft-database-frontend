@@ -148,7 +148,7 @@
    * thumbnail: https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Lockheed_R7V-2_turboprop_Connie_in_flight_c1953.jpeg/300px-Lockheed_R7V-2_turboprop_Connie_in_flight_c1953.jpeg
    */
   function imageThumbnailURL(image){
-    if(image.url.indexOf('.svg')){
+    if(image.url.indexOf('.svg') !== -1){
       return image.url;
     }
 
