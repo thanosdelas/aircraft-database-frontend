@@ -16,6 +16,13 @@ export default class AircraftApiAdmin{
     return await this.httpRequest.get(API_URL, this.authentication.headers());
   }
 
+  public async fetchImages(id: string): Promise<any>{
+    const params = new URLSearchParams({aircraft_id: id});
+    const API_URL = `http://localhost:3000/api/admin/aircraft/images?${ params.toString() }`;
+
+    return await this.httpRequest.get(API_URL, this.authentication.headers());
+  }
+
   public async saveImages(id: string, images: any): Promise<any>{
     const API_URL = `http://localhost:3000/api/admin/aircraft/images`;
 
