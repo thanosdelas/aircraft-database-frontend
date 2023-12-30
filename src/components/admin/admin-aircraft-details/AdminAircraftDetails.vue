@@ -50,8 +50,12 @@
 
         <div class="images">
           <div class="entry" :class="{ selected: image.selected, saved: image.saved }" v-for="image in images" @click="selectImage(image)">
-            <div class="image-saved-label" v-if="image.saved">Saved</div>
-            <img :alt="image.title" :src="imageThumbnailURL(image)" />
+            <div class="inner">
+              <img :alt="image.title" :src="imageThumbnailURL(image)" />
+            </div>
+            <div class="image-saved-label" v-if="image.saved">
+              <div class="image-saved-label-inner">Saved</div>
+            </div>
           </div>
         </div>
       </div>

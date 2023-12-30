@@ -73,7 +73,6 @@
     position: relative;
     overflow: hidden;
     display: block;
-    padding: 10px;
   }
   .aircraft-list-entry{
     display: block;

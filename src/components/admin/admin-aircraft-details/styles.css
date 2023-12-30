@@ -14,8 +14,7 @@
   border-left: 1px solid #5d5d5d;
 }
 .edit-mode{
-  border: 10px solid #da5616;
-
+/*  border: 10px solid #da5616;*/
 }
 .aircraft-details .header{
   background: #000;
@@ -45,12 +44,12 @@
 }
 .details-wrapper{
   display: block;
-  margin-top: 140px;
+  margin-top: 125px;
 }
 .details-entry{
   display: flex;
   justify-content: space-between;
-  background: #49463e;
+  background: #5e594c;
   padding: 10px;
 }
 .muted{
@@ -67,34 +66,52 @@
   padding: 10px;
 }
 .images .entry{
+  position: relative;
+  overflow: hidden;
   display: flex;
-  flex-direction: column;
   align-items: center;
   background: #FFFFFF;
   border: 2px dashed #FFF;
   padding: 10px;
   transition: all .5s;
 }
+.images .entry .inner{
+}
 .images .entry.selected{
   padding: 10px;
-/*  background: #7ed54b;*/
   border: 2px dashed #000;
   background: #EEEEEE;
-  opacity: .5;
-  box-shadow: 0 0 10px #FFF;
+  background: rgb(159 239 45 / 44%);
+  background: #9fef2d;
+  background: rgb(239 189 45 / 48%);
+  border-radius: 40px;
+  background: #efbd2d;
 }
+.images .entry.selected img{
+  border-radius: 80px;
+}
+
 .images .entry.saved{
 }
 .image-saved-label{
   background: rgb(159 239 45 / 44%);
+/*  background: rgb(0 0 0 / 46%);*/
+/*  background: rgb(0 0 0 / 38%);*/
   color: #000;
-/*  position: absolute;*/
+  position: absolute;
   bottom: 0;
   width: 100%;
   text-align: center;
-/*  display: table;*/
-/*  vertical-align: middle;*/
-  padding: 20px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+.image-saved-label-inner{
+  width: 100%;
+  text-transform: uppercase;
+  font-size: 30px;
+  text-shadow: 0 0 10px #000;
+  color: #ffffff63;
 }
 .summary{
   background: #1b1b1a;
@@ -102,5 +119,6 @@
 }
 .edit-images{
   background: #da5616;
+  background: #efbd2d;
   padding: 20px;
 }
