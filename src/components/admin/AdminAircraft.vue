@@ -26,7 +26,7 @@
   import { ref, onMounted } from 'vue';
   import { HttpRequest } from '@/services/http-request';
   import Authentication from '@/services/authentication';
-  import AdminAircraftDetails from './AdminAircraftDetails.vue';
+  import AdminAircraftDetails from './admin-aircraft-details/AdminAircraftDetails.vue';
   import AircraftApiAdmin from '@/services/aircraft-api-admin';
 
   onMounted(() => {

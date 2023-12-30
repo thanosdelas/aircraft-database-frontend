@@ -7,6 +7,8 @@ export default class Authentication{
 
     const accessToken: string = this.findAccessToken();
 
+    headers['Content-Type'] = 'application/json';
+
     if(accessToken.length > 0){
       headers['Authorization'] = `Bearer ${accessToken}`;
     }

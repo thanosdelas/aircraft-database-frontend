@@ -1,5 +1,6 @@
-import { Error } from '@/types/types'
+import { Error, WikipediaImage } from '@/types/types'
 import { HttpRequest } from '@/services/http-request';
+import { Image } from '@/types/types'
 
 export class WikipediaDetails{
   private errors: Error[] = [];
@@ -12,8 +13,8 @@ export class WikipediaDetails{
   /**
    * Search for Wikipedia titles by aircraft model
    */
-  public async searchAircraftModel(data: any): Promise<any>{
-    const searchTerm = `${ data.aircraft.model }`;
+  public async searchAircraftModel(aircraft: any): Promise<any>{
+    const searchTerm = `${ aircraft.model }`;
     const params = {
       format: 'json',
       action: 'query',
@@ -109,7 +110,15 @@ export class WikipediaDetails{
       };
     }
 
-    return { data: imageURLs }
+    let transformImageURLs: Image[] = [];
+    imageURLs.forEach((imageURL: any) => {
+      transformImageURLs.push({
+        url: imageURL.url,
+        filename: imageURL.title
+      });
+    });
+
+    return { data: transformImageURLs }
   }
 
   private async fetchImageFilenames(title: string, pageId: string){
@@ -139,7 +148,7 @@ export class WikipediaDetails{
   }
 
   private async fetchImageURLs(imageFilenames: string[]){
-    const images: string[] = [];
+    const images: WikipediaImage[] = [];
 
     const params = {
       format: 'json',
@@ -172,7 +181,10 @@ export class WikipediaDetails{
         !/Question_book/i.test(response.query.pages[key].imageinfo[0].url) &&
         !/Aviacionavion/i.test(response.query.pages[key].imageinfo[0].url)
       ){
-        images.push(response.query.pages[key].imageinfo[0].url)
+        images.push({
+          title: response.query.pages[key].title,
+          url: response.query.pages[key].imageinfo[0].url
+        })
       }
     }
 

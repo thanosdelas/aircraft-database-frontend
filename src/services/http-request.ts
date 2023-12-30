@@ -23,6 +23,26 @@ export class HttpRequest{
     }
   }
 
+  public async put(url: string, headers = {}, data = {}): Promise<any>{
+    try{
+      const response = await fetch(url, {
+        headers: headers,
+        method: 'PUT',
+        body: JSON.stringify(data)
+      });
+
+      if(this.responseErrors(response)){
+        return this.errorResponse();
+      }
+
+      return await response.json();
+    }
+    catch(error){
+      this.errors.push({ code: 'exception', message: error.message });
+      return this.errorResponse();
+    }
+  }
+
   /**
    * TODO: Match all or some of the successful responses.
    */
