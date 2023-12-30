@@ -51,7 +51,7 @@
         <div class="images">
           <div class="entry" :class="{ selected: image.selected, saved: image.saved }" v-for="image in images" @click="selectImage(image)">
             <div class="image-saved-label" v-if="image.saved">Saved</div>
-            <img :alt="image.title" :src="image.url" />
+            <img :alt="image.title" :src="imageThumbnailURL(image)" />
           </div>
         </div>
       </div>
@@ -136,5 +136,18 @@
 
   function updateImagesValue(){
     images.value = JSON.parse(JSON.stringify(adminAircraftDetails.getImages()));
+  }
+
+  /**
+   * Generate image thumbnail URL from existing image URL, eg.:
+   * original: https://upload.wikimedia.org/wikipedia/commons/0/0a/Lockheed_R7V-2_turboprop_Connie_in_flight_c1953.jpeg
+   * thumbnail: https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Lockheed_R7V-2_turboprop_Connie_in_flight_c1953.jpeg/300px-Lockheed_R7V-2_turboprop_Connie_in_flight_c1953.jpeg
+   */
+  function imageThumbnailURL(image){
+    if(image.url.indexOf('.svg')){
+      return image.url;
+    }
+
+    return image.url.split('commons').join('commons/thumb')+'/150px-'+image.filename.replace('File:','').replace(/ /g,"_");
   }
 </script>
