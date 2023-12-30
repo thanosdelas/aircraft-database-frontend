@@ -39,13 +39,12 @@
     const aircraftApi = new AircraftApi(httpRequest, authentication);
 
     const result = await aircraftApi.fetch();
-
     if('errors' in result){
       errors.value = result.errors
       return null;
     }
 
-    aircraftData.value = result;
+    aircraftData.value = result.data;
   }
 
   function visitArticle(aircraft){
