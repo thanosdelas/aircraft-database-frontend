@@ -24,7 +24,7 @@
           <span class="loader"></span>
         </div>
         <div class="entry" v-for="image in images">
-          <img :src="image" />
+          <img :alt="image.title" :src="image.url" />
         </div>
       </div>
     </div>
@@ -55,7 +55,7 @@
     const httpRequest = new HttpRequest();
     const wikipedia = new WikipediaDetails(httpRequest);
 
-    const result = await wikipedia.searchAircraftModel(data);
+    const result = await wikipedia.searchAircraftModel(data.aircraft);
     if('errors' in result){
       summaryLoading.value = false;
       imagesLoading.value = false;
@@ -84,6 +84,8 @@
       imagesError.value = 'No images found';
       return null;
     }
+
+    console.log(imagesResult.data);
 
     images.value = imagesResult.data
   }
