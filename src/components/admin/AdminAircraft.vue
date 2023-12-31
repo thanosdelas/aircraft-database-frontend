@@ -5,6 +5,11 @@
       {{ error.message }}
     </div>
 
+    <div class="search-bar">
+      <input type="text" name="sarch" v-model="searchTerm" @keyup.enter="search" />
+      <button @click="search">Search</button>
+    </div>
+
     <div
       class="aircraft-list-entry"
       :class="{ active: selectedAircraft == aircraft }"
@@ -34,21 +39,33 @@
   });
 
   const errors = ref(null);
+  const searchTerm = ref(null);
   const aircraftData = ref(null);
-  const selectedAircraft = ref(false)
+  const selectedAircraft = ref(false);
 
-  async function fetchAircraft(){
+  async function fetchAircraft(searchTerm = ''){
     const httpRequest = new HttpRequest();
     const authentication = new Authentication();
-    const aircraftApi = new AircraftApiAdmin(httpRequest, authentication);
+    const aircraftApiAdmin = new AircraftApiAdmin(httpRequest, authentication);
 
-    const result = await aircraftApi.fetch();
+    let params = {};
+    if(searchTerm.length > 0){
+      params['search_term'] = searchTerm;
+    }
+
+    const result = await aircraftApiAdmin.fetch(params);
     if('errors' in result){
       errors.value = result.errors
       return null;
     }
 
     aircraftData.value = result.data;
+  }
+
+  function search(){
+    closeDetails();
+
+    return fetchAircraft(searchTerm.value);
   }
 
   function visitArticle(aircraft){
@@ -90,5 +107,22 @@
   .aircraft-list-entry span{
     margin-right: 10px;
     display: inline-block;
+  }
+  .search-bar{
+    display: flex;
+    padding: 20px 0px;
+  }
+  .search-bar input{
+    width: 100%;
+    background: none;
+    border-color: #efbd2d;
+    color: #efbd2d;
+    font-size: 20px;
+    /*
+    border-bottom: 1px solid;
+    border-left: 7px solid;
+    border-radius: 50px;
+    padding-left: 20px;
+    */
   }
 </style>

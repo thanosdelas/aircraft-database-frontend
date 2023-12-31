@@ -10,10 +10,11 @@ export default class AircraftApiAdmin{
     this.authentication = authentication;
   }
 
-  public async fetch(): Promise<any>{
-    const API_URL = `http://localhost:3000/api/admin/aircraft`;
+  public async fetch(params = {}): Promise<any>{
+    const searchParams = new URLSearchParams(params);
+    const API_URL = `http://localhost:3000/api/admin/aircraft?${ searchParams.toString() }`;
 
-    return await this.httpRequest.get(API_URL, this.authentication.headers());
+    return await this.httpRequest.get(API_URL, this.authentication.headers(), searchParams);
   }
 
   public async fetchImages(id: string): Promise<any>{
