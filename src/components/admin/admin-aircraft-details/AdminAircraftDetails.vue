@@ -40,8 +40,14 @@
           <span class="loader"></span>
         </div>
 
+        <button class="small" @click="showDescription = !showDescription">
+          {{ showDescription ? 'Hide images description' : 'Show images description' }}
+        </button>
+
         <div v-if="editMode" class="edit-images">
-          <span style="color: black;">Please select images to import</span>
+          <span style="color: black;">
+            Please select images to import
+          </span>
 
           <div v-for="error in saveImageErrors">
             {{ error.message }}
@@ -56,6 +62,8 @@
             <div class="image-saved-label" v-if="image.saved">
               <div class="image-saved-label-inner">Saved</div>
             </div>
+
+            <div class="description" v-if="showDescription && image.description">{{ image.description }}</div>
           </div>
         </div>
       </div>
@@ -79,6 +87,7 @@
   const saveImageErrors = ref(null);
   const summary = ref(null);
   const images = ref(null);
+  const showDescription = ref(false)
   const imagesError = ref(null);
   const editMode = ref(false);
   const summaryLoading = ref(true);
@@ -122,7 +131,11 @@
       return null
     };
 
-    adminAircraftDetails.selectImage({ url: image.url, filename: image.filename });
+    adminAircraftDetails.selectImage({
+      url: image.url,
+      filename: image.filename,
+      description: image.description
+    });
 
     return updateImagesValue();
   }

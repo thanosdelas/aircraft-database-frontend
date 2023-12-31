@@ -78,7 +78,8 @@ export class WikipediaDetails{
   /**
    * Find page images.
    * Requires two requests; one to find image filenames and one
-   * to find the image URLs.
+   * to find the image URLs. Additional filtering is applied to the
+   * last results of the last query, to filter out icons and flags.
    */
   public async fetchImages(title: string, pageId: string): Promise<any>{
     const imageFilenames = await this.fetchImageFilenames(title, pageId);
@@ -114,13 +115,18 @@ export class WikipediaDetails{
     imageURLs.forEach((imageURL: any) => {
       transformImageURLs.push({
         url: imageURL.url,
-        filename: imageURL.title
+        filename: imageURL.title,
+        description: this.stripHTML(imageURL.description)
       });
     });
 
     return { data: transformImageURLs }
   }
 
+  /**
+   * Fetch a list of filenames from provided Wikipedia title.
+   * https://en.wikipedia.org/w/api.php?format=json&action=query&origin=*&imlimit=50&prop=images&titles=Lockheed+Model+10+Electra
+   */
   private async fetchImageFilenames(title: string, pageId: string){
     const params = {
       format: 'json',
@@ -147,6 +153,10 @@ export class WikipediaDetails{
     return collectImages;
   }
 
+  /**
+   * Fetch image URLs according to files (titles) collected from fetchImageFilenames.
+   * https://en.wikipedia.org/w/api.php?format=json&action=query&origin=*&prop=imageinfo&iiprop=url%7Cextmetadata&titles=File:...
+   */
   private async fetchImageURLs(imageFilenames: string[]){
     const images: WikipediaImage[] = [];
 
@@ -155,7 +165,7 @@ export class WikipediaDetails{
       action: 'query',
       origin: '*',
       prop: 'imageinfo',
-      iiprop: 'url',
+      iiprop: 'url|extmetadata',
       titles: imageFilenames.join('|')
     }
 
@@ -170,6 +180,9 @@ export class WikipediaDetails{
       return images;
     }
 
+    //
+    // Filter out any image URLs matching criteria like flags & wikipedia icons.
+    //
     for(const key in response.query.pages){
       if(
         response.query.pages[key].imageinfo.length === 1 &&
@@ -181,13 +194,30 @@ export class WikipediaDetails{
         !/Question_book/i.test(response.query.pages[key].imageinfo[0].url) &&
         !/Aviacionavion/i.test(response.query.pages[key].imageinfo[0].url)
       ){
-        images.push({
+        let image = {
           title: response.query.pages[key].title,
-          url: response.query.pages[key].imageinfo[0].url
-        })
+          url: response.query.pages[key].imageinfo[0].url,
+          description: ''
+        }
+
+        if(
+          'ImageDescription' in response.query.pages[key].imageinfo[0].extmetadata &&
+          'value' in response.query.pages[key].imageinfo[0].extmetadata.ImageDescription
+        ){
+          image.description = response.query.pages[key].imageinfo[0].extmetadata.ImageDescription.value;
+        }
+
+        images.push(image);
       }
     }
 
     return images.reverse();
+  }
+
+  private stripHTML(html: string): string{
+    let element = document.createElement('div');
+    element.innerHTML = html;
+
+    return element.textContent || element.innerText || '';
   }
 }

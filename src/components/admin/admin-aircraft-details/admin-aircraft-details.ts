@@ -229,7 +229,8 @@ export class AdminAircraftDetails{
   private appendSelectedImage(image: Image){
     this.selectedImages.push({
       filename: image.filename,
-      url: image.url
+      url: image.url,
+      description: image.description
     });
   }
 

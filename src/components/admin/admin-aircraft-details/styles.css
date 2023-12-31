@@ -95,7 +95,9 @@
 .images .entry.selected img{
   border-radius: 80px;
 }
-
+.images .entry .description{
+  color: #000;
+}
 .images .entry.saved{
 }
 .image-saved-label{

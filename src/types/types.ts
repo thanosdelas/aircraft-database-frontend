@@ -18,6 +18,7 @@ export interface WikipediaImage{
 export interface Image{
   url: string;
   filename: string;
+  description: string;
   saved?: boolean;
   selected?: boolean;
 }
