@@ -5,19 +5,22 @@
 .aircraft-details{
   position: fixed;
   width: 45%;
-  background: #222222;
+  /*background: #222222;*/
+  background: #222631;
   top: 0;
   height: 100%;
   right: 0;
   overflow-y: scroll;
   overflow-x: hidden;
   border-left: 1px solid #5d5d5d;
+  border-left: 1px solid #3b3a36;
 }
 .edit-mode{
 /*  border: 10px solid #da5616;*/
 }
 .aircraft-details .header{
-  background: #000;
+/*  background: #000;*/
+  background: #222631;
   position: fixed;
   z-index: 9000;
   width: 45%;
@@ -26,6 +29,7 @@
   display: block;
   padding: 10px;
   border-bottom: 1px solid #919191;
+  border-bottom: 1px solid #3b3a36;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -115,7 +119,7 @@
   color: #ffffff63;
 }
 .summary{
-  background: #1b1b1a;
+/*  background: #1b1b1a;*/
   padding: 10px;
 }
 .edit-images{
