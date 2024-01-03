@@ -12,9 +12,9 @@
 
     <div
       class="aircraft-list-entry"
-      :class="{ active: selectedAircraft == aircraft }"
+      :class="{ active: selectedAircraft == aircraft, 'last-visited': lastVisited == aircraft && !selectedAircraft }"
       v-for="aircraft in aircraftData"
-      @click="visitArticle(aircraft)">
+      @click="aircraftDetails(aircraft)">
       <div>
         <span>{{ aircraft.model }}</span>
       </div>
@@ -41,6 +41,7 @@
   const errors = ref(null);
   const searchTerm = ref(null);
   const aircraftData = ref(null);
+  const lastVisited = ref(false);
   const selectedAircraft = ref(false);
 
   async function fetchAircraft(searchTerm = ''){
@@ -68,11 +69,16 @@
     return fetchAircraft(searchTerm.value);
   }
 
-  function visitArticle(aircraft){
+  function aircraftDetails(aircraft){
     resetDetails();
+
+    if(lastVisited.value === aircraft){
+      return lastVisited.value = null;
+    }
 
     setTimeout(function(){
       selectedAircraft.value = aircraft;
+      lastVisited.value = aircraft;
     }, 50);
   }
 
@@ -102,6 +108,11 @@
   .aircraft-list-entry.active{
     background: #9fef2d;
     color: #000;
+    padding: 5px;
+  }
+  .aircraft-list-entry.last-visited{
+    background: #2a303f;
+    color: #797979;
     padding: 5px;
   }
   .aircraft-list-entry span{
