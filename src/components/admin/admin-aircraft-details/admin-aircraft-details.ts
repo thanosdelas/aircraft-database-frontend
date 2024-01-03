@@ -37,6 +37,7 @@ export class AdminAircraftDetails{
   //
   // Expose the follwing to update view.
   //
+  public wikipediaPageResult: string;
   public summary: string;
   public summaryLoading: boolean = true;
   public imagesLoading: boolean = true;
@@ -138,6 +139,8 @@ export class AdminAircraftDetails{
       return wikipediaDetails;
     }
 
+    this.wikipediaPageResult = wikipediaDetails;
+
     //
     // Load summary from Wikipedia; do not return on error.
     //
@@ -175,7 +178,8 @@ export class AdminAircraftDetails{
 
     return {
       title: result.title,
-      pageId: result.pageid
+      pageId: result.pageid,
+      page_url: `https://en.wikipedia.org/wiki/${ result.title.replace(/ /g,"_") }`
     }
   }
 

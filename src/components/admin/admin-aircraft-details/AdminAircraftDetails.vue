@@ -19,6 +19,12 @@
     </div>
 
     <div class="details-wrapper">
+      <div><a target="_blank" :href="googleSearchURL">Google Search</a></div>
+      <div v-if="wikipediaPageResult">
+        <div><a target="_blank" :href="wikipediaPageResult.page_url">Wikipedia Page</a></div>
+        <pre>{{ wikipediaPageResult }}</pre>
+      </div>
+
       <div class="details-entry" v-for="column in displayColumns">
         <div class="muted">{{ column }}</div>
         <div>{{ aircraft[column] }}</div>
@@ -93,6 +99,8 @@
   const summaryLoading = ref(true);
   const imagesLoading = ref(true);
   const selectedImages = ref([]);
+  const wikipediaPageResult = ref(null);
+  const googleSearchURL = ref(null);
 
   const displayColumns = [
     "model",
@@ -105,6 +113,8 @@
       loadDetailsErrors.value = loadDetailsResult.errors
     }
 
+    googleSearchURL.value = `https://www.google.com/search?q=${ data.aircraft.model }`;
+    wikipediaPageResult.value = adminAircraftDetails.wikipediaPageResult;
     imagesError.value = adminAircraftDetails.imagesError;
     images.value = adminAircraftDetails.getImages();
     summary.value = adminAircraftDetails.summary;
