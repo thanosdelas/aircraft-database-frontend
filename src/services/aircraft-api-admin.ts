@@ -14,7 +14,7 @@ export default class AircraftApiAdmin{
     const searchParams = new URLSearchParams(params);
     const API_URL = `http://localhost:3000/api/admin/aircraft?${ searchParams.toString() }`;
 
-    return await this.httpRequest.get(API_URL, this.authentication.headers(), searchParams);
+    return await this.httpRequest.get(API_URL, this.authentication.headers());
   }
 
   public async fetchImages(id: string): Promise<any>{
