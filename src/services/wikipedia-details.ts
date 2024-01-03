@@ -145,6 +145,18 @@ export class WikipediaDetails{
       return response;
     }
 
+    if(
+      !(pageId in response.query.pages) ||
+      !('images' in response.query.pages[pageId])
+    ){
+      return {
+        errors: [{
+          code: 'failed',
+          message: `Could not find images for title: ${ title }`
+        }]
+      }
+    }
+
     let collectImages = [];
     for(let x = 0; x < response.query.pages[pageId].images.length; x++){
       collectImages.push(response.query.pages[pageId].images[x].title);
