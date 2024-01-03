@@ -52,7 +52,7 @@ export default class Authentication{
       const response = await fetch(API_URL, requestOptions);
       const results = await response.json();
 
-      if(results.status === 'ok'){
+      if(results.status === 'success'){
         store.authentication.loggedIn = true;
         return true;
       }

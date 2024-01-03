@@ -33,7 +33,7 @@
   let authentication = null;
 
   onMounted(() => {
-    email.value = 'test1@example.com';
+    email.value = 'test@example.com';
     password.value = 'test';
 
     authentication = new Authentication();
@@ -69,18 +69,15 @@
       const response = await fetch(API_URL, requestOptions);
       const results = await response.json();
 
-      if(results.status === 'ok' && results.data.access_token){
+      if(results.status === 'success' && results.data.access_token){
         authentication.saveAccessToken(results.data.access_token);
 
-        console.log("Store before routing is");
-        console.log(store.authentication.loggedIn);
         return router.push({ path: '/' });
       }
 
       message.value = 'Authentication failed';
     }
     catch(error){
-      console.log(error);
       message.value = 'Something went wrong';
     }
   }
