@@ -56,6 +56,22 @@ export class AdminAircraftDetails{
   }
 
   /**
+   * Save aircraft details to database.
+   */
+  public async updateAircraftDetails(data: any){
+    const result = await this.aircraftApiAdmin.update(this.aircraft.id, {
+      model: data.model,
+      description: data.description
+    });
+
+    if('errors' in result){
+      return result;
+    }
+
+    return result;
+  }
+
+  /**
    * Save selected images to database.
    */
   public async saveImages(){
@@ -122,7 +138,7 @@ export class AdminAircraftDetails{
     // Load saved images from database; return on error.
     //
     const fetchImagesResult = await this.aircraftApiAdmin.fetchImages(this.aircraft.id);
-    if('errors' in this.savedImages){
+    if('errors' in fetchImagesResult){
       this.imagesLoading = false;
       this.summaryLoading = false;
       return fetchImagesResult;

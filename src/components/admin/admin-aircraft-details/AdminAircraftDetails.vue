@@ -2,13 +2,19 @@
 <template>
   <div class="aircraft-details">
     <div class="header">
-      <h2>{{ aircraft.model }}</h2>
+      <h2 v-if="!editMode">{{ aircraft.model }}</h2>
+      <div v-if="editMode">
+        <input type="text" v-model="aircraftDetailsForm.model">
+        <span><i>
+          WARNING: Changing the model name may lead to a different Wikipedia title match, which then may lead to loose your images and information mismatch.
+        </i></span>
+      </div>
 
       <div class="actions">
         <button @click="$emit('closeDetails')">Close</button>
         <button @click="editEnable" v-if="!editMode">Edit</button>
         <button @click="editDisable" v-if="editMode">Cancel</button>
-        <button @click="saveImages" v-if="editMode">Save</button>
+        <button @click="save" v-if="editMode">Save</button>
       </div>
     </div>
 
@@ -36,7 +42,8 @@
             <span class="loader"></span>
           </div>
         </div>
-        {{ summary }}
+        <div v-if="!editMode">{{ aircraft.description || summary }}</div>
+        <textarea v-if="editMode" v-model="aircraftDetailsForm.description">{{ summary }}</textarea>
       </div>
 
       <div class="images-wrapper" :class="{ 'edit-mode': editMode }">
@@ -101,6 +108,7 @@
   const selectedImages = ref([]);
   const wikipediaPageResult = ref(null);
   const googleSearchURL = ref(null);
+  const aircraftDetailsForm = ref(null);
 
   const displayColumns = [
     "model",
@@ -126,6 +134,11 @@
     editMode.value = true;
     adminAircraftDetails.initializeEdit();
 
+    aircraftDetailsForm.value = {
+      model: data.aircraft.model,
+      description: data.aircraft.description || summary.value
+    }
+
     return updateImagesValue();
   }
 
@@ -150,11 +163,23 @@
     return updateImagesValue();
   }
 
-  async function saveImages(){
-    const result = await adminAircraftDetails.saveImages();
+  async function save(){
+    const formData = {
+      model: aircraftDetailsForm.value.model,
+      description: aircraftDetailsForm.value.description,
+    }
 
-    if('errors' in result){
-      saveImageErrors.value = result.errors
+    const updateAircraftDetails = await adminAircraftDetails.updateAircraftDetails(formData);
+    if('errors' in updateAircraftDetails){
+      console.log(updateAircraftDetails);
+      return false;
+    }
+
+    data.aircraft.description = updateAircraftDetails.data.description;
+
+    const saveImagesResult = await adminAircraftDetails.saveImages();
+    if('errors' in saveImagesResult){
+      saveImageErrors.value = saveImagesResult.errors
       return false;
     }
 
