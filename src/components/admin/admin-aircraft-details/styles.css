@@ -39,6 +39,7 @@
   display: flex;
   align-items: center;
   flex-direction: row-reverse;
+  margin-top: 10px;
 }
 .aircraft-details .header button{
   margin-left: 10px;
@@ -131,8 +132,38 @@
 }
 pre{
   background: #000;
-  color: #9fef2d;
-  color: #79a041;
+  color: #e0e0e0;
   font-size: 10px;
   padding: 5px;
+}
+.aircraft-details input
+{
+  width: 100%;
+  padding: 10px;
+  background: none;
+  border: 1px dashed #efbd2d;
+  border-radius: 10px;
+  font-family: unset;
+  font-size: 14px;
+  color: unset;
+  padding: 10px;
+}
+.aircraft-details textarea{
+  width: 100%;
+  max-width: 100%;
+  min-height: 250px;
+  height: 100%;
+  background: none;
+  border: 1px dashed #efbd2d;
+  border-radius: 10px;
+  font-family: unset;
+  font-size: 14px;
+  color: unset;
+  padding: 10px;
+}
+input:focus,
+textarea:focus
+{
+  outline: none;
+  border: 2px dashed #efbd2d;
 }
