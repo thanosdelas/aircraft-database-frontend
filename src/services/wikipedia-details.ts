@@ -166,6 +166,7 @@ export class WikipediaDetails{
   }
 
   /**
+   * TODO: Keep track of URLs and skip duplicates.
    * Fetch image URLs according to files (titles) collected from fetchImageFilenames.
    * https://en.wikipedia.org/w/api.php?format=json&action=query&origin=*&prop=imageinfo&iiprop=url%7Cextmetadata&titles=File:...
    */
@@ -204,6 +205,9 @@ export class WikipediaDetails{
         !/globe_content/i.test(response.query.pages[key].imageinfo[0].url) &&
         !/question_mark/i.test(response.query.pages[key].imageinfo[0].url) &&
         !/Question_book/i.test(response.query.pages[key].imageinfo[0].url) &&
+        !/apps_kaboodle/i.test(response.query.pages[key].imageinfo[0].url) &&
+        !/support_vote/i.test(response.query.pages[key].imageinfo[0].url) &&
+        !/Wiki_letter/i.test(response.query.pages[key].imageinfo[0].url) &&
         !/Aviacionavion/i.test(response.query.pages[key].imageinfo[0].url)
       ){
         let image = {
