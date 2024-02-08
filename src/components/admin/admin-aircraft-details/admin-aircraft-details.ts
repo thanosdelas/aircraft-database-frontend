@@ -187,7 +187,7 @@ export class AdminAircraftDetails{
   }
 
   private async loadWikipediaDetails(){
-    const result = await this.wikipediaDetails.searchAircraftModel(this.aircraft);
+    const result = await this.wikipediaDetails.searchAircraftModel(this.aircraft.model);
     if('errors' in result){
       return result;
     }

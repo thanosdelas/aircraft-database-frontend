@@ -1,5 +1,5 @@
 <template class="aircraft-details">
-  <div class="aircraft-details">
+  <div v-if="aircraft" class="aircraft-details">
     <button @click="$emit('closeDetails')">Close</button>
 
     <h2>{{ aircraft.model }}</h2>
@@ -44,14 +44,19 @@
   import { ref, onMounted } from 'vue';
   import { HttpRequest } from '@/services/http-request';
   import { WikipediaDetails } from '@/services/wikipedia-details';
+  import AircraftApi from '@/services/aircraft-api';
 
+  const httpRequest = new HttpRequest();
+  const aircraftApi = new AircraftApi(httpRequest);
+
+  const aircraft = ref(null);
   const detailsLoadedFrom = ref(null);
   const summary = ref(null);
   const images = ref(null);
   const featured_image = ref(null);
   const summaryLoading = ref(true);
   const imagesLoading = ref(true);
-  const data = defineProps(['aircraft']);
+  const data = defineProps(['aircraftId']);
   const emits = defineEmits(['closeDetails']);
 
   const displayColumns = [
@@ -62,26 +67,35 @@
     return loadDatabaseDetails();
   });
 
-  function loadDatabaseDetails(){
+  async function loadDatabaseDetails(){
     images.value = null;
     summary.value = null;
     imagesLoading.value = true;
     summaryLoading.value = true;
     detailsLoadedFrom.value = 'database';
 
-    images.value = data.aircraft.images
-    summary.value = data.aircraft.description
+    const result = await aircraftApi.fetch(data.aircraftId);
+    if('errors' in result){
+      console.log('Could not fetch aricraft');
+      console.log(result);
+      return null;
+    }
+
+    aircraft.value = result.data
+
+    images.value = aircraft.value.images
+    summary.value = aircraft.value.description
 
     imagesLoading.value = false;
     summaryLoading.value = false;
 
-    if(data.aircraft.images.length > 0){
-      featured_image.value = data.aircraft.images[0];
+    if(aircraft.value.images.length > 0){
+      featured_image.value = aircraft.value.images[0];
     }
 
-    if(data.aircraft.featured_image.length > 0){
-      data.aircraft.images.forEach((image) => {
-        if(image.filename === `File:${ data.aircraft.featured_image }`){
+    if(aircraft.value.featured_image.length > 0){
+      aircraft.value.images.forEach((image) => {
+        if(image.filename === `File:${ aircraft.featured_image }`){
           featured_image.value = image;
         }
       });
@@ -98,7 +112,7 @@
     const httpRequest = new HttpRequest();
     const wikipedia = new WikipediaDetails(httpRequest);
 
-    const result = await wikipedia.searchAircraftModel(data.aircraft);
+    const result = await wikipedia.searchAircraftModel(aircraft.value.model);
     if('errors' in result){
       summaryLoading.value = false;
       imagesLoading.value = false;

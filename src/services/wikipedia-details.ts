@@ -13,8 +13,8 @@ export class WikipediaDetails{
   /**
    * Search for Wikipedia titles by aircraft model
    */
-  public async searchAircraftModel(aircraft: any): Promise<any>{
-    const searchTerm = `${ aircraft.model }`;
+  public async searchAircraftModel(model: any): Promise<any>{
+    const searchTerm = `${ model }`;
     const params = {
       format: 'json',
       action: 'query',

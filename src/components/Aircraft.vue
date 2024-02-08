@@ -13,7 +13,7 @@
   </div>
 
   <div v-if="selectedAircraft">
-    <AircraftDetails :aircraft="selectedAircraft" @closeDetails="closeDetails">
+    <AircraftDetails :aircraftId="selectedAircraft.id" @closeDetails="closeDetails">
     </AircraftDetails>
   </div>
 </template>
@@ -22,7 +22,6 @@
   import { ref, onMounted } from 'vue';
   import { HttpRequest } from '@/services/http-request';
   import AircraftApi from '@/services/aircraft-api';
-  import Authentication from '@/services/authentication';
   import AircraftDetails from './AircraftDetails.vue';
 
   onMounted(() => {
@@ -35,10 +34,9 @@
 
   async function fetchAircraft(){
     const httpRequest = new HttpRequest();
-    const authentication = new Authentication();
-    const aircraftApi = new AircraftApi(httpRequest, authentication);
+    const aircraftApi = new AircraftApi(httpRequest);
 
-    const result = await aircraftApi.fetch();
+    const result = await aircraftApi.fetchAll();
     if('errors' in result){
       errors.value = result.errors
       return null;
