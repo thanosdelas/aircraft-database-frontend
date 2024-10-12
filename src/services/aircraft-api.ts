@@ -1,3 +1,4 @@
+import { API_BASE_URL } from '@/main.js';
 import { HttpRequest } from '@/services/http-request';
 
 export default class AircraftApi{
@@ -8,13 +9,13 @@ export default class AircraftApi{
   }
 
   public async fetchAll(): Promise<any>{
-    const API_URL = `http://localhost:3000/api/aircraft`;
+    const API_URL = `${API_BASE_URL}/aircraft`;
 
     return await this.httpRequest.get(API_URL);
   }
 
   public async fetch(id: string): Promise<any>{
-    const API_URL = `http://localhost:3000/api/aircraft/${id}`;
+    const API_URL = `${API_BASE_URL}/aircraft/${id}`;
 
     return await this.httpRequest.get(API_URL);
   }

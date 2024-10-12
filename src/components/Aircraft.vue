@@ -28,7 +28,6 @@
     return fetchAircraft();
   });
 
-  const API_URL = `http://localhost:3000/api/aircraft`
   const aircraftData = ref(null);
   const selectedAircraft = ref(false)
 

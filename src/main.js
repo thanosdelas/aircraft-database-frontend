@@ -13,7 +13,7 @@ import AdminMain from './components/admin/AdminMain.vue';
 import AdminHomePage from './components/admin/AdminHomePage.vue';
 import AdminAircraft from './components/admin/AdminAircraft.vue';
 
-export const API_BASE_URL = 'http://localhost:3000';
+export const API_BASE_URL = 'http://localhost:3000/api';
 
 const routes = [
   { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound },
