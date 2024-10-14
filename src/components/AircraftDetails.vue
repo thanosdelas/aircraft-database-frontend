@@ -81,7 +81,7 @@
       return null;
     }
 
-    aircraft.value = result.data
+    aircraft.value = result
 
     images.value = aircraft.value.images
     summary.value = aircraft.value.description
