@@ -37,7 +37,7 @@ export default class Authentication{
   }
 
   private async verifyToken(accessToken: string){
-    const API_URL = `${ API_BASE_URL }/api/authentication/verify_token`;
+    const API_URL = `${ API_BASE_URL }/authentication/verify_token`;
     const requestOptions = {
       method: 'POST',
       headers: {
