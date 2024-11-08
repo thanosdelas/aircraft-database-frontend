@@ -95,7 +95,7 @@
 
     if(aircraft.value.featured_image.length > 0){
       aircraft.value.images.forEach((image) => {
-        if(image.filename === `File:${ aircraft.featured_image }`){
+        if(image.filename === `File:${ aircraft.value.featured_image }`){
           featured_image.value = image;
         }
       });
