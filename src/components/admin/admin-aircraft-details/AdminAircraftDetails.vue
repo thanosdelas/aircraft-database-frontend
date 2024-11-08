@@ -175,7 +175,7 @@
       return false;
     }
 
-    data.aircraft.description = updateAircraftDetails.data.description;
+    data.aircraft.description = updateAircraftDetails.description;
 
     const saveImagesResult = await adminAircraftDetails.saveImages();
     if('errors' in saveImagesResult){

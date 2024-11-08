@@ -67,10 +67,10 @@
 
     try{
       const response = await fetch(API_URL, requestOptions);
-      const results = await response.json();
+      const data = await response.json()
 
-      if(results.status === 'success' && results.data.access_token){
-        authentication.saveAccessToken(results.data.access_token);
+      if(response.status === 201){
+        authentication.saveAccessToken(data.access_token);
 
         return router.push({ path: '/' });
       }

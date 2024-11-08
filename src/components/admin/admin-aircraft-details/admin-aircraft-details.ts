@@ -81,7 +81,7 @@ export class AdminAircraftDetails{
       return result;
     }
 
-    this.savedImages = result.data;
+    this.savedImages = result;
     this.updateImagesWithSavedImages();
 
     return result;
@@ -138,12 +138,13 @@ export class AdminAircraftDetails{
     // Load saved images from database; return on error.
     //
     const fetchImagesResult = await this.aircraftApiAdmin.fetchImages(this.aircraft.id);
+
     if('errors' in fetchImagesResult){
       this.imagesLoading = false;
       this.summaryLoading = false;
       return fetchImagesResult;
     }
-    this.savedImages = fetchImagesResult.data;
+    this.savedImages = fetchImagesResult;
 
     //
     // Load wikipedia details, return on error;
