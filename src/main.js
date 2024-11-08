@@ -21,7 +21,7 @@ const routes = [
     path: '/',
     component: Main,
     children: [
-      { path: '/', component: HomePage },
+      { path: '/', component: Aircraft },
       { path: '/authentication/login', component: Login },
       { path: '/authentication/logout', component: Logout },
       { path: '/aircraft-database', component: Aircraft }
@@ -31,7 +31,7 @@ const routes = [
     path: '/admin',
     component: AdminMain,
     children: [
-      { path: '/admin', component: AdminHomePage },
+      { path: '/admin', component: AdminAircraft },
       { path: '/admin/aircraft-database', component: AdminAircraft }
     ]
   },
