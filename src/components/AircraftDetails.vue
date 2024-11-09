@@ -11,7 +11,9 @@
       Wikipedia Details
     </button>
 
-    <img v-if="featured_image" :alt="featured_image.title" :src="featuredImageThumbnailURL(featured_image)" />
+    <div class="image-wrapper">
+      <img v-if="featured_image" :alt="featured_image.title" :src="featuredImageThumbnailURL(featured_image)" />
+    </div>
 
     <div class="details-wrapper">
       <div class="details-entry" v-for="column in displayColumns">
@@ -178,8 +180,16 @@
     overflow-y: scroll;
     padding: 10px;
   }
-  .aircraft-details img{
-    width: 100%;
+  .aircraft-details .image-wrapper{
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: #262522;
+  }
+  .aircraft-details .image-wrapper img{
+    width: 512px;
   }
   .details-wrapper{
     display: block;
@@ -202,6 +212,8 @@
   .summary{
     background: #1b1b1a;
     padding: 10px;
+    height: 200px;
+    overflow-y: scroll;
   }
   .loaded-from-button{
     background: #afa485;
