@@ -95,9 +95,13 @@
       featured_image.value = aircraft.value.images[0];
     }
 
+    // NOTE: Featured images are not always saved inside images.
     if(aircraft.value.featured_image.length > 0){
       aircraft.value.images.forEach((image) => {
-        if(image.filename === `File:${ aircraft.value.featured_image }`){
+        if(
+          image.filename === aircraft.value.featured_image ||
+          image.filename === `File:${ aircraft.value.featured_image }`
+        ){
           featured_image.value = image;
         }
       });
