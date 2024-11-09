@@ -90,7 +90,14 @@
     googleSearchURL.value = `https://www.google.com/search?q=${ aircraft.value.model }`;
 
     images.value = aircraft.value.images
-    summary.value = aircraft.value.description
+
+    const MAX_CHARS = 450
+    var description = aircraft.value.description;
+    if (aircraft.value.description.length > MAX_CHARS){
+      description = aircraft.value.description.substr(0, MAX_CHARS) + "\u2026";
+    }
+
+    summary.value = description
 
     imagesLoading.value = false;
     summaryLoading.value = false;
