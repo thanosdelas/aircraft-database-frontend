@@ -16,6 +16,7 @@
     </div>
 
     <div class="details-wrapper">
+      <div><a target="_blank" :href="googleSearchURL">Google Search</a></div>
       <div class="details-entry" v-for="column in displayColumns">
         <div class="muted">{{ column }}</div>
         <div>{{ aircraft[column] }}</div>
@@ -58,6 +59,7 @@
   const featured_image = ref(null);
   const summaryLoading = ref(true);
   const imagesLoading = ref(true);
+  const googleSearchURL = ref(null);
   const data = defineProps(['aircraftId']);
   const emits = defineEmits(['closeDetails']);
 
@@ -84,6 +86,8 @@
     }
 
     aircraft.value = result
+
+    googleSearchURL.value = `https://www.google.com/search?q=${ aircraft.value.model }`;
 
     images.value = aircraft.value.images
     summary.value = aircraft.value.description
