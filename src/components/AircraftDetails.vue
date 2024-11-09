@@ -209,15 +209,22 @@
     margin-right: 10px;
   }
   .images-wrapper{
+    margin-top: 10px;
     display: grid;
     grid-gap: 10px;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+  .images-wrapper .entry{
+  }
+  .images-wrapper .entry img{
+    width: 100%;
   }
   .summary{
     background: #1b1b1a;
     padding: 10px;
     height: 200px;
-    overflow-y: scroll;
+    overflow: hidden;
+
   }
   .loaded-from-button{
     background: #afa485;
