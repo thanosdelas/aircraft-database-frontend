@@ -35,16 +35,3 @@
     }, 1000);
   });
 </script>
-
-<style type="text/css">
-  .navigation-menu{
-    display: flex;
-    align-items: center;
-    background: #222;
-    padding: 5px;
-  }
-  .loading-text{
-    font-size: 10px;
-    color: #7ed54b;
-  }
-</style>

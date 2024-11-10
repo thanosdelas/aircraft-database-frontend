@@ -92,11 +92,6 @@
 </script>
 
 <style scoped>
-  .aircraft-wrapper{
-    position: relative;
-    overflow: hidden;
-    display: block;
-  }
   .aircraft-list-entry{
     display: block;
     width: 100%;

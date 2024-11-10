@@ -1,8 +1,9 @@
 <template class="aircraft-details">
   <div v-if="aircraft" class="aircraft-details">
-    <button @click="$emit('closeDetails')">Close</button>
-
-    <h2>{{ aircraft.model }}</h2>
+    <div class="title-wrapper">
+      <h2>{{ aircraft.model }}</h2>
+      <button class="button" @click="$emit('closeDetails')">X</button>
+    </div>
 
     <div class="aircraft-types">
       <span v-for="aircraft_type in aircraft.types">
@@ -31,16 +32,14 @@
       <div class="summary">
         <div class="loader-wrapper" v-if="summaryLoading">
           <div>loading summary ...</div>
-          <div>
-            <span class="loader"></span>
-          </div>
+          <div class="loader"><div></div><div></div></div>
         </div>
         {{ summary }}
       </div>
       <div class="images-wrapper">
         <div class="loader-wrapper" v-if="imagesLoading">
           <span>loading images ...</span>
-          <span class="loader"></span>
+          <div class="loader"><div></div><div></div></div>
         </div>
         <div class="entry" v-for="image in images">
           <img :alt="image.title" :src="imageThumbnailURL(image)" />
@@ -195,23 +194,28 @@
   .aircraft-details{
     position: fixed;
     width: 45%;
-    background: #333;
+    max-width: 650px;
+    background: #000;
     top: 0;
     height: 100%;
     right: 0;
     overflow-y: scroll;
-    padding: 10px;
+    border-left: 1px solid #3f3f3f;
+  }
+  .aircraft-details h2{
+    padding: 7px 0;
+    /*background: #49463e;*/
   }
   .aircraft-details .image-wrapper{
     text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 20px;
     background: #262522;
   }
   .aircraft-details .image-wrapper img{
-    width: 512px;
+    /*width: 512px;*/
+    width: 100%;
   }
   .details-wrapper{
     display: block;
@@ -238,10 +242,10 @@
     width: 100%;
   }
   .summary{
-    background: #1b1b1a;
+    background: #363532;
     padding: 10px;
-    height: 200px;
     overflow: hidden;
+    boder-bottom: 1px solid #EEE;
 
   }
   .loaded-from-button{
@@ -252,13 +256,13 @@
     background: #8b7e5a;
   }
   .aircraft-types{
-/*    background: #000;*/
     padding: 10px 0px;
+    /*background: #222;*/
   }
   .aircraft-types span{
-    background: #000;
+    background: #49463e;
     margin-right: 5px;
     padding: 7px;
-    font-size: 11px;
+    font-size: 12px;
   }
 </style>

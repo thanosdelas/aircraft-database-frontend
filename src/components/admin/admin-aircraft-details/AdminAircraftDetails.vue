@@ -38,9 +38,7 @@
       <div class="summary">
         <div class="loader-wrapper" v-if="summaryLoading">
           <div>loading summary ...</div>
-          <div>
-            <span class="loader"></span>
-          </div>
+          <div class="loader"><div></div><div></div></div>
         </div>
         <div v-if="!editMode">{{ aircraft.description || summary }}</div>
         <textarea v-if="editMode" v-model="aircraftDetailsForm.description">{{ summary }}</textarea>
@@ -50,7 +48,7 @@
         <div v-if="imagesError">{{ imagesError }}</div>
         <div class="loader-wrapper" v-if="imagesLoading">
           <span>loading images ...</span>
-          <span class="loader"></span>
+          <div class="loader"><div></div><div></div></div>
         </div>
 
         <button class="small" @click="showDescription = !showDescription">

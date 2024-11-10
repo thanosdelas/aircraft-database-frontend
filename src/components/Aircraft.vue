@@ -62,21 +62,19 @@
 </script>
 
 <style scoped>
-  .aircraft-wrapper{
-    position: relative;
-    overflow: hidden;
-    display: block;
-    padding: 10px;
-  }
   .aircraft-list-entry{
     display: block;
     width: 100%;
     overflow: hidden;
     cursor: pointer;
     border-bottom: 1px dashed #5d5947;
+    transition: all .3s;
   }
   .aircraft-list-entry.active{
-    background: #496973;
+    /*background: #9fef2d;*
+    /*color: #000;*/
+    background: #49463e;
+    padding: 5px;
   }
   .aircraft-list-entry span{
     margin-right: 10px;

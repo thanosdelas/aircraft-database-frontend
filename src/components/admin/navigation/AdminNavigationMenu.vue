@@ -1,5 +1,5 @@
 <template>
-  <div class="navigation-menu-admin">
+  <div class="navigation-menu">
     <Logo></Logo>
     <RouterLink to="/admin">Admin Panel</RouterLink>
     <RouterLink to="/admin/aircraft-database">Aircraft Database</RouterLink>
@@ -35,16 +35,3 @@
     }, 1000);
   });
 </script>
-
-<style scoped>
-  .navigation-menu-admin{
-    display: flex;
-    align-items: center;
-    background: #222631;
-    padding: 5px;
-  }
-  .loading-text{
-    font-size: 10px;
-    color: #7ed54b;
-  }
-</style>
