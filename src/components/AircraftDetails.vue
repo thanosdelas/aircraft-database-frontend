@@ -4,6 +4,12 @@
 
     <h2>{{ aircraft.model }}</h2>
 
+    <div class="aircraft-types">
+      <span v-for="aircraft_type in aircraft.types">
+        {{ aircraft_type.aircraft_type }}
+      </span>
+    </div>
+
     <button @click="loadDatabaseDetails" class="loaded-from-button" :class="{active: detailsLoadedFrom === 'database'}">
       Database Details
     </button>
@@ -11,12 +17,13 @@
       Wikipedia Details
     </button>
 
+    <div><a target="_blank" :href="googleSearchURL">Google Search</a></div>
+
     <div class="image-wrapper">
       <img v-if="featured_image" :alt="featured_image.title" :src="featuredImageThumbnailURL(featured_image)" />
     </div>
 
     <div class="details-wrapper">
-      <div><a target="_blank" :href="googleSearchURL">Google Search</a></div>
       <div class="details-entry" v-for="column in displayColumns">
         <div class="muted">{{ column }}</div>
         <div>{{ aircraft[column] }}</div>
@@ -243,5 +250,15 @@
   }
   .loaded-from-button.active{
     background: #8b7e5a;
+  }
+  .aircraft-types{
+/*    background: #000;*/
+    padding: 10px 0px;
+  }
+  .aircraft-types span{
+    background: #000;
+    margin-right: 5px;
+    padding: 7px;
+    font-size: 11px;
   }
 </style>
