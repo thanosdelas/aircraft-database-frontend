@@ -196,11 +196,14 @@
     width: 45%;
     max-width: 650px;
     background: #000;
-    top: 0;
     height: 100%;
-    right: 0;
     overflow-y: scroll;
+    scrollbar-color: #a5a29a #464646;
+    scrollbar-width: thin;
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+
     border-left: 1px solid #3f3f3f;
+    left: 900px;
   }
   .aircraft-details h2{
     padding: 7px 0;

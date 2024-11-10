@@ -8,12 +8,37 @@ body {
   /*padding: 2rem;*/
   font-weight: normal;
 }
+.top-bar-fixed{
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  width: 100%;
+  background: #000;
+  border-bottom: 1px solid #2f2f2f;
+}
+.main-wrapper{
+  margin-top: 47px;
+}
+.aircraft-types-wrapper{
+  position: fixed;
+  height: 100%;
+  width: 300px;
+  overflow-y: scroll;
+  scrollbar-color: #a5a29a #464646;
+  scrollbar-width: thin;
+}
 .aircraft-wrapper{
-  position: relative;
+  position: fixed;
   overflow: hidden;
   display: block;
+  margin-left: 300px;
+  height: 100%;
+  overflow-y: scroll;
+  scrollbar-color: #a5a29a #464646;
+  scrollbar-width: thin;
+  width: 600px;
 }
-a {
+a{
   text-decoration: none;
   color: #5873c5;
   color: #6c88de;

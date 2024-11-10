@@ -1,15 +1,16 @@
 <template>
-  <div class="navigation-menu">
-    <Logo></Logo>
-    <RouterLink to="/">Home</RouterLink>
-    <RouterLink to="/aircraft-database">Aircraft Database</RouterLink>
-    <div v-if="authenticationCheckLoading" class="loading-text">checking authentication status ...</div>
-    <div v-if="!authenticationCheckLoading">
-      <RouterLink to="/authentication/login" v-if="!store.authentication.loggedIn">Login</RouterLink>
+  <div class="top-bar-fixed">
+    <div class="navigation-menu">
+      <Logo></Logo>
+      <RouterLink to="/aircraft-database">Aircraft Database</RouterLink>
+      <div v-if="authenticationCheckLoading" class="loading-text">checking authentication status ...</div>
+      <div v-if="!authenticationCheckLoading">
+        <RouterLink to="/authentication/login" v-if="!store.authentication.loggedIn">Login</RouterLink>
 
-      <div v-if="store.authentication.loggedIn">
-        <RouterLink to="/admin/aircraft-database">Admin</RouterLink>
-        <RouterLink to="/authentication/logout">Logout</RouterLink>
+        <div v-if="store.authentication.loggedIn">
+          <RouterLink to="/admin/aircraft-database">Admin</RouterLink>
+          <RouterLink to="/authentication/logout">Logout</RouterLink>
+        </div>
       </div>
     </div>
   </div>
