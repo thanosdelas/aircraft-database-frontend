@@ -91,7 +91,12 @@
 
     setTimeout(function(){
       aircraftDataLoading.value = false;
+
       aircraftData.value = result.data;
+
+      if (result.data.length === 1){
+        visitArticle(result.data[0]);
+      }
     }, randomInt(100, 200));
   }
 
