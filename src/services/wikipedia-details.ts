@@ -132,7 +132,7 @@ export class WikipediaDetails{
       format: 'json',
       action: 'query',
       origin: '*',
-      imlimit: '50',
+      imlimit: '100',
       prop: 'images',
       titles: title
     };
@@ -199,6 +199,12 @@ export class WikipediaDetails{
     for(const key in response.query.pages){
       if(
         response.query.pages[key].imageinfo.length === 1 &&
+        !/.svg/i.test(response.query.pages[key].imageinfo[0].url) &&
+        !/.tif/i.test(response.query.pages[key].imageinfo[0].url) &&
+        !/.gif/i.test(response.query.pages[key].imageinfo[0].url) &&
+        !/.ogv/i.test(response.query.pages[key].imageinfo[0].url) &&
+        !/.ogg/i.test(response.query.pages[key].imageinfo[0].url) &&
+        !/.webm/i.test(response.query.pages[key].imageinfo[0].url) &&
         !/flag/i.test(response.query.pages[key].imageinfo[0].url) &&
         !/edit/i.test(response.query.pages[key].imageinfo[0].url) &&
         !/commons-logo/i.test(response.query.pages[key].imageinfo[0].url) &&

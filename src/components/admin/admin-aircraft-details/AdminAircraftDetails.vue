@@ -2,19 +2,18 @@
 <template>
   <div class="aircraft-details">
     <div class="header">
-      <h2 v-if="!editMode">{{ aircraft.model }}</h2>
+      <h2 v-if="!editMode">{{ aircraft.model }}</h2> <span v-if="aircraft.wikipedia_info_collected"><i class='bx bxl-wikipedia'></i></span>
       <div v-if="editMode">
         <input type="text" v-model="aircraftDetailsForm.model">
-        <span><i>
+        <span class="info-text"><i>
           WARNING: Changing the model name may lead to a different Wikipedia title match, which then may lead to loose your images and information mismatch.
         </i></span>
       </div>
-
       <div class="actions">
-        <button @click="$emit('closeDetails')">Close</button>
-        <button @click="editEnable" v-if="!editMode">Edit</button>
-        <button @click="editDisable" v-if="editMode">Cancel</button>
-        <button @click="save" v-if="editMode">Save</button>
+        <button class="button" @click="$emit('closeDetails')">Close</button>
+        <button class="button" @click="editEnable" v-if="!editMode">Edit</button>
+        <button class="button" @click="editDisable" v-if="editMode">Cancel</button>
+        <button class="button" @click="save" v-if="editMode">Save</button>
       </div>
     </div>
 
@@ -31,16 +30,12 @@
         <pre>{{ wikipediaPageResult }}</pre>
       </div>
 
-      <div class="details-entry" v-for="column in displayColumns">
-        <div class="muted">{{ column }}</div>
-        <div>{{ aircraft[column] }}</div>
-      </div>
       <div class="summary">
         <div class="loader-wrapper" v-if="summaryLoading">
           <div>loading summary ...</div>
           <div class="loader"><div></div><div></div></div>
         </div>
-        <div v-if="!editMode">{{ aircraft.description || summary }}</div>
+        <div v-if="!editMode">{{ summary_excerpt }}</div>
         <textarea v-if="editMode" v-model="aircraftDetailsForm.description">{{ summary }}</textarea>
       </div>
 
@@ -57,8 +52,13 @@
 
         <div v-if="editMode" class="edit-images">
           <span style="color: black;">
-            Please select images to import
+            Please select images to import.
           </span>
+
+          <span class="info-text"><i>
+            WARNING:
+            Images are only saved links, retrieved from wikipedia. If you deselect an image, it is deleted from the database.
+          </i></span>
 
           <div v-for="error in saveImageErrors">
             {{ error.message }}
@@ -97,6 +97,7 @@
   const loadDetailsErrors = ref(null);
   const saveImageErrors = ref(null);
   const summary = ref(null);
+  const summary_excerpt = ref(null);
   const images = ref(null);
   const showDescription = ref(false)
   const imagesError = ref(null);
@@ -108,12 +109,15 @@
   const googleSearchURL = ref(null);
   const aircraftDetailsForm = ref(null);
 
-  const displayColumns = [
-    "model",
-  ];
-
   onMounted(async () => {
-    const loadDetailsResult = await adminAircraftDetails.loadDetails();
+    let loadDetailsResult = null;
+
+    if (data.aircraft.wikipedia_info_collected === true) {
+      loadDetailsResult = await adminAircraftDetails.loadDetailsFromDatabase();
+    }
+    else{
+      loadDetailsResult = await adminAircraftDetails.loadDetailsFromDatabaseAndWikipedia();
+    }
 
     if('errors' in loadDetailsResult){
       loadDetailsErrors.value = loadDetailsResult.errors
@@ -124,11 +128,12 @@
     imagesError.value = adminAircraftDetails.imagesError;
     images.value = adminAircraftDetails.getImages();
     summary.value = adminAircraftDetails.summary;
+    summary_excerpt.value = summaryExcerpt(summary.value);
     imagesLoading.value = adminAircraftDetails.imagesLoading;
     summaryLoading.value = adminAircraftDetails.summaryLoading;
   });
 
-  function editEnable(){
+  async function editEnable(){
     editMode.value = true;
     adminAircraftDetails.initializeEdit();
 
@@ -183,6 +188,18 @@
 
     return editDisable();
   }
+
+  function summaryExcerpt(summary){
+    const MAX_CHARS = 450
+
+    let summaryExcerpt = summary;
+    if (summary.length > MAX_CHARS){
+      summaryExcerpt = summary.substr(0, MAX_CHARS) + "\u2026";
+    }
+
+    return summaryExcerpt;
+  }
+
 
   function updateImagesValue(){
     images.value = JSON.parse(JSON.stringify(adminAircraftDetails.getImages()));

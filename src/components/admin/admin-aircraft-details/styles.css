@@ -5,12 +5,12 @@
 .aircraft-details{
   position: fixed;
   width: 45%;
-  /*background: #222222;*/
   background: #222631;
-  top: 0;
   height: 100%;
   right: 0;
   overflow-y: scroll;
+  scrollbar-color: #a5a29a #464646;
+  scrollbar-width: thin;
   overflow-x: hidden;
   border-left: 1px solid #5d5d5d;
   border-left: 1px solid #3b3a36;
@@ -102,9 +102,7 @@
 .images .entry.saved{
 }
 .image-saved-label{
-  background: rgb(159 239 45 / 44%);
-/*  background: rgb(0 0 0 / 46%);*/
-/*  background: rgb(0 0 0 / 38%);*/
+  background: rgb(0 0 0 / 48%);
   color: #000;
   position: absolute;
   bottom: 0;
@@ -166,4 +164,10 @@ textarea:focus
 {
   outline: none;
   border: 2px dashed #efbd2d;
+}
+.info-text{
+  background: #000;
+  color: #efbd2d;
+  font-size: 12px;
+  font-family: Lucida Console,Lucida Sans Typewriter,monaco,Bitstream Vera Sans Mono,monospace;
 }

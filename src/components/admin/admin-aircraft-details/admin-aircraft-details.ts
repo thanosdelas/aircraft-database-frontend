@@ -39,6 +39,7 @@ export class AdminAircraftDetails{
   //
   public wikipediaPageResult: string;
   public summary: string;
+  public summary_excerpt: string;
   public summaryLoading: boolean = true;
   public imagesLoading: boolean = true;
   public imagesError: string;
@@ -125,6 +126,35 @@ export class AdminAircraftDetails{
     this.updateImagesWithSavedImages();
   }
 
+  public async loadDetailsFromDatabase(){
+    //
+    // Load aircraft details from database
+    //
+    const aircraftDetails = await this.aircraftApiAdmin.fetch(this.aircraft.id);
+
+    this.imagesLoading = false;
+    this.summaryLoading = false;
+
+    this.images = aircraftDetails.images;
+    // this.savedImages = aircraftDetails.images;
+    this.summary = aircraftDetails.description;
+
+    //
+    // Load saved images from database; return on error.
+    //
+    const fetchImagesResult = await this.aircraftApiAdmin.fetchImages(this.aircraft.id);
+
+    if('errors' in fetchImagesResult){
+      this.imagesLoading = false;
+      this.summaryLoading = false;
+      return fetchImagesResult;
+    }
+    this.savedImages = fetchImagesResult;
+    this.updateImagesWithSavedImages();
+
+    return aircraftDetails;
+  }
+
   /**
    * Load aircraft data from database and Wikipedia.
    * 1. Load saved images from database.
@@ -133,7 +163,7 @@ export class AdminAircraftDetails{
    * 4. Search for Wikipedia for images from previously found title.
    * 5. Compare images from Wikipedia with saved images and update accordingly.
    */
-  public async loadDetails(){
+  public async loadDetailsFromDatabaseAndWikipedia(){
     //
     // Load saved images from database; return on error.
     //

@@ -11,9 +11,15 @@ export default class AircraftApiAdmin{
     this.authentication = authentication;
   }
 
-  public async fetch(params = {}): Promise<any>{
+  public async fetchAll(params = {}): Promise<any>{
     const searchParams = new URLSearchParams(params);
     const API_URL = `${API_BASE_URL}/admin/aircraft?${ searchParams.toString() }`;
+
+    return await this.httpRequest.get(API_URL, this.authentication.headers());
+  }
+
+  public async fetch(id: string): Promise<any>{
+    const API_URL = `${API_BASE_URL}/admin/aircraft/${id}`;
 
     return await this.httpRequest.get(API_URL, this.authentication.headers());
   }

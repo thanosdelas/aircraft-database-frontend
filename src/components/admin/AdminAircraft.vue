@@ -17,6 +17,7 @@
       @click="aircraftDetails(aircraft)">
       <div>
         <span>{{ aircraft.model }}</span>
+        <span v-if="aircraft.wikipedia_info_collected"><i class='bx bxl-wikipedia'></i></span>
       </div>
     </div>
   </div>
@@ -54,7 +55,7 @@
       params['search_term'] = searchTerm;
     }
 
-    const result = await aircraftApiAdmin.fetch(params);
+    const result = await aircraftApiAdmin.fetchAll(params);
     if('errors' in result){
       errors.value = result.errors
       return null;
