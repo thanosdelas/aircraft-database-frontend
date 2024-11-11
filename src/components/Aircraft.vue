@@ -215,13 +215,12 @@
   function selectFilterTab(tab){
     switch(tab){
       case 'manufacturers':
-        filterTabs.value.manufacturers = {
+        filterTabs.value = {
           "manufacturers": true,
           "types": false,
         };
 
-        this.activeTab = 'manufacturers';
-
+        activeTab.value = 'manufacturers';
         break;
       case 'types':
         filterTabs.value = {
@@ -229,8 +228,7 @@
           "types": true,
         };
 
-        this.activeTab = 'types';
-
+        activeTab.value = 'types';
         break;
     }
   }
