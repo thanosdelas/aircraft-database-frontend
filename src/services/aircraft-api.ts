@@ -21,6 +21,13 @@ export default class AircraftApi{
     return await this.httpRequest.get(API_URL);
   }
 
+  public async fetchAircraftManufacturers(params = {}): Promise<any>{
+    const searchParams = new URLSearchParams(params);
+    const API_URL = `${API_BASE_URL}/aircraft-manufacturers?${ searchParams.toString() }`;
+
+    return await this.httpRequest.get(API_URL);
+  }
+
   public async fetchAircraftTypes(params = {}): Promise<any>{
     const searchParams = new URLSearchParams(params);
     const API_URL = `${API_BASE_URL}/aircraft-types?${ searchParams.toString() }`;

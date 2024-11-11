@@ -7,19 +7,46 @@
       </div>
     </div>
 
-    <div class="aircraft-types-wrapper">
-      <div class="loader-wrapper" v-if="aircraftTypesLoading">
-        <div>loading aircraft types ...</div>
-        <div class="loader"><div></div><div></div></div>
+    <div class="filters-wrapper">
+      <div class="header">
+        <div class="header-tab" :class="{ active: activeTab === 'manufacturers' }" @click="selectFilterTab('manufacturers')">Manufacturers</div>
+        <div class="header-tab" :class="{ active: activeTab === 'types' }" @click="selectFilterTab('types')">Types</div>
+      </div>
+
+      <div class="entry aircraft-manufacturers-wrapper" v-if="filterTabs.manufacturers">
+        <div class="loader-wrapper" v-if="aircraftManufacturersLoading">
+          <div>loading aircraft manufacturers ...</div>
+          <div class="loader"><div></div><div></div></div>
+        </div>
+
+        <div
+          class="list-entry"
+          :class="{ active: selectedAircraftManufacturer == aircraftManufacturer }"
+          v-for="aircraftManufacturer in aircraftManufacturers"
+          @click="filterByManufacturer(aircraftManufacturer)">
+          <div>
+            {{ aircraftManufacturer.manufacturer }} <span>({{ aircraftManufacturer.aircraft_count }})</span>
+          </div>
+        </div>
       </div>
 
       <div
-        class="aircraft-types-list-entry"
-        :class="{ active: selectedAircraftType == aircraftType }"
-        v-for="aircraftType in aircraftTypes"
-        @click="filterByType(aircraftType)">
-        <div>
-          {{ aircraftType.aircraft_type }} <span>({{ aircraftType.aircraft_count }})</span>
+        class="entry aircraft-types-wrapper"
+        v-if="filterTabs.types"
+      >
+        <div class="loader-wrapper" v-if="aircraftTypesLoading">
+          <div>loading aircraft types ...</div>
+          <div class="loader"><div></div><div></div></div>
+        </div>
+
+        <div
+          class="list-entry"
+          :class="{ active: selectedAircraftType == aircraftType }"
+          v-for="aircraftType in aircraftTypes"
+          @click="filterByType(aircraftType)">
+          <div>
+            {{ aircraftType.aircraft_type }} <span>({{ aircraftType.aircraft_count }})</span>
+          </div>
         </div>
       </div>
     </div>
@@ -54,18 +81,29 @@
   import AircraftApi from '@/services/aircraft-api';
   import AircraftDetails from './AircraftDetails.vue';
 
+  const activeTab = ref('manufacturers')
+  const filterTabs = ref({
+    "manufacturers": true,
+    "types": false,
+  });
+  const aircraftData = ref(null);
+  const aircraftDataGallery = ref(null);
+  const aircraftManufacturers = ref(null);
+  const aircraftTypes = ref(null);
+  const selectedAircraft = ref(false);
+  const selectedAircraftType = ref(false);
+  const selectedAircraftManufacturer = ref(false);
+  const aircraftDataLoading = ref(true);
+  const aircraftTypesLoading = ref(true);
+  const aircraftManufacturersLoading = ref(true);
+
   onMounted(() => {
+    console.log(filterTabs.value);
+
+    fetchAircraftManufacturers();
     fetchAircraftTypes();
     fetchAircraft();
   });
-
-  const aircraftData = ref(null);
-  const aircraftDataGallery = ref(null);
-  const aircraftTypes = ref(null);
-  const selectedAircraft = ref(false)
-  const selectedAircraftType = ref(false)
-  const aircraftDataLoading = ref(true)
-  const aircraftTypesLoading = ref(true)
 
   async function fetchAircraftTypes(searchTerm = ''){
     const httpRequest = new HttpRequest();
@@ -81,6 +119,23 @@
     setTimeout(function(){
       aircraftTypesLoading.value = false;
       aircraftTypes.value = data.data;
+    }, randomInt(100, 200));
+  }
+
+  async function fetchAircraftManufacturers(searchTerm = ''){
+    const httpRequest = new HttpRequest();
+    const aircraftApi = new AircraftApi(httpRequest);
+
+    const data = await aircraftApi.fetchAircraftManufacturers();
+
+    if('errors' in data){
+      errors.value = data.errors
+      return null;
+    }
+
+    setTimeout(function(){
+      aircraftManufacturersLoading.value = false;
+      aircraftManufacturers.value = data.data;
     }, randomInt(100, 200));
   }
 
@@ -122,18 +177,62 @@
     }, 50);
   }
 
+  function filterByManufacturer(aircraftManufacturer){
+    if (selectedAircraftManufacturer.value === aircraftManufacturer){
+      selectedAircraftManufacturer.value = null;
+
+      resetSelectedFilterBy();
+      return fetchAircraft();
+    }
+
+    resetSelectedFilterBy();
+    selectedAircraftManufacturer.value = aircraftManufacturer;
+
+    resetDetails();
+    return fetchAircraft({ manufacturer: aircraftManufacturer.manufacturer })
+  }
+
   function filterByType(aircraftType){
     if (selectedAircraftType.value === aircraftType){
       selectedAircraftType.value = null;
 
+      resetSelectedFilterBy();
       return fetchAircraft();
     }
 
+    resetSelectedFilterBy();
     selectedAircraftType.value = aircraftType;
 
     resetDetails();
-
     return fetchAircraft({aircraft_type: aircraftType.aircraft_type})
+  }
+
+  function resetSelectedFilterBy(){
+    selectedAircraftManufacturer.value = null;
+    selectedAircraftType.value = null;
+  }
+
+  function selectFilterTab(tab){
+    switch(tab){
+      case 'manufacturers':
+        filterTabs.value.manufacturers = {
+          "manufacturers": true,
+          "types": false,
+        };
+
+        this.activeTab = 'manufacturers';
+
+        break;
+      case 'types':
+        filterTabs.value = {
+          "manufacturers": false,
+          "types": true,
+        };
+
+        this.activeTab = 'types';
+
+        break;
+    }
   }
 
   function closeDetails(){
@@ -194,24 +293,6 @@
     padding: 6px;
   }
   .aircraft-list-entry span{
-    margin-right: 10px;
-    display: inline-block;
-  }
-  .aircraft-types-list-entry{
-    display: block;
-    width: 100%;
-    overflow: hidden;
-    cursor: pointer;
-    border-bottom: 1px dashed #5d5947;
-    transition: all .3s;
-  }
-  .aircraft-types-list-entry.active{
-    /*background: #9fef2d;*
-    /*color: #000;*/
-    background: #49463e;
-    padding: 5px;
-  }
-  .aircraft-types-list-entry span{
     margin-right: 10px;
     display: inline-block;
   }

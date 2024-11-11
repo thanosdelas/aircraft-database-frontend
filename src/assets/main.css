@@ -19,7 +19,8 @@ body {
 .main-wrapper{
   margin-top: 47px;
 }
-.aircraft-types-wrapper{
+
+.filters-wrapper{
   position: fixed;
   height: 100%;
   width: 300px;
@@ -27,7 +28,72 @@ body {
   scrollbar-color: #a5a29a #464646;
   scrollbar-width: thin;
   background: rgb(0 0 0 / 77%);
+
+  padding-top: 35px;
 }
+.filters-wrapper .header{
+  position: fixed;
+  display: flex;
+  width: 300px;
+
+  background: #000;
+  border-bottom: 1px solid #5b4f2d;
+  color: #efbd2d;
+  color: #d3ad3e;
+
+  margin-top: -35px;
+}
+.filters-wrapper .header .header-tab{
+  cursor: pointer;
+  margin-right: 2px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-right: 8px;
+}
+.filters-wrapper .header .header-tab.active{
+  border-bottom: 1px solid #efbd2d;
+  color: #efbd2d;
+  font-weight: bold;
+  transition: all .5s;
+}
+
+.filters-wrapper .entry{
+/*  position: fixed;*/
+/*  display: block;*/
+/*  margin-left: 300px;*/
+  height: 100%;
+  overflow: hidden;
+  overflow-y: scroll;
+  scrollbar-color: #a5a29a #464646;
+  scrollbar-width: thin;
+/*  width: 600px;*/
+  background: rgb(0 0 0 / 87%);
+}
+
+.filters-wrapper .entry .list-entry{
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  cursor: pointer;
+  border-bottom: 1px dashed #5d5947;
+  transition: all .3s;
+}
+.filters-wrapper .entry .list-entry.active{
+  /*background: #9fef2d;*
+  /*color: #000;*/
+  background: #49463e;
+  padding: 5px;
+}
+.filters-wrapper .entry .list-entry span{
+  margin-right: 10px;
+  display: inline-block;
+}
+
+.aircraft-types-wrapper{
+  background: purple;
+}
+
+
 .aircraft-wrapper{
   position: fixed;
   overflow: hidden;
