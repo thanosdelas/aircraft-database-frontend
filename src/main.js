@@ -4,7 +4,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 import App from './App.vue';
 import Main from './components/Main.vue';
-import HomePage from './components/HomePage.vue';
 import Aircraft from './components/Aircraft.vue';
 import NotFound from './components/NotFound.vue';
 import Login from './components/authentication/Login.vue';
@@ -21,7 +20,7 @@ const routes = [
     path: '/',
     component: Main,
     children: [
-      { path: '/', component: Aircraft },
+      { path: '/', redirect: '/aircraft-database' },
       { path: '/authentication/login', component: Login },
       { path: '/authentication/logout', component: Logout },
       { path: '/aircraft-database', component: Aircraft }

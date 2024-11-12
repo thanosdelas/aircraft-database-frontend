@@ -28,6 +28,7 @@
 
 <script setup>
   import Logo from '@/components/icons/Logo.vue';
+  import { onBeforeRouteUpdate } from 'vue-router';
   import { ref, onMounted, onUpdated } from 'vue';
   import { store } from '@/store/store.js'
   import Authentication from '@/services/authentication';
@@ -43,6 +44,10 @@
         authenticationCheckLoading.value = false;
       });
     }, 1000);
+  });
+
+  onBeforeRouteUpdate((to, from) => {
+    toggleMenu();
   });
 
   function toggleMenu(){

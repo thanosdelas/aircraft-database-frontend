@@ -102,8 +102,6 @@
   const aircraftManufacturersLoading = ref(true);
 
   onMounted(() => {
-    console.log(filterTabs.value);
-
     fetchAircraftManufacturers();
     fetchAircraftTypes();
     fetchAircraft();
