@@ -66,7 +66,7 @@
 </template>
 
 <script setup>
-  import { ref, onMounted } from 'vue';
+  import { ref, onMounted, onUnmounted } from 'vue';
   import { HttpRequest } from '@/services/http-request';
   import { WikipediaDetails } from '@/services/wikipedia-details';
   import AircraftApi from '@/services/aircraft-api';
@@ -74,6 +74,7 @@
   const httpRequest = new HttpRequest();
   const aircraftApi = new AircraftApi(httpRequest);
 
+  let currentImageNavigationIndex = 0;
   const aircraft = ref(null);
   const detailsLoadedFrom = ref(null);
   const summary = ref(null);
@@ -92,8 +93,34 @@
   ];
 
   onMounted(() => {
+    window.addEventListener('keydown', arrowKeys);
+
     return loadDatabaseDetails();
   });
+
+  onUnmounted(() => {
+    window.removeEventListener('keydown', arrowKeys);
+  });
+
+  function arrowKeys(event){
+    if (event.code === 'ArrowRight'){
+      if (currentImageNavigationIndex === 0){
+        currentImageNavigationIndex = images.value.length;
+      }
+
+      featured_image.value = images.value[images.value.length - currentImageNavigationIndex];
+      --currentImageNavigationIndex;
+    }
+    else if (event.code === 'ArrowLeft'){
+      featured_image.value = images.value[images.value.length - currentImageNavigationIndex];
+
+      if (currentImageNavigationIndex === images.value.length - 1){
+        currentImageNavigationIndex = 0;
+      }
+
+      ++currentImageNavigationIndex;
+    }
+  }
 
   async function loadDatabaseDetails(){
     images.value = null;
