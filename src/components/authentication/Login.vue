@@ -1,18 +1,26 @@
 <template>
-  <div v-if="allowLogin">
-    <h1>Login</h1>
+  <div class="main-wrapper">
+    <div v-if="allowLogin">
+      <div class="login-form">
+        <h2>Login</h2>
 
-    <div>{{ message }}</div>
+        <div>{{ message }}</div>
 
-    <div>
-      email: <input v-model="email" @keyup.enter="login">
+        <div class="form">
+          <div class="form-row">
+            <label>Email:</label>
+            <input v-model="email" @keyup.enter="login">
+          </div>
+
+          <div class="form-row">
+            <label>Password: </label>
+            <input v-model="password" @keyup.enter="login">
+          </div>
+
+          <button @click='login'>Log In</button>
+        </div>
+      </div>
     </div>
-
-    <div>
-      password; <input v-model="password" @keyup.enter="login">
-    </div>
-
-    <button @click='login'>Log In</button>
   </div>
 </template>
 
@@ -82,3 +90,36 @@
     }
   }
 </script>
+
+<style type="text/css">
+  .login-form{
+    display: flex;
+    flex-direction: column;
+    margin-top: 100px;
+    padding: 35px;
+    width: 527px;
+    margin: 205px auto;
+    background: #000000ab;
+  }
+
+  .form .form-row{
+    display: flex;
+    border-bottom: 1px dashed #c3c3c3;
+    padding: 5px 2px;
+    margin: 23px 0px;
+  }
+
+  .form input{
+    background: none;
+    border: none;
+    color: #FFF;
+    width: 100%;
+  }
+
+  .form label{
+    width: 100px;
+    background: none;
+    border: none;
+    color: #c3c3c3;
+  }
+</style>
