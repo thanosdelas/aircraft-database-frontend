@@ -32,8 +32,7 @@
 
       <div
         class="entry aircraft-types-wrapper"
-        v-if="filterTabs.types"
-      >
+        v-if="filterTabs.types">
         <div class="loader-wrapper" v-if="aircraftTypesLoading">
           <div>loading aircraft types ...</div>
           <div class="loader"><div></div><div></div></div>
@@ -52,18 +51,24 @@
     </div>
 
     <div class="aircraft-wrapper">
-      <div class="loader-wrapper" v-if="aircraftDataLoading">
-        <div>loading aircraft ...</div>
-        <div class="loader"><div></div><div></div></div>
+      <div class="header">
+        Aircraft Models
       </div>
 
-      <div
-        class="aircraft-list-entry"
-        :class="{ active: selectedAircraft == aircraft }"
-        v-for="aircraft in aircraftData"
-        @click="visitArticle(aircraft)">
-        <div>
-          <span>{{ aircraft.model }}</span>
+      <div class="aircraft-listing-wrapper">
+        <div class="loader-wrapper" v-if="aircraftDataLoading">
+          <div>loading aircraft ...</div>
+          <div class="loader"><div></div><div></div></div>
+        </div>
+
+        <div
+          class="aircraft-list-entry"
+          :class="{ active: selectedAircraft == aircraft }"
+          v-for="aircraft in aircraftData"
+          @click="visitArticle(aircraft)">
+          <div>
+            <span>{{ aircraft.model }}</span>
+          </div>
         </div>
       </div>
     </div>

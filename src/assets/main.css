@@ -1,6 +1,7 @@
 @import './base.css';
 body {
   color: #EEE;
+  background: #141412;
 }
 #app {
   /*max-width: 1280px;*/
@@ -18,6 +19,7 @@ body {
 }
 .main-wrapper{
   margin-top: 47px;
+  margin: 52px 43px
 }
 
 .filters-wrapper{
@@ -33,13 +35,17 @@ body {
 }
 .filters-wrapper .header{
   position: fixed;
+  align-items: center;
   display: flex;
   width: 300px;
 
   background: #000;
+  background: #141412;
   border-bottom: 1px solid #5b4f2d;
   color: #efbd2d;
   color: #d3ad3e;
+
+  height: 35px;
 
   margin-top: -35px;
 }
@@ -93,7 +99,6 @@ body {
   background: purple;
 }
 
-
 .aircraft-wrapper{
   position: fixed;
   overflow: hidden;
@@ -105,13 +110,44 @@ body {
   scrollbar-width: thin;
   width: 600px;
   background: rgb(0 0 0 / 87%);
+
+  padding-top: 35px;
 }
+
+.aircraft-wrapper .header{
+  position: fixed;
+  display: flex;
+  align-items: center;
+  width: 600px;
+
+  background: #000;
+  background: #141412;
+  border-bottom: 1px solid #5b4f2d;
+  color: #efbd2d;
+
+  padding: 4px 0;
+
+  height: 35px;
+  margin-top: -35px;
+}
+
+.aircraft-wrapper .aircraft-listing-wrapper{
+}
+
 a{
   text-decoration: none;
   color: #5873c5;
   color: #6c88de;
+  color: #5f74b3;
+  border-bottom: 1px solid #5f74b3;
   transition: 0.4s;
   padding: 3px;
+  margin-right: 6px;
+}
+a:hover{
+  color: #7b90cd;
+  border-bottom: 1px solid #7b90cd;
+  transition: 0.4s;
 }
 .button{
   border-radius: 4px;
@@ -119,9 +155,21 @@ a{
   padding: 5px 13px;
 }
 .button-close{
-  background-color: #ac3c3c;
-  color: #FFFFFF;
   cursor: pointer;
+  background: none;
+  border: 1px solid #efbd2d;
+  color: #efbd2d;
+  font-size: 16px;
+  padding: 3px 11px;
+  border-radius: 4px;
+  opacity: 0.9;
+  transition: all .5s;
+  margin-right: 4px;
+}
+.button-close:hover{
+  transition: all .5s;
+  opacity: 0.9;
+  border-radius: 8px;
 }
 .navigation-menu{
   display: flex;
@@ -186,12 +234,7 @@ a{
 .loader div:nth-child(2) {
   animation-delay: -0.5s;
 }
-.title-wrapper{
-  display: flex;
-  align-items: center;
-  vertical-align: middle;
-  justify-content: space-between;
-}
+
 @keyframes loader {
   0% {
     top: 36px;

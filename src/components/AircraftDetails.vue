@@ -1,47 +1,64 @@
 <template class="aircraft-details">
   <div v-if="aircraft" class="aircraft-details">
-    <div class="title-wrapper">
+    <div class="header">
       <h2>{{ aircraft.model }}</h2>
-      <button class="button" @click="$emit('closeDetails')">X</button>
+      <button class="button-close" @click="$emit('closeDetails')"><i class='bx bx-x'></i></button>
     </div>
 
-    <div class="aircraft-types">
-      <span v-for="aircraft_type in aircraft.types">
-        {{ aircraft_type.aircraft_type }}
-      </span>
+    <div v-if="false">
+      <button @click="loadDatabaseDetails" class="loaded-from-button" :class="{active: detailsLoadedFrom === 'database'}">
+        Database Details
+      </button>
+      <button @click="loadWikipediaDetails" class="loaded-from-button" :class="{active: detailsLoadedFrom === 'wikipedia'}">
+        Wikipedia Details
+      </button>
     </div>
-
-    <button @click="loadDatabaseDetails" class="loaded-from-button" :class="{active: detailsLoadedFrom === 'database'}">
-      Database Details
-    </button>
-    <button @click="loadWikipediaDetails" class="loaded-from-button" :class="{active: detailsLoadedFrom === 'wikipedia'}">
-      Wikipedia Details
-    </button>
-
-    <div><a target="_blank" :href="googleSearchURL">Google Search</a></div>
 
     <div class="image-wrapper">
-      <img v-if="featured_image" :alt="featured_image.title" :src="featuredImageThumbnailURL(featured_image)" />
+      <div v-if="imagesLoading" class="loader"><div></div><div></div></div>
+      <img v-if="featured_image && !imagesLoading" :alt="featured_image.title" :src="featuredImageThumbnailURL(featured_image)" />
     </div>
 
     <div class="details-wrapper">
+
+
+      <div class="details-entry">
+        <h3>{{ aircraft.model }}</h3>
+      </div>
+
       <div class="details-entry" v-for="column in displayColumns">
         <div class="muted">{{ column }}</div>
         <div>{{ aircraft[column] }}</div>
       </div>
+
+      <div class="aircraft-types" v-if="aircraft.types.length > 0">
+        <span v-for="aircraft_type in aircraft.types">
+          {{ aircraft_type.aircraft_type }}
+        </span>
+      </div>
+
       <div class="summary">
         <div class="loader-wrapper" v-if="summaryLoading">
           <div>loading summary ...</div>
           <div class="loader"><div></div><div></div></div>
         </div>
-        {{ summary }}
+
+        <div v-if="!summaryLoading">{{ summary }}</div>
       </div>
+
+      <div class="external-links">
+        <div v-if="wikipediaPage">
+          <a target="_blank" :href="wikipediaPage"><i class='bx bxl-wikipedia'></i> Wikipedia <i class='bx bx-link-external'></i></a>
+        </div>
+        <div><a target="_blank" :href="googleSearchURL"><i class='bx bxl-google'></i> Google Search <i class='bx bx-link-external'></i></a></div>
+      </div>
+
       <div class="images-wrapper">
         <div class="loader-wrapper" v-if="imagesLoading">
           <span>loading images ...</span>
           <div class="loader"><div></div><div></div></div>
         </div>
-        <div class="entry" v-for="image in images">
+        <div class="entry" v-for="image in images" v-if="!imagesLoading">
           <img :alt="image.title" :src="imageThumbnailURL(image)" />
         </div>
       </div>
@@ -66,11 +83,12 @@
   const summaryLoading = ref(true);
   const imagesLoading = ref(true);
   const googleSearchURL = ref(null);
+  const wikipediaPage = ref(null);
   const data = defineProps(['aircraftId']);
   const emits = defineEmits(['closeDetails']);
 
   const displayColumns = [
-    "model",
+    // "model",
   ];
 
   onMounted(() => {
@@ -94,6 +112,7 @@
     aircraft.value = result
 
     googleSearchURL.value = `https://www.google.com/search?q=${ aircraft.value.model }`;
+    wikipediaPage.value = `https://en.wikipedia.org/?curid=${ aircraft.value.wikipedia_page_id }`
 
     images.value = aircraft.value.images
 
@@ -104,8 +123,6 @@
     }
 
     summary.value = description
-
-    imagesLoading.value = false;
     summaryLoading.value = false;
 
     if(aircraft.value.images.length > 0){
@@ -113,7 +130,7 @@
     }
 
     // NOTE: Featured images are not always saved inside images.
-    if(aircraft.value.featured_image.length > 0){
+    if(aircraft.value.featured_image !== null && aircraft.value.featured_image.length > 0){
       aircraft.value.images.forEach((image) => {
         if(
           image.filename === aircraft.value.featured_image ||
@@ -123,6 +140,9 @@
         }
       });
     }
+
+    setTimeout(function(){ imagesLoading.value = false; }, randomInt(257, 555));
+    setTimeout(function(){ summaryLoading.value = false; }, randomInt(678, 1211));
   }
 
   async function loadWikipediaDetails(){
@@ -188,12 +208,17 @@
 
     return image.url.split('commons').join('commons/thumb')+'/500px-'+image.filename.replace('File:','').replace(/ /g,"_");
   }
+
+  function randomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  }
 </script>
 
 <style scoped>
   .aircraft-details{
     position: fixed;
     width: 45%;
+    width: 555px;
     max-width: 650px;
     background: #000;
     height: 100%;
@@ -202,23 +227,55 @@
     scrollbar-width: thin;
     box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 
-    border-left: 1px solid #3f3f3f;
+    /*border-left: 1px solid #3f3f3f;*/
     left: 900px;
+
+    padding-top: 35px;
   }
-  .aircraft-details h2{
-    padding: 7px 0;
-    /*background: #49463e;*/
+
+  .aircraft-details .header{
+    position: fixed;
+    display: flex;
+    align-items: center;
+    vertical-align: middle;
+    justify-content: space-between;
+
+    background: #141412;
+    border-bottom: 1px solid #5b4f2d;
+    color: #efbd2d;
+    padding: 3px 0;
+
+    width: 555px;
+    max-width: 600px;
+
+    height: 35px;
+    margin-top: -35px;
+    z-index: 9999;
   }
+
+  .aircraft-details .header h2{
+    font-size: 15px;
+  }
+
   .aircraft-details .image-wrapper{
     text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;
     background: #262522;
+
+    border-radius: 32px;
+    padding: 20p;
+    margin: 12px;
+
+    height: 400px;
   }
   .aircraft-details .image-wrapper img{
-    /*width: 512px;*/
     width: 100%;
+    padding: 19px;
+    border-radius: 30%;
+    /*height: 363px;*/
+    /*box-shadow: -20px 0px 20px 0px inset #636059;*/
   }
   .details-wrapper{
     display: block;
@@ -228,6 +285,7 @@
     justify-content: space-between;
     background: #49463e;
     padding: 10px;
+    color: #c7c5be;
   }
   .muted{
     opacity: .6;
@@ -243,13 +301,12 @@
   }
   .images-wrapper .entry img{
     width: 100%;
+    padding: 8px;
+    border-radius: 21%;
   }
   .summary{
-    background: #363532;
-    padding: 10px;
     overflow: hidden;
-    boder-bottom: 1px solid #EEE;
-
+    color: #99968b;
   }
   .loaded-from-button{
     background: #afa485;
@@ -265,7 +322,17 @@
   .aircraft-types span{
     background: #49463e;
     margin-right: 5px;
-    padding: 7px;
+    padding: 4px 7px;
     font-size: 12px;
+    display: inline-block;
+    margin-bottom: 5px;
+  }
+  .external-links{
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+    display: flex;
+    align-items: center;
+    padding: 10px 0px;
   }
 </style>
