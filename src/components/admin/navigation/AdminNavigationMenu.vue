@@ -1,5 +1,5 @@
 <template>
-  <div class="top-bar-fixed">
+  <div class="sidebar-menu-fixed">
     <div class="navigation-menu">
       <Logo></Logo>
       <RouterLink to="/admin">Admin Panel</RouterLink>

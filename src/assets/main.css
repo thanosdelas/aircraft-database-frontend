@@ -14,7 +14,7 @@ body {
   display: flex;
   justify-content: center;
 }
-.top-bar-fixed{
+.sidebar-menu-fixed{
   position: fixed;
   z-index: 9999;
   top: 0;
@@ -22,6 +22,19 @@ body {
   background: #000;
   background: #00000099;
   border-bottom: 1px solid #2f2f2f;
+
+  width: 300px;
+  left: 0;
+  height: 100%;
+}
+.sibar-menu-wrapper{
+  width: 100%;
+  display: block;
+  margin-top: 140px;
+}
+.sibar-menu-wrapper .menu-entry{
+  display: block;
+  width: 100%;
 }
 .background-overlay{
   position: fixed;
@@ -38,6 +51,23 @@ body {
   background: linear-gradient(180deg, rgba(37,36,34,0) 5%, rgba(64,61,54,0.7343312324929971) 50%, rgba(73,70,62,0.5410539215686274) 100%), url(dark-mosaic.png) repeat;
   background: linear-gradient(180deg, rgba(37,36,34,0) 5%, rgba(64,61,54,0.7343312324929971) 50%, rgba(73,70,62,0.5410539215686274) 100%), url(3px-tile.png) repeat;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#252422",endColorstr="#49463e",GradientType=1);
+
+/*  background:linear-gradient(
+      180deg,
+      rgba(37,36,34,0) 5%,
+      rgba(0,0,0,0.6) 35%,
+      rgba(64,61,54,0.73) 50%,
+      rgba(73,70,62,0.54) 65%,
+      rgba(0,0,0,0.6) 75%,
+      rgba(0,0,0,0.8) 85%,
+      rgba(0,0,0,0.4) 100%
+    ),
+    url(3px-tile.png) repeat;*/
+/*  opacity: 0.7;*/
+/*  background: rgba(0,0,0,0.73) url(dark-mosaic.png) repeat;*/
+  background: rgba(0,0,0, 0.5) url(dark-mosaic.png) repeat;
+  background: linear-gradient(180deg, rgba(0,0,0,0.2) 5%, rgba(0,0,0,0.4) 25%, rgba(64,61,54,0.7343312324929971) 50%, rgba(73,70,62,0.5410539215686274) 100%), url(3px-tile.png) repeat;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.2) 5%, rgba(0, 0, 0, 0.4) 25%, rgb(34 33 31 / 73%) 50%, rgba(73, 70, 62, 0.5410539215686274) 100%), url(3px-tile.png) repeat;
 }
 .main-wrapper{
   max-width: 1280px;
@@ -212,6 +242,23 @@ a:hover{
   transition: all .5s;
   opacity: 0.9;
   border-radius: 8px;
+}
+.navigation-menu-collapsed{
+  cursor: pointer;
+  position: fixed;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #49463e;
+  left: 0;
+  top: 0;
+  width: 50px;
+  height: 50px;
+  transition: all 0.4s;
+}
+.navigation-menu-collapsed:hover{
+  opacity: 0.8;
 }
 .navigation-menu{
   display: flex;

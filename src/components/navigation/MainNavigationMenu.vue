@@ -1,15 +1,23 @@
 <template>
-  <div class="top-bar-fixed">
+  <div class="navigation-menu-collapsed" @click="toggleMenu()" v-if="!menu">
+    <Logo></Logo>
+  </div>
+  <div class="sidebar-menu-fixed" v-if="menu">
     <div class="navigation-menu">
-      <Logo></Logo>
-      <RouterLink to="/aircraft-database">Aircraft Database</RouterLink>
-      <div v-if="authenticationCheckLoading" class="loading-text">checking authentication status ...</div>
-      <div v-if="!authenticationCheckLoading">
-        <RouterLink to="/authentication/login" v-if="!store.authentication.loggedIn">Login</RouterLink>
+      <div class="navigation-menu-collapsed" @click="toggleMenu()">
+        <Logo></Logo>
+      </div>
 
-        <div v-if="store.authentication.loggedIn">
-          <RouterLink to="/admin/aircraft-database">Admin</RouterLink>
-          <RouterLink to="/authentication/logout">Logout</RouterLink>
+      <div class="sibar-menu-wrapper">
+        <RouterLink class="menu-entry" to="/aircraft-database">Aircraft Database</RouterLink>
+        <div v-if="authenticationCheckLoading" class="loading-text">checking authentication status ...</div>
+        <div v-if="!authenticationCheckLoading">
+          <RouterLink class="menu-entry" to="/authentication/login" v-if="!store.authentication.loggedIn">Login</RouterLink>
+
+          <div v-if="store.authentication.loggedIn">
+            <RouterLink class="menu-entry" to="/admin/aircraft-database">Admin</RouterLink>
+            <RouterLink class="menu-entry" to="/authentication/logout">Logout</RouterLink>
+          </div>
         </div>
       </div>
     </div>
@@ -24,6 +32,7 @@
   import { store } from '@/store/store.js'
   import Authentication from '@/services/authentication';
 
+  const menu = ref(false);
   const authenticationCheckLoading = ref(true);
 
   onMounted(() => {
@@ -35,4 +44,13 @@
       });
     }, 1000);
   });
+
+  function toggleMenu(){
+    if (menu.value === true){
+      menu.value = false;
+    }
+    else{
+      menu.value = true;
+    }
+  }
 </script>
