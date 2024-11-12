@@ -9,10 +9,10 @@ body {
   background-size: cover;
 }
 #app {
-/*  max-width: 1280px;*/
   margin: 0 auto;
-  /*padding: 2rem;*/
   font-weight: normal;
+  display: flex;
+  justify-content: center;
 }
 .top-bar-fixed{
   position: fixed;
@@ -23,7 +23,6 @@ body {
   background: #00000099;
   border-bottom: 1px solid #2f2f2f;
 }
-
 .background-overlay{
   position: fixed;
   width: 100%;
@@ -40,21 +39,21 @@ body {
   background: linear-gradient(180deg, rgba(37,36,34,0) 5%, rgba(64,61,54,0.7343312324929971) 50%, rgba(73,70,62,0.5410539215686274) 100%), url(3px-tile.png) repeat;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#252422",endColorstr="#49463e",GradientType=1);
 }
-
 .main-wrapper{
-  margin-top: 47px;
+  max-width: 1280px;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
   margin: 73px 41px;
 }
-
 .filters-wrapper{
   position: fixed;
-  height: 90%;
+  height: calc(100vh - 120px);
   width: 300px;
   overflow-y: scroll;
   scrollbar-color: #a5a29a #464646;
   scrollbar-width: thin;
   background: rgb(0 0 0 / 55%);
-
   padding-top: 35px;
 }
 .filters-wrapper .header{
@@ -86,18 +85,13 @@ body {
   font-weight: bold;
   transition: all .5s;
 }
-
 .filters-wrapper .entry{
-/*  position: fixed;*/
-/*  display: block;*/
-/*  margin-left: 300px;*/
   height: 100%;
   overflow: hidden;
   overflow-y: scroll;
   scrollbar-color: #a5a29a #464646;
   scrollbar-width: thin;
 }
-
 .filters-wrapper .entry .list-entry{
   display: block;
   width: 100%;
@@ -107,8 +101,6 @@ body {
   transition: all .3s;
 }
 .filters-wrapper .entry .list-entry.active{
-  /*background: #9fef2d;*
-  /*color: #000;*/
   background: #49463e;
   padding: 5px;
 }
@@ -116,26 +108,20 @@ body {
   margin-right: 10px;
   display: inline-block;
 }
-
-.aircraft-types-wrapper{
-}
-
 .aircraft-wrapper{
   position: fixed;
   overflow: hidden;
   display: block;
   margin-left: 300px;
-  height: 90%;
+  height: calc(100vh - 120px);
   overflow-y: scroll;
   scrollbar-color: #a5a29a #464646;
   scrollbar-width: thin;
   width: 550px;
   background: rgb(0 0 0 / 80%);
   background: rgb(0 0 0 / 29%);
-
   padding-top: 35px;
 }
-
 .aircraft-wrapper .header{
   position: fixed;
   display: flex;
@@ -152,10 +138,43 @@ body {
   height: 35px;
   margin-top: -35px;
 }
-
-.aircraft-wrapper .aircraft-listing-wrapper{
+.aircraft-details{
+  position: fixed;
+  width: 45%;
+  width: 555px;
+  max-width: 650px;
+  background: #000;
+  background: #141412;
+  background: #141412bd;
+  height: calc(100vh - 120px);
+  overflow-y: scroll;
+  scrollbar-color: #a5a29a #464646;
+  scrollbar-width: thin;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  margin-left: 850px;
+  padding-top: 35px;
 }
+.aircraft-details .header{
+  position: fixed;
+  display: flex;
+  align-items: center;
+  vertical-align: middle;
+  justify-content: space-between;
 
+  background: #141412;
+  border-bottom: 1px solid #5b4f2d;
+  color: #efbd2d;
+  padding: 3px 0;
+
+  width: 555px;
+  max-width: 600px;
+  height: 35px;
+  margin-top: -35px;
+  z-index: 9999;
+}
+.aircraft-details .header h2{
+  font-size: 15px;
+}
 a{
   text-decoration: none;
   color: #5873c5;
@@ -168,12 +187,8 @@ a{
   margin-right: 6px;
 }
 a:hover{
-/*  color: #7b90cd;
-  border-bottom: 1px solid #7b90cd;*/
-
   color: #efbd2d;
   border-bottom: 1px solid #efbd2d;
-
   transition: 0.4s;
 }
 .button{
@@ -225,14 +240,68 @@ a:hover{
     background-color: #131414;
   }
 }
-@media (min-width: 1024px) {
-  body {
+@media (min-width: 1320px) and (max-width: 1530px) {
+  .aircraft-wrapper, .aircraft-wrapper .header{
+    width: 410px;
   }
-
-  #app {
+  .aircraft-details{
+    margin-left: 710px;
   }
 }
+@media (min-width: 1280px) and (max-width: 1319px) {
+  .aircraft-wrapper, .aircraft-wrapper .header{
+    width: 380px;
+  }
+  .aircraft-details{
+    margin-left: 680px;
+  }
+}
+@media (min-width: 550px) and (max-width: 1319px) {
+  .main-wrapper{
+    max-width: unset;
+    margin: 0;
+    margin-top: 50px;
+  }
 
+  .filters-wrapper, .aircraft-wrapper, .aircraft-details{
+    height: calc(100vh - 50px);
+  }
+
+  .aircraft-wrapper, .aircraft-wrapper .header{
+    width: 380px;
+  }
+  .aircraft-details{
+    margin-left: 0px;
+    right: 0;
+  }
+}
+@media (max-width: 549px) {
+  .main-wrapper{
+    max-width: unset;
+    margin: 0;
+    margin-top: 50px;
+  }
+
+  .filters-wrapper, .aircraft-wrapper, .aircraft-details{
+    height: calc(100vh - 50px);
+  }
+
+  .filters-wrapper, .filters-wrapper .header{
+    width: 50%;
+  }
+
+  .aircraft-wrapper, .aircraft-wrapper .header{
+    width: 50%;
+    right: 0;
+  }
+
+  .aircraft-details, .aircraft-details .header{
+    margin-left: 0px;
+    right: 0;
+    background: #141412;
+    width: 100%;
+  }
+}
 .loader-wrapper{
   display: flex;
   width: 100%;
@@ -266,7 +335,6 @@ a:hover{
 .loader div:nth-child(2) {
   animation-delay: -0.5s;
 }
-
 @keyframes loader {
   0% {
     top: 36px;

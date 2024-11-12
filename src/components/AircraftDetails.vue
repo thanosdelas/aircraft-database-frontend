@@ -244,50 +244,6 @@
 </script>
 
 <style scoped>
-  .aircraft-details{
-    position: fixed;
-    width: 45%;
-    width: 555px;
-    max-width: 650px;
-    background: #000;
-    background: #141412;
-    background: #141412bd;
-    height: 90%;
-    overflow-y: scroll;
-    scrollbar-color: #a5a29a #464646;
-    scrollbar-width: thin;
-    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-
-    /*border-left: 1px solid #3f3f3f;*/
-    left: 891px;
-
-    padding-top: 35px;
-  }
-
-  .aircraft-details .header{
-    position: fixed;
-    display: flex;
-    align-items: center;
-    vertical-align: middle;
-    justify-content: space-between;
-
-    background: #141412;
-    border-bottom: 1px solid #5b4f2d;
-    color: #efbd2d;
-    padding: 3px 0;
-
-    width: 555px;
-    max-width: 600px;
-
-    height: 35px;
-    margin-top: -35px;
-    z-index: 9999;
-  }
-
-  .aircraft-details .header h2{
-    font-size: 15px;
-  }
-
   .aircraft-details .image-wrapper-overlay{
     /*background: rgba(0,0,0,0.7343312324929971) url(dark-mosaic.png) repeat;*/
     background: url(3px-tile.png) repeat;

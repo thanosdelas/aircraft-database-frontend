@@ -74,10 +74,8 @@
       </div>
     </div>
 
-    <div v-if="selectedAircraft">
-      <AircraftDetails :aircraftId="selectedAircraft.id" @closeDetails="closeDetails">
-      </AircraftDetails>
-    </div>
+    <AircraftDetails v-if="selectedAircraft" :aircraftId="selectedAircraft.id" @closeDetails="closeDetails">
+    </AircraftDetails>
   </div>
 </template>
 
