@@ -5,8 +5,7 @@
 .aircraft-details{
   position: fixed;
   width: 45%;
-  background: #222631;
-  height: 100%;
+  /*height: 100%;*/
   right: 0;
   overflow-y: scroll;
   scrollbar-color: #a5a29a #464646;
@@ -19,8 +18,6 @@
 /*  border: 10px solid #da5616;*/
 }
 .aircraft-details .header{
-/*  background: #000;*/
-  background: #222631;
   position: fixed;
   z-index: 9000;
   width: 45%;
@@ -120,7 +117,6 @@
   color: #ffffff63;
 }
 .summary{
-/*  background: #1b1b1a;*/
   padding: 10px;
 }
 .edit-images{

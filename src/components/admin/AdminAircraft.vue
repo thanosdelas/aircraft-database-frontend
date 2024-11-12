@@ -1,30 +1,38 @@
 <template>
-  <h1>Aircraft Database</h1>
-  <div class="aircraft-wrapper">
-    <div v-for="error in errors">
-      {{ error.message }}
-    </div>
+  <div class="background-overlay"></div>
 
-    <div class="search-bar">
-      <input type="text" name="sarch" v-model="searchTerm" @keyup.enter="search" />
-      <button @click="search">Search</button>
-    </div>
+  <div class="main-wrapper">
+    <div class="aircraft-wrapper">
 
-    <div
-      class="aircraft-list-entry"
-      :class="{ active: selectedAircraft == aircraft, 'last-visited': lastVisited == aircraft && !selectedAircraft }"
-      v-for="aircraft in aircraftData"
-      @click="aircraftDetails(aircraft)">
-      <div>
-        <span>{{ aircraft.model }}</span>
-        <span v-if="aircraft.wikipedia_info_collected"><i class='bx bxl-wikipedia'></i></span>
+      <div class="header">
+        Aircraft Models
+      </div>
+
+      <div v-for="error in errors">
+        {{ error.message }}
+      </div>
+
+      <div class="search-bar">
+        <input type="text" name="sarch" v-model="searchTerm" @keyup.enter="search" />
+        <button @click="search">Search</button>
+      </div>
+
+      <div
+        class="aircraft-list-entry"
+        :class="{ active: selectedAircraft == aircraft, 'last-visited': lastVisited == aircraft && !selectedAircraft }"
+        v-for="aircraft in aircraftData"
+        @click="aircraftDetails(aircraft)">
+        <div>
+          <span>{{ aircraft.model }}</span>
+          <span v-if="aircraft.wikipedia_info_collected"><i class='bx bxl-wikipedia'></i></span>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div v-if="selectedAircraft">
-    <AdminAircraftDetails :aircraft="selectedAircraft" @closeDetails="closeDetails">
-    </AdminAircraftDetails>
+    <div v-if="selectedAircraft">
+      <AdminAircraftDetails :aircraft="selectedAircraft" @closeDetails="closeDetails">
+      </AdminAircraftDetails>
+    </div>
   </div>
 </template>
 
@@ -93,6 +101,11 @@
 </script>
 
 <style scoped>
+  .main-wrapper{
+    margin: 0;
+    margin-top: 50px;
+  }
+
   .aircraft-list-entry{
     display: block;
     width: 100%;

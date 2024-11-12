@@ -21,18 +21,21 @@ body {
   width: 100%;
   background: #000;
   background: #00000099;
+  background: #0d0c0ede url(dark-mosaic.png) repeat;
+  /*background: #3b3832eb url(dark-mosaic.png) repeat;*/
+  background: #181715d9 url(dark-mosaic.png) repeat;
   border-bottom: 1px solid #2f2f2f;
 
   width: 300px;
   left: 0;
   height: 100%;
 }
-.sibar-menu-wrapper{
+.sidebar-menu-wrapper{
   width: 100%;
   display: block;
-  margin-top: 140px;
+  margin-top: 59px;
 }
-.sibar-menu-wrapper .menu-entry{
+.sidebar-menu-wrapper .menu-entry{
   display: block;
   width: 100%;
 }
@@ -265,7 +268,6 @@ a:hover{
   align-items: center;
   padding: 5px;
   align-items: center;
-  height: 50px;
 }
 .navigation-menu a{
   display: inline-flex;

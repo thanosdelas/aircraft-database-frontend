@@ -8,7 +8,7 @@
         <Logo></Logo>
       </div>
 
-      <div class="sibar-menu-wrapper">
+      <div class="sidebar-menu-wrapper">
         <RouterLink class="menu-entry" to="/aircraft-database">Aircraft Database</RouterLink>
         <div v-if="authenticationCheckLoading" class="loading-text">checking authentication status ...</div>
         <div v-if="!authenticationCheckLoading">
