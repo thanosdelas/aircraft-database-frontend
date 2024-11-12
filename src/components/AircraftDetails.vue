@@ -15,7 +15,8 @@
     </div>
 
     <div class="image-wrapper-old-tv-and-vcr-effects" v-if="true">
-      <OldTvAndVcrEffects :featured_image_url="featuredImageThumbnailURL(featured_image)"></OldTvAndVcrEffects>
+      <OldTvAndVcrEffects :featured_image_url="featuredImageThumbnailURL(featured_image)" ref="oldTvAndVcrEffectsComponent">
+      </OldTvAndVcrEffects>
     </div>
 
     <div class="image-wrapper" v-if="false">
@@ -93,6 +94,7 @@
   const wikipediaPage = ref(null);
   const data = defineProps(['aircraftId']);
   const emits = defineEmits(['closeDetails']);
+  const oldTvAndVcrEffectsComponent = ref(null);
 
   const displayColumns = [
     // "model",
@@ -110,15 +112,21 @@
 
   function arrowKeys(event){
     if (event.code === 'ArrowRight'){
+      console.log('ArrowLeft');
       if (currentImageNavigationIndex === 0){
         currentImageNavigationIndex = images.value.length;
       }
 
       featured_image.value = images.value[images.value.length - currentImageNavigationIndex];
+      oldTvAndVcrEffectsComponent.value.changeImage(featured_image.value);
+
       --currentImageNavigationIndex;
     }
     else if (event.code === 'ArrowLeft'){
+      console.log('ArrowLeft');
+
       featured_image.value = images.value[images.value.length - currentImageNavigationIndex];
+      oldTvAndVcrEffectsComponent.value.changeImage(featured_image.value);
 
       if (currentImageNavigationIndex === images.value.length - 1){
         currentImageNavigationIndex = 0;
@@ -240,7 +248,7 @@
       return image.url;
     }
 
-    return image.url.split('commons').join('commons/thumb')+'/500px-'+image.filename.replace('File:','').replace(/ /g,"_");
+    return image.url.split('commons').join('commons/thumb')+'/250px-'+image.filename.replace('File:','').replace(/ /g,"_");
   }
 
   function randomInt(min, max) {
@@ -318,6 +326,7 @@
     width: 100%;
     padding: 8px;
     border-radius: 21%;
+    opacity: 0.9;
   }
   .summary{
     overflow: hidden;

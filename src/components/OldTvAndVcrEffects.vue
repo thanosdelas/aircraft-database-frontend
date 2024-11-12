@@ -15,7 +15,7 @@
 </template>
 
 <script setup>
-  import { ref, onMounted, onBeforeUnmount } from 'vue';
+  import { ref, defineExpose, onMounted, onBeforeUnmount } from 'vue';
 
   const data = defineProps(['featured_image_url']);
 
@@ -73,6 +73,30 @@
 
     screen.value.destroy();
   });
+
+  defineExpose({
+    changeImage
+  });
+
+  function changeImage(image){
+    for ( const prop in config.effects ) {
+      if (prop === 'image'){
+        let options = JSON.parse(JSON.stringify(config.effects[prop]));
+        options.options.src = featuredImageThumbnailURL(image);
+
+        screen.value.remove(prop);
+        screen.value.add(prop, options.options);
+      }
+    }
+  }
+
+  function featuredImageThumbnailURL(image){
+    if(image.url.indexOf('.svg') !== -1){
+      return image.url;
+    }
+
+    return image.url.split('commons').join('commons/thumb')+'/250px-'+image.filename.replace('File:','').replace(/ /g,"_");
+  }
 
   const config = {
     effects: {
@@ -307,7 +331,9 @@
           node = document.createElement('img');
           node.classList.add(type);
 
-          node.src = config.src;
+          // node.src = config.src;
+          console.log(options.src);
+          node.src = options.src;
 
           wrapper.appendChild(node);
           break;
@@ -509,9 +535,11 @@ canvas.snow {
 
 #screenElement {
   width: 100%;
-  height: 100%;
   display: flex;
-  min-height: 250px;
+  justify-content: center;
+  align-items: center;
+  min-height: 360px;
+  max-height: 360px;
   background: transparent linear-gradient(to bottom, #85908c 0%, #323431 100%) repeat scroll 0 0;
   background-size: cover;
 }
@@ -520,7 +548,7 @@ canvas.snow {
   /*width: 640px;*/
   /*height: 360px;*/
   width: 100%;
-  min-height: 250px;
+  height: 350px;
   overflow: hidden;
   position: relative;
 }
@@ -542,8 +570,9 @@ canvas.snow {
 
 .image {
   width: 100%;
-  height: auto;
-  filter: blur(1.2px);
+  /*height: auto;*/
+  /*This was probably meant to be configurable*/
+  filter: blur(0.5px);
 }
 
 .vignette {
