@@ -15,6 +15,7 @@
     </div>
 
     <div class="image-wrapper">
+      <div class="image-wrapper-overlay"></div>
       <div v-if="imagesLoading" class="loader"><div></div><div></div></div>
       <img v-if="featured_image && !imagesLoading" :alt="featured_image.title" :src="featuredImageThumbnailURL(featured_image)" />
     </div>
@@ -249,14 +250,16 @@
     width: 555px;
     max-width: 650px;
     background: #000;
-    height: 100%;
+    background: #141412;
+    background: #141412bd;
+    height: 90%;
     overflow-y: scroll;
     scrollbar-color: #a5a29a #464646;
     scrollbar-width: thin;
     box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 
     /*border-left: 1px solid #3f3f3f;*/
-    left: 900px;
+    left: 891px;
 
     padding-top: 35px;
   }
@@ -285,13 +288,31 @@
     font-size: 15px;
   }
 
+  .aircraft-details .image-wrapper-overlay{
+    /*background: rgba(0,0,0,0.7343312324929971) url(dark-mosaic.png) repeat;*/
+    background: url(3px-tile.png) repeat;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: .22;
+  }
+
   .aircraft-details .image-wrapper{
+    position: relative;
+    overflow: hidden;
     text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #262522;
-
+    background: #262522 url('dark-mosaic.png') repeat;
+    /*background: #262522 url('3px-tile.png') repeat;*/
+    /*background: #2f2d28 url(3px-tile.png) repeat;*/
+    /*background: #49463e url('dark-mosaic.png') repeat;*/
+/*    background: url(dark-mosaic.png), repeat url(3px-tile.png) repeat, #595447;*/
+    background-image: url(3px-tile.png), url(dark-mosaic.png);
+    background-repeat: repeat, repeat;
+    background-color: #77705e;
+    background-color: #2d2b27;
     border-radius: 32px;
     padding: 20p;
     margin: 12px;
@@ -363,9 +384,7 @@
     align-items: center;
     padding: 10px 0px;
   }
-
   .external-links a{
-    color: #7584b3;
     font-size: 12px;
   }
 </style>

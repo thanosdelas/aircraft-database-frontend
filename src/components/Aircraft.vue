@@ -1,6 +1,7 @@
 <template>
-  <div class="main-wrapper">
+  <div class="background-overlay"></div>
 
+  <div class="main-wrapper">
     <div class="aircraft-gallery-wrapper">
       <div class="image" v-for="image in aircraftDataGallery">
         <img :alt="image.featured_image" :src="featuredImageThumbnailURL(image)" />
@@ -159,8 +160,7 @@
 
     aircraftDataGallery.value = null
     if ('aircraft_type' in params){
-      aircraftDataGallery.value = findFeaturedImages(result.data);
-      console.log(aircraftDataGallery);
+      // aircraftDataGallery.value = findFeaturedImages(result.data);
     }
 
     setTimeout(function(){
@@ -310,10 +310,9 @@
     grid-template-rows: auto; /* Automatically size rows based on content */
     gap: 0; /* No gap between grid items */
 
-
     width: calc(100vw - 300px);
-    width: 600px;
-    left: 300px;
+    width: 500px;
+    left: 340px;
     overflow: hidden;
   }
 
