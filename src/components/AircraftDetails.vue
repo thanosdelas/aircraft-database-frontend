@@ -101,38 +101,37 @@
   ];
 
   onMounted(() => {
-    window.addEventListener('keydown', arrowKeys);
+    window.addEventListener('keydown', arrowKeysToChangeFeaturedImage);
 
     return loadDatabaseDetails();
   });
 
   onUnmounted(() => {
-    window.removeEventListener('keydown', arrowKeys);
+    window.removeEventListener('keydown', arrowKeysToChangeFeaturedImage);
   });
 
-  function arrowKeys(event){
+  function arrowKeysToChangeFeaturedImage(event){
     if (event.code === 'ArrowRight'){
-      console.log('ArrowLeft');
+      ++currentImageNavigationIndex;
+
+      // End of list
+      if (currentImageNavigationIndex === images.value.length){
+        currentImageNavigationIndex = 0;
+      }
+
+      featured_image.value = images.value[currentImageNavigationIndex];
+      oldTvAndVcrEffectsComponent.value.changeImage(featured_image.value);
+    }
+    else if (event.code === 'ArrowLeft'){
+      // End of list
       if (currentImageNavigationIndex === 0){
         currentImageNavigationIndex = images.value.length;
       }
 
-      featured_image.value = images.value[images.value.length - currentImageNavigationIndex];
-      oldTvAndVcrEffectsComponent.value.changeImage(featured_image.value);
-
       --currentImageNavigationIndex;
-    }
-    else if (event.code === 'ArrowLeft'){
-      console.log('ArrowLeft');
 
-      featured_image.value = images.value[images.value.length - currentImageNavigationIndex];
+      featured_image.value = images.value[currentImageNavigationIndex];
       oldTvAndVcrEffectsComponent.value.changeImage(featured_image.value);
-
-      if (currentImageNavigationIndex === images.value.length - 1){
-        currentImageNavigationIndex = 0;
-      }
-
-      ++currentImageNavigationIndex;
     }
   }
 
