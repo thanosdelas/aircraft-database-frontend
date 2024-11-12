@@ -47,10 +47,9 @@
       </div>
 
       <div class="external-links">
-        <div v-if="wikipediaPage">
-          <a target="_blank" :href="wikipediaPage"><i class='bx bxl-wikipedia'></i> Wikipedia <i class='bx bx-link-external'></i></a>
-        </div>
+        <div v-if="wikipediaPage"><a target="_blank" :href="wikipediaPage"><i class='bx bxl-wikipedia'></i> Wikipedia <i class='bx bx-link-external'></i></a></div>
         <div><a target="_blank" :href="googleSearchURL"><i class='bx bxl-google'></i> Google Search <i class='bx bx-link-external'></i></a></div>
+        <div><a target="_blank" :href="googleImagesSearchURL"><i class='bx bxl-google'></i> Google Images Search <i class='bx bx-link-external'></i></a></div>
       </div>
 
       <div class="images-wrapper">
@@ -83,6 +82,7 @@
   const summaryLoading = ref(true);
   const imagesLoading = ref(true);
   const googleSearchURL = ref(null);
+  const googleImagesSearchURL = ref(null);
   const wikipediaPage = ref(null);
   const data = defineProps(['aircraftId']);
   const emits = defineEmits(['closeDetails']);
@@ -112,6 +112,7 @@
     aircraft.value = result
 
     googleSearchURL.value = `https://www.google.com/search?q=${ aircraft.value.model }`;
+    googleImagesSearchURL.value = `https://www.google.com/search?tbm=isch&q=${ aircraft.value.model }`;
     wikipediaPage.value = `https://en.wikipedia.org/?curid=${ aircraft.value.wikipedia_page_id }`
 
     images.value = aircraft.value.images
@@ -334,5 +335,10 @@
     display: flex;
     align-items: center;
     padding: 10px 0px;
+  }
+
+  .external-links a{
+    color: #7584b3;
+    font-size: 12px;
   }
 </style>
