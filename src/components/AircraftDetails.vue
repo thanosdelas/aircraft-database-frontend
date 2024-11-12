@@ -14,7 +14,11 @@
       </button>
     </div>
 
-    <div class="image-wrapper">
+    <div class="image-wrapper-old-tv-and-vcr-effects" v-if="true">
+      <OldTvAndVcrEffects :featured_image_url="featuredImageThumbnailURL(featured_image)"></OldTvAndVcrEffects>
+    </div>
+
+    <div class="image-wrapper" v-if="false">
       <div class="image-wrapper-overlay"></div>
       <div v-if="imagesLoading" class="loader"><div></div><div></div></div>
       <img v-if="featured_image && !imagesLoading" :alt="featured_image.title" :src="featuredImageThumbnailURL(featured_image)" />
@@ -67,6 +71,7 @@
 </template>
 
 <script setup>
+  import OldTvAndVcrEffects from '@/components/OldTvAndVcrEffects.vue';
   import { ref, onMounted, onUnmounted } from 'vue';
   import { HttpRequest } from '@/services/http-request';
   import { WikipediaDetails } from '@/services/wikipedia-details';
@@ -251,6 +256,11 @@
     width: 100%;
     height: 100%;
     opacity: .22;
+  }
+
+  .image-wrapper-old-tv-and-vcr-effects{
+    background: #000;
+    padding: 10px;
   }
 
   .aircraft-details .image-wrapper{
