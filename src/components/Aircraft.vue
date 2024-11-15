@@ -65,7 +65,9 @@
         <div
           class="aircraft-list-entry"
           :class="{ active: selectedAircraft == aircraft }"
-          v-for="aircraft in aircraftData"
+          v-for="(aircraft) in aircraftData"
+          :key="aircraft.id"
+          :ref="setAircraftListRef(aircraft.id)"
           @click="visitArticle(aircraft)">
           <div>
             <span>{{ aircraft.model }}</span>
@@ -80,7 +82,7 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, onMounted } from 'vue';
+  import { ref, onMounted, onUnmounted } from 'vue';
   import { HttpRequest } from '@/services/http-request';
   import AircraftApi from '@/services/aircraft-api';
   import AircraftDetails from './AircraftDetails.vue';
@@ -100,12 +102,82 @@
   const aircraftDataLoading = ref(true);
   const aircraftTypesLoading = ref(true);
   const aircraftManufacturersLoading = ref(true);
+  const aircraftList = ref(null);
+  const aircraftListRefs = ref({});
+  const setAircraftListRef = (id) => (element) => {
+    if (element) {
+      aircraftListRefs.value[id] = element;
+    }
+  };
+
+  let currentAircraftNavigationIndex = 0;
 
   onMounted(() => {
     fetchAircraftManufacturers();
     fetchAircraftTypes();
     fetchAircraft();
+
+    window.addEventListener('keydown', arrowKeysToChangeArcraft);
   });
+
+  onUnmounted(() => {
+    window.removeEventListener('keydown', arrowKeysToChangeArcraft);
+  });
+
+  function arrowKeysToChangeArcraft(event){
+    if (event.code === 'ArrowDown'){
+      if (!selectedAircraft.value){
+        currentAircraftNavigationIndex = 0;
+        visitArticle(aircraftData.value[0]);
+
+        return null;
+      }
+
+      currentAircraftNavigationIndex = findSelectedAircraftInList();
+
+      ++currentAircraftNavigationIndex;
+
+      // End of list
+      if (currentAircraftNavigationIndex === aircraftData.value.length){
+        currentAircraftNavigationIndex = 0;
+      }
+
+      visitArticle(aircraftData.value[currentAircraftNavigationIndex]);
+    }
+    else if (event.code === 'ArrowUp'){
+      if (!selectedAircraft.value){
+        currentAircraftNavigationIndex = 0;
+        visitArticle(aircraftData.value[0]);
+
+        return null;
+      }
+
+      currentAircraftNavigationIndex = findSelectedAircraftInList();
+
+      // End of list
+      if (currentAircraftNavigationIndex === 0){
+        currentAircraftNavigationIndex = aircraftData.value.length;
+      }
+
+      --currentAircraftNavigationIndex;
+
+      visitArticle(aircraftData.value[currentAircraftNavigationIndex]);
+    }
+  }
+
+  function findSelectedAircraftInList(){
+    let index = 0;
+
+    for (let entry of aircraftData.value){
+      if(selectedAircraft.value === entry){
+        break;
+      }
+
+      ++index;
+    }
+
+    return index;
+  }
 
   async function fetchAircraftTypes(searchTerm = ''){
     const httpRequest = new HttpRequest();
@@ -175,6 +247,9 @@
 
     setTimeout(function(){
       selectedAircraft.value = aircraft;
+
+      const elementToScroll = aircraftListRefs.value[selectedAircraft.value.id];
+      elementToScroll.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }, 50);
   }
 
