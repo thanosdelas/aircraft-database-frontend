@@ -9,6 +9,10 @@
         <div class="screen-wrapper" ref="wrapper3">
           <div id="screenElement" ref="screenElement"></div>
         </div>
+
+        <div id="scanlines" ref="scanlines"></div>
+        <canvas id="vcr" ref="vcr"></canvas>
+        <canvas id="snow" ref="snow"></canvas>
       </div>
     </div>
   </div>
@@ -18,16 +22,16 @@
   import { ref, defineExpose, onMounted, onBeforeUnmount } from 'vue';
 
   const data = defineProps(['featured_image_url']);
-
   const container = ref(null);
   const wrapper1 = ref(null);
   const wrapper2 = ref(null);
   const wrapper3 = ref(null);
   const screenElement = ref(null);
-
+  const scanlines = ref(null);
+  const vcr = ref(null);
+  const snow = ref(null);
   const gui = ref(null);
   const screen = ref(null);
-
   let f1 = null;
   let f2 = null;
   let f3 = null;
@@ -122,11 +126,11 @@
       vcr: {
         enabled: true,
         options: {
-          opacity: 1,
+          opacity: 0.8,
           miny: 220,
           miny2: 220,
           num: 70,
-          fps: 60
+          fps: 20
         }
       },
       wobbley: { enabled: true },
@@ -258,14 +262,14 @@
       const that = this;
 
       if ( type === "snow" ) {
-        const canvas = document.createElement("canvas");
+        const canvas = snow.value
         const ctx = canvas.getContext("2d");
         canvas.classList.add(type);
 
         canvas.width = this.rect.width / 2;
         canvas.height = this.rect.height / 2;
 
-        this.nodes.wrapper2.appendChild(canvas);
+        // this.nodes.wrapper2.appendChild(canvas);
 
         animate();
         // that.generateSnow(ctx);
@@ -290,9 +294,10 @@
       }
 
       if ( type === "vcr" ) {
-        const canvas = document.createElement("canvas");
+        // const canvas = document.createElement("canvas");
+        const canvas = vcr.value;
         canvas.classList.add(type);
-        this.nodes.wrapper2.appendChild(canvas);
+        // this.nodes.wrapper2.appendChild(canvas);
 
         canvas.width = this.rect.width;
         canvas.height = this.rect.height;
@@ -319,9 +324,13 @@
           wrapper.classList.add(type);
           break;
         case "scanlines":
-          node = document.createElement("div");
-          node.classList.add(type);
-          wrapper.appendChild(node);
+          // node = document.createElement("div");
+          // node.classList.add(type);
+          // wrapper.appendChild(node);
+
+          const div = scanlines.value
+          div.classList.add(type);
+
           break;
         case "vignette":
           wrapper = this.nodes.container;
@@ -512,17 +521,6 @@
 </script>
 
 <style type="text/css">
-/*body {
-  margin: 0;
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  background-color: #000;
-}*/
-
 canvas {
   position: absolute;
   left: 0;
