@@ -243,6 +243,10 @@
   }
 
   function featuredImageThumbnailURL(image){
+    if (image === null){
+      return '';
+    }
+
     if(image.url.indexOf('.svg') !== -1){
       return image.url;
     }

@@ -35,8 +35,6 @@
   let f5 = null;
 
   onMounted(() => {
-    console.log(data.featured_image_url);
-
     screen.value = new ScreenEffect(screenElement.value, {});
     gui.value = new dat.GUI();
 
@@ -64,7 +62,7 @@
   });
 
   onBeforeUnmount(() => {
-    console.log("onBeforeUnmount");
+    // console.log("onBeforeUnmount");
     gui.value.destroy();
 
     for ( const effect in config.effects ) {
@@ -82,17 +80,24 @@
     for ( const prop in config.effects ) {
       if (prop === 'image'){
         let options = JSON.parse(JSON.stringify(config.effects[prop]));
-        options.options.src = featuredImageThumbnailURL(image);
+        let image = featuredImageThumbnailURL(image);
 
-        screen.value.remove(prop);
+        if (image === null || image === ''){
+          screen.value.remove(prop);
+          break;
+        }
+
+        options.options.src = featuredImageThumbnailURL(image);
         screen.value.add(prop, options.options);
+
+        break;
       }
     }
   }
 
   function featuredImageThumbnailURL(image){
-    if(image.url.indexOf('.svg') !== -1){
-      return image.url;
+    if(iamge === null){
+      return '';
     }
 
     return image.url.split('commons').join('commons/thumb')+'/250px-'+image.filename.replace('File:','').replace(/ /g,"_");
@@ -142,7 +147,7 @@
   }
 
   function initializeConfigEffects(screen){
-    console.log("\n[*] initializeConfigEffects");
+    // console.log("\n[*] initializeConfigEffects");
 
     for ( const effect in config.effects ) {
       const type = config.effects[effect];
@@ -218,8 +223,7 @@
     }
 
     render() {
-      console.log("[*] render");
-
+      // console.log("[*] render");
       this.nodes = {
         "container": container.value,
         "wrapper1": wrapper1.value,
@@ -332,7 +336,7 @@
           node.classList.add(type);
 
           // node.src = config.src;
-          console.log(options.src);
+          // console.log(options.src);
           node.src = options.src;
 
           wrapper.appendChild(node);
