@@ -77,17 +77,16 @@
   });
 
   function changeImage(image){
+    if(image === null || image === ''){
+      return null;
+    }
+
     for ( const prop in config.effects ) {
       if (prop === 'image'){
         let options = JSON.parse(JSON.stringify(config.effects[prop]));
-        let image = featuredImageThumbnailURL(image);
-
-        if (image === null || image === ''){
-          screen.value.remove(prop);
-          break;
-        }
-
         options.options.src = featuredImageThumbnailURL(image);
+
+        screen.value.remove(prop);
         screen.value.add(prop, options.options);
 
         break;
@@ -96,7 +95,7 @@
   }
 
   function featuredImageThumbnailURL(image){
-    if(iamge === null){
+    if(image === null){
       return '';
     }
 
