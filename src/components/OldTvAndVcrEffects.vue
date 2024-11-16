@@ -63,6 +63,18 @@
         screen.value.add(prop, config.effects[prop].options);
       }
     }
+
+    // Snow In Effect
+    let opacity = 0.59
+    screen.value.effects['snow'].node.style.opacity = 0.59;
+    const snowInEffect = setInterval(function(){
+      opacity = opacity - 0.123;
+      screen.value.effects['snow'].node.style.opacity = opacity;
+
+      if(opacity < 0.2){
+        clearInterval(snowInEffect);
+      }
+    }, 100);
   });
 
   onBeforeUnmount(() => {
@@ -126,10 +138,10 @@
       vcr: {
         enabled: true,
         options: {
-          opacity: 0.8,
-          miny: 220,
+          opacity: 0.2,
+          miny: 10,
           miny2: 220,
-          num: 70,
+          num: 20,
           fps: 20
         }
       },
@@ -137,7 +149,7 @@
       snow: {
         enabled: true,
         options: {
-          opacity: 0.2
+          opacity: 0.1
         }
       },
     },

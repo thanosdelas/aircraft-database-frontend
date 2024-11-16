@@ -71,6 +71,7 @@ body {
   background: rgba(0,0,0, 0.5) url(dark-mosaic.png) repeat;
   background: linear-gradient(180deg, rgba(0,0,0,0.2) 5%, rgba(0,0,0,0.4) 25%, rgba(64,61,54,0.7343312324929971) 50%, rgba(73,70,62,0.5410539215686274) 100%), url(3px-tile.png) repeat;
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.2) 5%, rgba(0, 0, 0, 0.4) 25%, rgb(34 33 31 / 73%) 50%, rgba(73, 70, 62, 0.5410539215686274) 100%), url(3px-tile.png) repeat;
+  background: linear-gradient(180deg, rgb(0 0 0 / 0%) 5%, rgb(0 0 0 / 45%) 25%, rgb(34 33 31 / 73%) 50%, rgba(73, 70, 62, 0.5410539215686274) 100%);
 }
 .main-wrapper{
   max-width: 1280px;
@@ -204,9 +205,6 @@ body {
   height: 35px;
   margin-top: -35px;
   z-index: 9999;
-}
-.aircraft-details .header h2{
-  font-size: 15px;
 }
 a{
   text-decoration: none;

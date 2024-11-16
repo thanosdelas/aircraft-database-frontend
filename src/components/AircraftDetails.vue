@@ -1,7 +1,7 @@
 <template class="aircraft-details">
   <div v-if="aircraft" class="aircraft-details">
     <div class="header">
-      <h2>{{ aircraft.model }}</h2>
+      <div></div>
       <button class="button-close" @click="$emit('closeDetails')"><i class='bx bx-x'></i></button>
     </div>
 
@@ -15,6 +15,7 @@
     </div>
 
     <div class="image-wrapper-old-tv-and-vcr-effects" v-if="true">
+      <h2>{{ aircraft.model }}</h2>
       <OldTvAndVcrEffects :featured_image_url="featuredImageThumbnailURL(featured_image)" ref="oldTvAndVcrEffectsComponent">
       </OldTvAndVcrEffects>
     </div>
@@ -26,8 +27,6 @@
     </div>
 
     <div class="details-wrapper">
-
-
       <div class="details-entry">
         <h3>{{ aircraft.model }}</h3>
       </div>
@@ -274,6 +273,16 @@
     padding: 10px;
   }
 
+  .image-wrapper-old-tv-and-vcr-effects h2{
+    font-size: 15px;
+    margin-top: 12px;
+    margin-left: 19px;
+    text-shadow: 2px 1px 1px #000;
+    z-index: 999;
+    position: absolute;
+    color: #efbd2d;
+  }
+
   .aircraft-details .image-wrapper{
     position: relative;
     overflow: hidden;
@@ -285,7 +294,7 @@
     /*background: #262522 url('3px-tile.png') repeat;*/
     /*background: #2f2d28 url(3px-tile.png) repeat;*/
     /*background: #49463e url('dark-mosaic.png') repeat;*/
-/*    background: url(dark-mosaic.png), repeat url(3px-tile.png) repeat, #595447;*/
+    /*background: url(dark-mosaic.png), repeat url(3px-tile.png) repeat, #595447;*/
     background-image: url(3px-tile.png), url(dark-mosaic.png);
     background-repeat: repeat, repeat;
     background-color: #77705e;
@@ -306,7 +315,7 @@
   .details-wrapper{
     display: block;
   }
-  .details-entry{
+    .details-entry{
     display: flex;
     justify-content: space-between;
     background: #49463e;
