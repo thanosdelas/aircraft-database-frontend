@@ -42,6 +42,18 @@
         </span>
       </div>
 
+      <div class="aircraft-fields-wrapper">
+        <div class="fields-entry">
+          <div>First flight:</div>
+          <div>{{ aircraft.first_flight_raw }}</div>
+        </div>
+
+        <div class="fields-entry" v-for="(fieldValue, fieldTitle) in infoboxJSON">
+          <div>{{ fieldTitle }}:</div>
+          <div>{{ fieldValue || '-' }}</div>
+        </div>
+      </div>
+
       <div class="summary">
         <div class="loader-wrapper" v-if="summaryLoading">
           <div>loading summary ...</div>
@@ -57,7 +69,7 @@
         <div><a target="_blank" :href="googleImagesSearchURL"><i class='bx bxl-google'></i> Google Images Search <i class='bx bx-link-external'></i></a></div>
       </div>
 
-      <div class="images-wrapper">
+      <div class="images-wrapper" v-if="images.length > 2">
         <div class="loader-wrapper" v-if="imagesLoading">
           <span>loading images ...</span>
           <div class="loader"><div></div><div></div></div>
@@ -83,6 +95,7 @@
   let currentImageNavigationIndex = 0;
   const aircraft = ref(null);
   const detailsLoadedFrom = ref(null);
+  const infoboxJSON = ref(null);
   const summary = ref(null);
   const images = ref(null);
   const featured_image = ref(null);
@@ -96,8 +109,24 @@
   const oldTvAndVcrEffectsComponent = ref(null);
 
   const displayColumns = [
-    // "model",
   ];
+
+  const displayInfoboxJsonFields = {
+    'name': 'Name',
+    'national_origin': 'National Origin',
+    'introduction': 'Introduction',
+    'status': 'Status',
+    'produced': 'Produced',
+    'primary_user': 'Primary User',
+    'more_users': 'More Users',
+    'number_built': 'Number Built',
+    'developed_from': 'Developed From',
+    'developed_into': 'Developed Into',
+    'retired': 'Retired',
+    'variants': 'Variants',
+    'produced': 'Produced',
+    'unit_cost': 'Unit Cost'
+  }
 
   onMounted(() => {
     window.addEventListener('keydown', arrowKeysToChangeFeaturedImage);
@@ -149,6 +178,24 @@
     }
 
     aircraft.value = result
+
+    const collectInfoboxFields = {}
+    const infoboxJSONParsed = JSON.parse(aircraft.value.infobox_json)
+    for(const key in infoboxJSONParsed){
+      if(
+        typeof infoboxJSONParsed[key] !== 'undefined' &&
+        typeof displayInfoboxJsonFields[key] !== 'undefined' &&
+        infoboxJSONParsed[key].length > 0
+      ){
+        console.log(displayInfoboxJsonFields[key]);
+      console.log(infoboxJSONParsed[key]);
+        collectInfoboxFields[displayInfoboxJsonFields[key]] = infoboxJSONParsed[key];
+      }
+    }
+
+    infoboxJSON.value = collectInfoboxFields;
+
+    console.log(collectInfoboxFields);
 
     googleSearchURL.value = `https://www.google.com/search?q=${ aircraft.value.model }`;
     googleImagesSearchURL.value = `https://www.google.com/search?tbm=isch&q=${ aircraft.value.model }`;
@@ -343,6 +390,9 @@
   .summary{
     overflow: hidden;
     color: #99968b;
+    border-top: 5px solid #49463e;
+    border-bottom: 5px solid #49463e;
+    margin-top: 14px;
   }
   .loaded-from-button{
     background: #afa485;
@@ -373,5 +423,22 @@
   }
   .external-links a{
     font-size: 12px;
+  }
+  .aircraft-fields-wrapper{
+    display: block;
+    position: relative;
+    overflow: hidden;
+    max-width: 80%;
+    color: #daaf32;
+    font-size: 12px;
+  }
+  .aircraft-fields-wrapper .fields-entry{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px dashed #776635;
+  }
+  .aircraft-fields-wrapper .fields-entry div{
+    width: 50%;
   }
 </style>
