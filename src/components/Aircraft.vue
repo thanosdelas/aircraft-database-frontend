@@ -53,7 +53,7 @@
 
     <div class="aircraft-wrapper">
       <div class="header">
-        Aircraft Models ({{ aircraftDataLength }})
+        Aircraft Models <small>({{ aircraftDataLength }}) ({{ yearRange }})</small>
       </div>
 
       <div class="aircraft-listing-wrapper">
@@ -92,8 +92,9 @@
     "manufacturers": true,
     "types": false,
   });
+  const yearRange = ref('...');
   const aircraftData = ref(null);
-  const aircraftDataLength = ref(null);
+  const aircraftDataLength = ref('...');
   const aircraftDataGallery = ref(null);
   const aircraftManufacturers = ref(null);
   const aircraftTypes = ref(null);
@@ -236,6 +237,7 @@
       aircraftDataLoading.value = false;
       aircraftData.value = result.data;
       aircraftDataLength.value = result.data.length;
+      yearRange.value = `Years: ${result.metadata.first_flight_year_bounds.year_min} - ${result.metadata.first_flight_year_bounds.year_max}`;
 
       if (result.data.length === 1){
         visitArticle(result.data[0]);

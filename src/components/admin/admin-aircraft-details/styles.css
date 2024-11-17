@@ -52,7 +52,6 @@
 .details-entry{
   display: flex;
   justify-content: space-between;
-  background: #5e594c;
   padding: 10px;
 }
 .muted{

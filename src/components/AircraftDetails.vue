@@ -45,7 +45,7 @@
       <div class="aircraft-fields-wrapper">
         <div class="fields-entry">
           <div>First flight:</div>
-          <div>{{ aircraft.first_flight_raw }}</div>
+          <div>{{ aircraft.first_flight_year }}</div>
         </div>
 
         <div class="fields-entry" v-for="(fieldValue, fieldTitle) in infoboxJSON">
@@ -362,10 +362,9 @@
   .details-wrapper{
     display: block;
   }
-    .details-entry{
+  .details-entry{
     display: flex;
     justify-content: space-between;
-    background: #49463e;
     padding: 10px;
     color: #c7c5be;
   }
@@ -393,6 +392,7 @@
     border-top: 5px solid #49463e;
     border-bottom: 5px solid #49463e;
     margin-top: 14px;
+    padding: 14px;
   }
   .loaded-from-button{
     background: #afa485;
@@ -402,16 +402,17 @@
     background: #8b7e5a;
   }
   .aircraft-types{
-    padding: 10px 0px;
-    /*background: #222;*/
+    padding-bottom: 10px;
   }
   .aircraft-types span{
-    background: #49463e;
     margin-right: 5px;
-    padding: 4px 7px;
+    padding: 1px 17px;
     font-size: 12px;
     display: inline-block;
     margin-bottom: 5px;
+    color: #cfa62f;
+    border: 1px solid #8f721f;
+    margin-left: 9px;
   }
   .external-links{
     display: flex;
@@ -431,6 +432,7 @@
     max-width: 80%;
     color: #daaf32;
     font-size: 12px;
+    padding: 0px 14px;
   }
   .aircraft-fields-wrapper .fields-entry{
     display: flex;
