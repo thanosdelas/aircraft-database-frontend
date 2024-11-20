@@ -25,9 +25,8 @@
           :class="{ active: selectedAircraftManufacturer == aircraftManufacturer }"
           v-for="aircraftManufacturer in aircraftManufacturers"
           @click="filterByManufacturer(aircraftManufacturer)">
-          <div>
-            {{ aircraftManufacturer.manufacturer }} <span>({{ aircraftManufacturer.aircraft_count }})</span>
-          </div>
+          <div><i class='bx bx-chevron-right'></i></div>
+          <div>{{ aircraftManufacturer.manufacturer }} <small>({{ aircraftManufacturer.aircraft_count }})</small></div>
         </div>
       </div>
 
@@ -44,9 +43,8 @@
           :class="{ active: selectedAircraftType == aircraftType }"
           v-for="aircraftType in aircraftTypes"
           @click="filterByType(aircraftType)">
-          <div>
-            {{ aircraftType.aircraft_type }} <span>({{ aircraftType.aircraft_count }})</span>
-          </div>
+          <div><i class='bx bx-chevron-right'></i></div>
+          <div>{{ aircraftType.aircraft_type }} <small>({{ aircraftType.aircraft_count }})</small></div>
         </div>
       </div>
     </div>
@@ -69,9 +67,8 @@
           :key="aircraft.id"
           :ref="setAircraftListRef(aircraft.id)"
           @click="visitArticle(aircraft)">
-          <div>
-            <span>{{ aircraft.model }}</span>
-          </div>
+          <div><i class='bx bx-chevron-right'></i></div>
+          <div><span>{{ aircraft.model }}</span></div>
         </div>
       </div>
     </div>
@@ -355,7 +352,8 @@
 
 <style scoped>
   .aircraft-list-entry{
-    display: block;
+    display: flex;
+    align-items: center;
     width: 100%;
     overflow: hidden;
     cursor: pointer;

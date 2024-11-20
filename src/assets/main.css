@@ -129,7 +129,8 @@ body {
   scrollbar-width: thin;
 }
 .filters-wrapper .entry .list-entry{
-  display: block;
+  display: flex;
+  align-items: center;
   width: 100%;
   overflow: hidden;
   cursor: pointer;
