@@ -187,16 +187,11 @@
         typeof displayInfoboxJsonFields[key] !== 'undefined' &&
         infoboxJSONParsed[key].length > 0
       ){
-        console.log(displayInfoboxJsonFields[key]);
-      console.log(infoboxJSONParsed[key]);
         collectInfoboxFields[displayInfoboxJsonFields[key]] = infoboxJSONParsed[key];
       }
     }
 
     infoboxJSON.value = collectInfoboxFields;
-
-    console.log(collectInfoboxFields);
-
     googleSearchURL.value = `https://www.google.com/search?q=${ aircraft.value.model }`;
     googleImagesSearchURL.value = `https://www.google.com/search?tbm=isch&q=${ aircraft.value.model }`;
     wikipediaPage.value = `https://en.wikipedia.org/?curid=${ aircraft.value.wikipedia_page_id }`
