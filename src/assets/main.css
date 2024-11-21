@@ -8,8 +8,10 @@ body {
   background-attachment: fixed;
   background-size: cover;
   font-family: monospace;
-  unicode-bidi: isolate;
+  /*unicode-bidi: isolate;*/
+  font: Inconsolata, monospace;
 }
+
 #app {
   margin: 0 auto;
   font-weight: normal;

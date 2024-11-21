@@ -139,6 +139,10 @@
   });
 
   function arrowKeysToChangeFeaturedImage(event){
+    if(aircraft.value.images.length < 2){
+      return null;
+    }
+
     if (event.code === 'ArrowRight'){
       ++currentImageNavigationIndex;
 

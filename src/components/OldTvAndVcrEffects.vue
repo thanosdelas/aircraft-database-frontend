@@ -8,8 +8,8 @@
       <div class="screen-wrapper" ref="wrapper2">
         <div class="screen-wrapper" ref="wrapper3">
           <div id="screenElement" ref="screenElement"></div>
+          <div v-if="noImage" class="no-image">NO IMAGE</div>
         </div>
-
         <div id="scanlines" ref="scanlines"></div>
         <canvas id="vcr" ref="vcr"></canvas>
         <canvas id="snow" ref="snow"></canvas>
@@ -32,6 +32,7 @@
   const snow = ref(null);
   const gui = ref(null);
   const screen = ref(null);
+  const noImage = ref(false)
   let f1 = null;
   let f2 = null;
   let f3 = null;
@@ -60,6 +61,10 @@
     // Initially this was inside a timeout
     for ( const prop in config.effects ) {
       if ( !!config.effects[prop].enabled ) {
+        if(prop === 'image' && config.effects[prop].options.src === ''){
+          noImage.value = true;
+          continue;
+        }
         screen.value.add(prop, config.effects[prop].options);
       }
     }
@@ -67,14 +72,16 @@
     // Snow In Effect
     let opacity = 0.59
     screen.value.effects['snow'].node.style.opacity = 0.59;
-    const snowInEffect = setInterval(function(){
-      opacity = opacity - 0.123;
-      screen.value.effects['snow'].node.style.opacity = opacity;
+    if(noImage.value === false){
+      const snowInEffect = setInterval(function(){
+        opacity = opacity - 0.123;
+        screen.value.effects['snow'].node.style.opacity = opacity;
 
-      if(opacity < 0.2){
-        clearInterval(snowInEffect);
-      }
-    }, 100);
+        if(opacity < 0.2){
+          clearInterval(snowInEffect);
+        }
+      }, 100);
+    }
   });
 
   onBeforeUnmount(() => {
@@ -555,6 +562,21 @@ canvas.snow {
   max-height: 360px;
   background: transparent linear-gradient(to bottom, #85908c 0%, #323431 100%) repeat scroll 0 0;
   background-size: cover;
+}
+
+.no-image{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 360px;
+  max-height: 360px;
+  z-index: 9999;
+  color: #B1B1B1;
+  margin-top: -360px;
+  font-size: 41px;
+  opacity: 0.9;
+  text-shadow: 0px 0px 10px #858585;
 }
 
 .screen-container {
