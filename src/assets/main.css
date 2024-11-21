@@ -161,6 +161,9 @@ body {
   background: rgb(0 0 0 / 29%);
   padding-top: 35px;
 }
+.aircraft-wrapper:focus{
+  outline: none;
+}
 .aircraft-wrapper .header{
   position: fixed;
   display: flex;

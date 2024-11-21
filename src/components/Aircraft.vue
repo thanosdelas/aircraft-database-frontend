@@ -49,7 +49,7 @@
       </div>
     </div>
 
-    <div class="aircraft-wrapper">
+    <div class="aircraft-wrapper" ref="aircraftWrapper" tabindex="-1">
       <div class="header">
         Aircraft Models <small>({{ aircraftDataLength }}) ({{ yearRange }})</small>
       </div>
@@ -103,6 +103,7 @@
   const aircraftManufacturersLoading = ref(true);
   const aircraftList = ref(null);
   const aircraftListRefs = ref({});
+  const aircraftWrapper = ref(null);
   const setAircraftListRef = (id) => (element) => {
     if (element) {
       aircraftListRefs.value[id] = element;
@@ -125,6 +126,8 @@
 
   function arrowKeysToChangeArcraft(event){
     if (event.code === 'ArrowDown'){
+      aircraftWrapper.value.focus();
+
       if (!selectedAircraft.value){
         currentAircraftNavigationIndex = 0;
         visitArticle(aircraftData.value[0]);
@@ -144,6 +147,8 @@
       visitArticle(aircraftData.value[currentAircraftNavigationIndex]);
     }
     else if (event.code === 'ArrowUp'){
+      aircraftWrapper.value.focus();
+
       if (!selectedAircraft.value){
         currentAircraftNavigationIndex = 0;
         visitArticle(aircraftData.value[0]);
