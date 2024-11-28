@@ -167,6 +167,25 @@
     }
   }
 
+  function imageSlider(){
+    if(images.value.length < 2){
+      return null;
+    }
+
+    const slider = setInterval(function(){
+      ++currentImageNavigationIndex;
+      console.log("Change image");
+
+      // End of list
+      if (currentImageNavigationIndex === images.value.length){
+        currentImageNavigationIndex = 0;
+      }
+
+      featured_image.value = images.value[currentImageNavigationIndex];
+      oldTvAndVcrEffectsComponent.value.changeImage(featured_image.value);
+    }, 1000);
+  }
+
   async function loadDatabaseDetails(){
     images.value = null;
     summary.value = null;
@@ -201,6 +220,8 @@
     wikipediaPage.value = `https://en.wikipedia.org/?curid=${ aircraft.value.wikipedia_page_id }`
 
     images.value = aircraft.value.images
+
+    imageSlider();
 
     const MAX_CHARS = 450
     var description = aircraft.value.description;
