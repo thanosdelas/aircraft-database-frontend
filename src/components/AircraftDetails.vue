@@ -80,6 +80,12 @@
       </div>
     </div>
   </div>
+
+  <div class="fixed-errors" v-if="errors.length > 0" @click="closeErrors()">
+    <div v-for="error in errors">
+      {{ JSON.stringify(error) }}
+    </div>
+  </div>
 </template>
 
 <script setup>
@@ -93,6 +99,7 @@
   const aircraftApi = new AircraftApi(httpRequest);
 
   let currentImageNavigationIndex = 0;
+  const errors = ref([])
   const aircraft = ref(null);
   const detailsLoadedFrom = ref(null);
   const infoboxJSON = ref(null);
@@ -187,6 +194,7 @@
   }
 
   async function loadDatabaseDetails(){
+    errors.value = [];
     images.value = null;
     summary.value = null;
     imagesLoading.value = true;
@@ -195,8 +203,7 @@
 
     const result = await aircraftApi.fetch(data.aircraftId);
     if('errors' in result){
-      console.log('Could not fetch aricraft');
-      console.log(result);
+      errors.value.push(result.errors)
       return null;
     }
 
@@ -266,7 +273,7 @@
     if('errors' in result){
       summaryLoading.value = false;
       imagesLoading.value = false;
-      console.log("Render errors: ", result);
+      errors.value.push(result.errors)
       return null;
     }
 
@@ -322,6 +329,10 @@
 
   function randomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
+  }
+
+  function closeErrors(){
+    errors.value = []
   }
 </script>
 

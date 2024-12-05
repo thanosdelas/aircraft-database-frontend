@@ -12,6 +12,17 @@ body {
   font: Inconsolata, monospace;
 }
 
+.fixed-errors{
+  background: #000;
+  border: 1px solid #ef362d;
+  position: fixed;
+  bottom: 0;
+  bottom: 40px;
+  padding: 10px;
+  font-size: 10px;
+  box-shadow: 0 0 10px #000000;
+}
+
 #app {
   margin: 0 auto;
   font-weight: normal;

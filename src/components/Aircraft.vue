@@ -76,6 +76,12 @@
     <AircraftDetails v-if="selectedAircraft" :aircraftId="selectedAircraft.id" @closeDetails="closeDetails">
     </AircraftDetails>
   </div>
+
+  <div class="fixed-errors" v-if="errors.length > 0" @click="closeErrors()">
+    <div v-for="error in errors">
+      {{ JSON.stringify(error) }}
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -84,6 +90,7 @@
   import AircraftApi from '@/services/aircraft-api';
   import AircraftDetails from './AircraftDetails.vue';
 
+  const errors = ref([])
   const activeTab = ref('manufacturers')
   const filterTabs = ref({
     "manufacturers": true,
@@ -184,59 +191,65 @@
   }
 
   async function fetchAircraftTypes(searchTerm = ''){
+    errors.value = [];
+
     const httpRequest = new HttpRequest();
     const aircraftApi = new AircraftApi(httpRequest);
-
     const data = await aircraftApi.fetchAircraftTypes();
-
-    if('errors' in data){
-      errors.value = data.errors
-      return null;
-    }
 
     setTimeout(function(){
       aircraftTypesLoading.value = false;
+
+      if('errors' in data){
+        errors.value.push(data.errors)
+        return null;
+      }
+
       aircraftTypes.value = data.data;
     }, randomInt(100, 200));
   }
 
   async function fetchAircraftManufacturers(searchTerm = ''){
+    errors.value = [];
+
     const httpRequest = new HttpRequest();
     const aircraftApi = new AircraftApi(httpRequest);
-
     const data = await aircraftApi.fetchAircraftManufacturers();
-
-    if('errors' in data){
-      errors.value = data.errors
-      return null;
-    }
 
     setTimeout(function(){
       aircraftManufacturersLoading.value = false;
+
+      if('errors' in data){
+        errors.value.push(data.errors)
+        return null;
+      }
+
       aircraftManufacturers.value = data.data;
     }, randomInt(100, 200));
   }
 
   async function fetchAircraft(params = {}){
+    errors.value = [];
     aircraftData.value = {}
     aircraftDataLoading.value = true
 
     const httpRequest = new HttpRequest();
     const aircraftApi = new AircraftApi(httpRequest);
-
     const result = await aircraftApi.fetchAll(params);
-    if('errors' in result){
-      errors.value = result.errors
-      return null;
-    }
-
-    aircraftDataGallery.value = null
-    if ('aircraft_type' in params){
-      // aircraftDataGallery.value = findFeaturedImages(result.data);
-    }
 
     setTimeout(function(){
       aircraftDataLoading.value = false;
+
+      if('errors' in result){
+        errors.value.push(result.errors)
+        return null;
+      }
+
+      aircraftDataGallery.value = null
+      if ('aircraft_type' in params){
+        // aircraftDataGallery.value = findFeaturedImages(result.data);
+      }
+
       aircraftData.value = result.data;
       aircraftDataLength.value = result.data.length;
       yearRange.value = `Years: ${result.metadata.first_flight_year_bounds.year_min} - ${result.metadata.first_flight_year_bounds.year_max}`;
@@ -324,6 +337,10 @@
 
   function randomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
+  }
+
+  function closeErrors(){
+    errors.value = []
   }
 
   function findFeaturedImages(aircraftResults){
