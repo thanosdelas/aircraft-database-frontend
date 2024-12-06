@@ -104,7 +104,7 @@
   const detailsLoadedFrom = ref(null);
   const infoboxJSON = ref(null);
   const summary = ref(null);
-  const images = ref(null);
+  const images = ref([]);
   const featured_image = ref(null);
   const summaryLoading = ref(true);
   const imagesLoading = ref(true);
@@ -114,6 +114,7 @@
   const data = defineProps(['aircraftId']);
   const emits = defineEmits(['closeDetails']);
   const oldTvAndVcrEffectsComponent = ref(null);
+  const imageSliderInterval = ref(null)
 
   const displayColumns = [
   ];
@@ -142,10 +143,16 @@
   });
 
   onUnmounted(() => {
+    clearInterval(imageSliderInterval.value);
+
     window.removeEventListener('keydown', arrowKeysToChangeFeaturedImage);
   });
 
   function arrowKeysToChangeFeaturedImage(event){
+    if (oldTvAndVcrEffectsComponent.value === null){
+      return null
+    }
+
     if(aircraft.value.images.length < 2){
       return null;
     }
@@ -179,7 +186,7 @@
       return null;
     }
 
-    const slider = setInterval(function(){
+    imageSliderInterval.value = setInterval(function(){
       ++currentImageNavigationIndex;
       console.log("Change image");
 
@@ -195,7 +202,7 @@
 
   async function loadDatabaseDetails(){
     errors.value = [];
-    images.value = null;
+    images.value = [];
     summary.value = null;
     imagesLoading.value = true;
     summaryLoading.value = true;
@@ -260,7 +267,7 @@
   }
 
   async function loadWikipediaDetails(){
-    images.value = null;
+    images.value = [];
     summary.value = null;
     imagesLoading.value = true;
     summaryLoading.value = true;
