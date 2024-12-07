@@ -1,0 +1,92 @@
+{
+  "id": 2444,
+  "model": "Grumman Gulfstream I",
+  "wikipedia_info_collected": true,
+  "wikipedia_title": "Grumman Gulfstream I",
+  "featured_image": "File:Uscg vc4gulfstream 1380 1964.jpg",
+  "infobox_json": "{\"name\":\"Gulfstream I\",\"image\":\"File:Uscg vc4gulfstream 1380 1964.jpg\",\"caption\":\"USCG VC-4A Gulfstream I in flight, 1964\",\"type\":\"Business aircraft\",\"national_origin\":\"[[United States]]\",\"manufacturer\":\"[[Grumman]]\",\"designer\":\"\",\"first_flight\":\"August 14, 1958\",\"introduction\":\"\",\"retired\":\"\",\"status\":\"\",\"primary_user\":\"\",\"more_users\":\"\",\"produced\":\"1959–1969{{cite web |url\",\"number_built\":\"200\",\"unit_cost\":\"\",\"developed_from\":\"\",\"variants\":\"\"}",
+  "infobox_raw": "{{Short description|1958 executive aircraft by Grumman}}\n\n{{Infobox aircraft\n  |name = Gulfstream I\n  |image = File:Uscg vc4gulfstream 1380 1964.jpg\n  |caption = USCG VC-4A Gulfstream I in flight, 1964\n  |type = Business aircraft\n  |national_origin = [[United States]]\n  |manufacturer = [[Grumman]]\n  |designer =\n  |first_flight = August 14, 1958\n  |introduction =\n  |retired =\n  |status =\n  |primary_user =\n  |more_users =\n  |produced = 1959–1969{{cite web |url=http://ww.airliners.net/aircraft-data/stats.main?id=236 |title=Grumman G-159 Gulfstream I | Airliners.net |access-date=2009-01-15 |url-status=dead |archive-url=https://web.archive.org/web/20100429014249/http://ww.airliners.net/aircraft-data/stats.main?id=236 |archive-date=2010-04-29 }}\n  |number_built = 200\n  |unit cost =\n  |developed_from =\n  |variants =\n}}\n\nThe '''Grumman Gulfstream I''' (company designation '''G-159''') is a twin-turboprop business aircraft. It first flew on August 14, 1958.",
+  "description": "The Grumman Gulfstream I (company designation G-159) is a twin-turboprop business aircraft. It first flew on August 14, 1958.\n\n",
+  "snippet": "The <span class=\"searchmatch\">Grumman</span> <span class=\"searchmatch\">Gulfstream</span> <span class=\"searchmatch\">I</span> (company designation G-159) is a twin-turboprop business aircraft. It first flew on August 14, 1958. After first rejecting an",
+  "created_at": "2024-11-16T15:02:22.579Z",
+  "updated_at": "2024-11-16T18:58:44.754Z",
+  "wikipedia_page_id": "3191303",
+  "first_flight_year": 1958,
+  "first_flight": null,
+  "first_flight_raw": "August 14, 1958",
+  "types": [
+    {
+      "id": 55,
+      "aircraft_type": "Business Aircraft",
+      "description": null,
+      "created_at": "2024-11-11T02:27:42.613Z",
+      "updated_at": "2024-11-11T02:27:42.613Z"
+    }
+  ],
+  "manufacturers": [
+    {
+      "id": 113,
+      "manufacturer": "Grumman",
+      "description": null,
+      "created_at": "2024-11-11T20:11:25.251Z",
+      "updated_at": "2024-11-11T20:11:25.251Z",
+      "manufacturer_group_id": null
+    }
+  ],
+  "images": [
+    {
+      "id": 6150,
+      "url": "https://upload.wikimedia.org/wikipedia/commons/8/84/HAFm_7078.JPG",
+      "filename": "File:HAFm 7078.JPG",
+      "description": "<p>Exhibit  at the Hellenic Air Force Museum at Dekelia (Tatoi), Athens, Greece.\n</p>\nGrumman G.159 Gulfstream I",
+      "aircraft_id": 2444,
+      "created_at": "2024-11-16T15:09:01.585Z",
+      "updated_at": "2024-11-16T15:09:01.585Z"
+    },
+    {
+      "id": 6151,
+      "url": "https://upload.wikimedia.org/wikipedia/commons/d/d4/Nasa_N5VX.jpg",
+      "filename": "File:Nasa N5VX.jpg",
+      "description": "NASA G159 Gulfstream I N5VX taxiing at Prestwick, Ayrshire",
+      "aircraft_id": 2444,
+      "created_at": "2024-11-16T15:09:01.592Z",
+      "updated_at": "2024-11-16T15:09:01.592Z"
+    },
+    {
+      "id": 6152,
+      "url": "https://upload.wikimedia.org/wikipedia/commons/8/87/TC-4C_Acedeme_at_NAS_Oceana_1989.JPEG",
+      "filename": "File:TC-4C Acedeme at NAS Oceana 1989.JPEG",
+      "description": "A U.S. Navy Grumman TC-4C <i>Academe</i> aircraft (BuNo 155727) from attack squadron VA-42 <i>Green Pawns</i>, at Naval Air Station, Oceana, Virginia (USA), on 1 August 1989. The TC-4C was a Gulfstream I fitted with the nose section of a Grumman A-6 (later A-6E TRAM) for bombardier/navigator training. This aircraft was retired to the AMARC as 4G0004 on 13 September 1994.",
+      "aircraft_id": 2444,
+      "created_at": "2024-11-16T15:09:01.602Z",
+      "updated_at": "2024-11-16T15:09:01.602Z"
+    },
+    {
+      "id": 6153,
+      "url": "https://upload.wikimedia.org/wikipedia/commons/2/2b/TC-4C_used_by_VA-42-side.jpg",
+      "filename": "File:TC-4C used by VA-42-side.jpg",
+      "description": "TC-4C aircraft used by VA-42 to train pilots and bombardier/navigators.",
+      "aircraft_id": 2444,
+      "created_at": "2024-11-16T15:09:01.606Z",
+      "updated_at": "2024-11-16T15:09:01.606Z"
+    },
+    {
+      "id": 6154,
+      "url": "https://upload.wikimedia.org/wikipedia/commons/f/f8/Uscg_vc4gulfstream_1380_1964.jpg",
+      "filename": "File:Uscg vc4gulfstream 1380 1964.jpg",
+      "description": "<a href=\"https://en.wikipedia.org/wiki/Grumman_Gulfstream_I\" class=\"extiw\" title=\"w:Grumman Gulfstream I\">Grumman Gulfstream I</a>, \"VC-4A #1380in flight, 20 January 1964.\"",
+      "aircraft_id": 2444,
+      "created_at": "2024-11-16T15:09:01.608Z",
+      "updated_at": "2024-11-16T15:09:01.608Z"
+    },
+    {
+      "id": 6155,
+      "url": "https://upload.wikimedia.org/wikipedia/commons/e/ef/WD-G-1.jpg",
+      "filename": "File:WD-G-1.jpg",
+      "description": "Gulfstream G-1",
+      "aircraft_id": 2444,
+      "created_at": "2024-11-16T15:09:01.611Z",
+      "updated_at": "2024-11-16T15:09:01.611Z"
+    }
+  ]
+}

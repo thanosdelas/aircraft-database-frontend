@@ -6,8 +6,9 @@ export type AircraftResults = {
 export type Aircraft = {
   id: number;
   model: string;
-  created_at: Date;
-  updated_at: Date;
+  wikipedia_title: string;
+  featured_image: string;
+  first_flight_year: number;
 }
 
 export type AircraftTypeResults = {

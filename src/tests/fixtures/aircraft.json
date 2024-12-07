@@ -1,0 +1,122 @@
+{
+  "data": [
+    {
+      "id": 1647,
+      "model": "Airbus A220",
+      "wikipedia_title": "Airbus A220",
+      "featured_image": "Airbus A220-300.jpg",
+      "first_flight_year": 2013
+    },
+    {
+      "id": 2354,
+      "model": "Bell Boeing Quad TiltRotor",
+      "wikipedia_title": "Bell Boeing Quad TiltRotor",
+      "featured_image": "File:Quad TiltRotor rendering.jpg",
+      "first_flight_year": null
+    },
+    {
+      "id": 1669,
+      "model": "Antonov An-12",
+      "wikipedia_title": "Antonov An-12",
+      "featured_image": "File:Antonov An-12BK, Russia - Air Force AN1879625.jpg",
+      "first_flight_year": 1957
+    },
+    {
+      "id": 1704,
+      "model": "Beechcraft 1900",
+      "wikipedia_title": "Beechcraft 1900",
+      "featured_image": "File:Beech 1900D, Air New Zealand Link (Eagle Airways) JP6920497.jpg",
+      "first_flight_year": 1982
+    },
+    {
+      "id": 1791,
+      "model": "Canadair CC-109 Cosmopolitan",
+      "wikipedia_title": "Canadair CC-109 Cosmopolitan",
+      "featured_image": "File:CanadairCC109Cosmopolitan.JPG",
+      "first_flight_year": 1959
+    },
+    {
+      "id": 1951,
+      "model": "Lockheed AC-130",
+      "wikipedia_title": "Lockheed AC-130",
+      "featured_image": "File:AC-130 (5872).jpg",
+      "first_flight_year": 1967
+    },
+    {
+      "id": 2024,
+      "model": "McDonnell 119",
+      "wikipedia_title": "McDonnell 119",
+      "featured_image": "File:McDonnell 119.jpg",
+      "first_flight_year": 1959
+    },
+    {
+      "id": 2613,
+      "model": "North American A-27",
+      "wikipedia_title": "North American A-27",
+      "featured_image": "File:Two North American A-27s intercepted from order from Siam on Nichols Field.jpg",
+      "first_flight_year": 1940
+    },
+    {
+      "id": 2081,
+      "model": "Northrop A-17",
+      "wikipedia_title": "Northrop A-17",
+      "featured_image": "File:Northrop A-17 front three-quarters view.jpg",
+      "first_flight_year": null
+    },
+    {
+      "id": 2823,
+      "model": "Sukhoi KR-860",
+      "wikipedia_title": "Sukhoi KR-860",
+      "featured_image": "Sukhoi KR-860.jpg",
+      "first_flight_year": null
+    },
+    {
+      "id": 2163,
+      "model": "Tupolev Tu-134",
+      "wikipedia_title": "Tupolev Tu-134",
+      "featured_image": "File:Tretyakovo Tupolev Tu-134.jpg",
+      "first_flight_year": 1963
+    },
+    {
+      "id": 2381,
+      "model": "Bartini Beriev VVA-14",
+      "wikipedia_title": "Bartini Beriev VVA-14",
+      "featured_image": "File:Bartini_VVA-14.jpg",
+      "first_flight_year": 1972
+    },
+    {
+      "id": 1641,
+      "model": "AgustaWestland AW101",
+      "wikipedia_title": "AgustaWestland AW101",
+      "featured_image": "File:AgustaWestland HH-101A Caesar (cropped).jpg",
+      "first_flight_year": null
+    },
+    {
+      "id": 3003,
+      "model": "A-90 Orlyonok",
+      "wikipedia_title": "A-90 Orlyonok",
+      "featured_image": "A-90 Orlyonok 4.JPG",
+      "first_flight_year": 1972
+    },
+    {
+      "id": 2268,
+      "model": "AAM-A-1 Firebird",
+      "wikipedia_title": "AAM-A-1 Firebird",
+      "featured_image": "AAM-A-1 Firebird on DB-26B Invader August 1949.png",
+      "first_flight_year": null
+    },
+    {
+      "id": 1624,
+      "model": "ADM-160 MALD",
+      "wikipedia_title": "ADM-160 MALD",
+      "featured_image": "ADM-160B MALD - Air Force Armament Museum.jpg",
+      "first_flight_year": null
+    }
+  ],
+  "metadata": {
+    "first_flight_year_bounds": {
+      "year_min": 1909,
+      "year_max": 2025
+    }
+  }
+}
