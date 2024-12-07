@@ -42,6 +42,18 @@
         </span>
       </div>
 
+      <div class="aircraft-manufacturers" v-if="aircraft.manufacturers.length > 0">
+        <div style="font-size: 10px; margin-left: 7px; display: inline-block;">
+          Manufacturers:
+        </div>
+        <a
+          target="_blank"
+          v-for="manufacturer in aircraft.manufacturers"
+          :href="`https://www.google.com/search?q=${manufacturer.manufacturer}`">
+          {{ manufacturer.manufacturer }} <i class='bx bx-link-external'></i>
+        </a>
+      </div>
+
       <div class="aircraft-fields-wrapper">
         <div class="fields-entry">
           <div>First flight:</div>
@@ -450,6 +462,20 @@
     margin-bottom: 5px;
     color: #cfa62f;
     border: 1px solid #8f721f;
+    margin-left: 9px;
+  }
+  .aircraft-manufacturers{
+    padding-bottom: 10px;
+  }
+  .aircraft-manufacturers a{
+    display: inline-block;
+    padding: 1px 17px;
+    font-size: 12px;
+    color: #7891db;
+    border-bottom: 1px solid #5f74b3;
+    transition: 0.4s;
+    padding: 3px;
+    margin-right: 6px;
     margin-left: 9px;
   }
   .external-links{
