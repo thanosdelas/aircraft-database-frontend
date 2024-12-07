@@ -1,6 +1,13 @@
 import { Error, WikipediaImage } from '@/types/types'
 import { HttpRequest } from '@/services/http-request';
 import { Image } from '@/types/types'
+import {
+  AircraftResults,
+  AircraftDetails,
+  AircraftTypeResults,
+  AircraftManufacturerResults,
+  HttpRequestError
+} from '@/types/types'
 
 export class WikipediaDetails{
   private errors: Error[] = [];
@@ -13,7 +20,7 @@ export class WikipediaDetails{
   /**
    * Search for Wikipedia titles by aircraft model
    */
-  public async searchAircraftModel(model: any): Promise<any>{
+  public async searchAircraftModel(model: any): Promise<any | HttpRequestError>{
     const searchTerm = `${ model }`;
     const params = {
       format: 'json',
@@ -26,12 +33,13 @@ export class WikipediaDetails{
     const searchParams = new URLSearchParams(params);
     const API_URL = `https://en.wikipedia.org/w/api.php?${ searchParams.toString() }`
     const response = await this.httpRequest.get(API_URL);
-
     if('errors' in response){
       return response;
     }
 
-    if(response.query.search.length === 0){
+    const result =  await response.json();
+
+    if(result.query.search.length === 0){
       return {
         errors: [{
           code: 'error',
@@ -40,14 +48,14 @@ export class WikipediaDetails{
       };
     }
 
-    return response.query.search[0];
+    return result.query.search[0];
   }
 
   /**
    * Summary text by page id
    * `https://en.wikipedia.org/w/api.php?origin=*&format=json&action=query&prop=extracts&exintro&explaintext&redirects=1&pageids=${pageId}`
    */
-  public async summary(pageId: string): Promise<any>{
+  public async summary(pageId: string): Promise<any | HttpRequestError>{
     const params:any = {
       format: 'json',
       action: 'query',
@@ -62,17 +70,18 @@ export class WikipediaDetails{
     const searchParams = new URLSearchParams(params);
     const API_URL = `https://en.wikipedia.org/w/api.php?${ searchParams.toString() }`
     const response = await this.httpRequest.get(API_URL);
-
     if('errors' in response){
       return response;
     }
 
-    if(!(pageId in response.query.pages)){
+    const result =  await response.json();
+
+    if(!(pageId in result.query.pages)){
       this.errors.push({ code: 'error', 'message': `Could not find summary on Wikipedia with page id: ${ pageId }` });
       return { errors: this.errors };
     }
 
-    return { data: response.query.pages[pageId].extract }
+    return { data: result.query.pages[pageId].extract }
   }
 
   /**
@@ -81,7 +90,7 @@ export class WikipediaDetails{
    * to find the image URLs. Additional filtering is applied to the
    * last results of the last query, to filter out icons and flags.
    */
-  public async fetchImages(title: string, pageId: string): Promise<any>{
+  public async fetchImages(title: string, pageId: string): Promise<any | HttpRequestError>{
     const imageFilenames = await this.fetchImageFilenames(title, pageId);
 
     if('errors' in imageFilenames){
@@ -140,14 +149,15 @@ export class WikipediaDetails{
     const searchParams = new URLSearchParams(params);
     const API_URL = `https://en.wikipedia.org/w/api.php?${ searchParams.toString() }`
     const response = await this.httpRequest.get(API_URL);
-
     if('errors' in response){
       return response;
     }
 
+    const result =  await response.json();
+
     if(
-      !(pageId in response.query.pages) ||
-      !('images' in response.query.pages[pageId])
+      !(pageId in result.query.pages) ||
+      !('images' in result.query.pages[pageId])
     ){
       return {
         errors: [{
@@ -158,8 +168,8 @@ export class WikipediaDetails{
     }
 
     let collectImages = [];
-    for(let x = 0; x < response.query.pages[pageId].images.length; x++){
-      collectImages.push(response.query.pages[pageId].images[x].title);
+    for(let x = 0; x < result.query.pages[pageId].images.length; x++){
+      collectImages.push(result.query.pages[pageId].images[x].title);
     }
 
     return collectImages;
@@ -184,49 +194,50 @@ export class WikipediaDetails{
 
     const API_URL = `https://en.wikipedia.org/w/api.php?${ new URLSearchParams(params).toString() }`
     const response = await this.httpRequest.get(API_URL);
-
     if('errors' in response){
       return response;
     }
 
-    if(Object.keys(response.query.pages).length === 0){
+    const result =  await response.json();
+
+    if(Object.keys(result.query.pages).length === 0){
       return images;
     }
 
     //
     // Filter out any image URLs matching criteria like flags & wikipedia icons.
     //
-    for(const key in response.query.pages){
+    for(const key in result.query.pages){
       if(
-        response.query.pages[key].imageinfo.length === 1 &&
-        !/.svg/i.test(response.query.pages[key].imageinfo[0].url) &&
-        !/.tif/i.test(response.query.pages[key].imageinfo[0].url) &&
-        !/.gif/i.test(response.query.pages[key].imageinfo[0].url) &&
-        !/.ogv/i.test(response.query.pages[key].imageinfo[0].url) &&
-        !/.ogg/i.test(response.query.pages[key].imageinfo[0].url) &&
-        !/.webm/i.test(response.query.pages[key].imageinfo[0].url) &&
-        !/flag/i.test(response.query.pages[key].imageinfo[0].url) &&
-        !/edit/i.test(response.query.pages[key].imageinfo[0].url) &&
-        !/commons-logo/i.test(response.query.pages[key].imageinfo[0].url) &&
-        !/globe_content/i.test(response.query.pages[key].imageinfo[0].url) &&
-        !/question_mark/i.test(response.query.pages[key].imageinfo[0].url) &&
-        !/Question_book/i.test(response.query.pages[key].imageinfo[0].url) &&
-        !/apps_kaboodle/i.test(response.query.pages[key].imageinfo[0].url) &&
-        !/support_vote/i.test(response.query.pages[key].imageinfo[0].url) &&
-        !/Wiki_letter/i.test(response.query.pages[key].imageinfo[0].url) &&
-        !/Aviacionavion/i.test(response.query.pages[key].imageinfo[0].url)
+        result.query.pages[key].imageinfo.length === 1 &&
+        !/.svg/i.test(result.query.pages[key].imageinfo[0].url) &&
+        !/.tif/i.test(result.query.pages[key].imageinfo[0].url) &&
+        !/.gif/i.test(result.query.pages[key].imageinfo[0].url) &&
+        !/.ogv/i.test(result.query.pages[key].imageinfo[0].url) &&
+        !/.ogg/i.test(result.query.pages[key].imageinfo[0].url) &&
+        !/.webm/i.test(result.query.pages[key].imageinfo[0].url) &&
+        !/flag/i.test(result.query.pages[key].imageinfo[0].url) &&
+        !/edit/i.test(result.query.pages[key].imageinfo[0].url) &&
+        !/commons-logo/i.test(result.query.pages[key].imageinfo[0].url) &&
+        !/globe_content/i.test(result.query.pages[key].imageinfo[0].url) &&
+        !/question_mark/i.test(result.query.pages[key].imageinfo[0].url) &&
+        !/Question_book/i.test(result.query.pages[key].imageinfo[0].url) &&
+        !/apps_kaboodle/i.test(result.query.pages[key].imageinfo[0].url) &&
+        !/support_vote/i.test(result.query.pages[key].imageinfo[0].url) &&
+        !/Wiki_letter/i.test(result.query.pages[key].imageinfo[0].url) &&
+        !/Aviacionavion/i.test(result.query.pages[key].imageinfo[0].url)
       ){
         let image = {
-          title: response.query.pages[key].title,
-          url: response.query.pages[key].imageinfo[0].url,
+          title: result.query.pages[key].title,
+          url: result.query.pages[key].imageinfo[0].url,
           description: ''
         }
 
         if(
-          'ImageDescription' in response.query.pages[key].imageinfo[0].extmetadata &&
-          'value' in response.query.pages[key].imageinfo[0].extmetadata.ImageDescription
+          'ImageDescription' in result.query.pages[key].imageinfo[0].extmetadata &&
+          'value' in result.query.pages[key].imageinfo[0].extmetadata.ImageDescription
         ){
-          image.description = response.query.pages[key].imageinfo[0].extmetadata.ImageDescription.value;
+          image.description = result.query.pages[key].imageinfo[0].extmetadata.ImageDescription.value;
         }
 
         images.push(image);

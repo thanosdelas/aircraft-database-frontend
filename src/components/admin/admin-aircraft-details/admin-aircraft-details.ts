@@ -2,7 +2,7 @@ import { HttpRequest } from '@/services/http-request';
 import { WikipediaDetails } from '@/services/wikipedia-details';
 import Authentication from '@/services/authentication';
 import AircraftApiAdmin from '@/services/aircraft-api-admin';
-import { Error, Image } from '@/types/types';
+import { AircraftDetails, Error, Image, HttpRequestError } from '@/types/types';
 
 /**
  * The following handles component logic to retrieve,
@@ -135,7 +135,12 @@ export class AdminAircraftDetails{
     //
     // Load aircraft details from database
     //
-    const aircraftDetails = await this.aircraftApiAdmin.fetch(this.aircraft.id);
+    const aircraftDetails: AircraftDetails | HttpRequestError = await this.aircraftApiAdmin.fetch(this.aircraft.id);
+    if('errors' in aircraftDetails){
+      this.imagesLoading = false;
+      this.summaryLoading = false;
+      return aircraftDetails;
+    }
 
     this.imagesLoading = false;
     this.summaryLoading = false;

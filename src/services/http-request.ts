@@ -1,4 +1,4 @@
-import { Error } from '@/types/types'
+import { Error, HttpRequestError } from '@/types/types'
 
 export class HttpRequest{
   private errors: Error[];
@@ -7,15 +7,15 @@ export class HttpRequest{
     this.errors = [];
   }
 
-  public async get(url: string, headers = {}): Promise<any>{
+  public async get(url: string, headers = {}): Promise<Response | HttpRequestError>{
     try{
-      const response = await fetch(url, { headers: headers });
+      const response: Response = await fetch(url, { headers: headers });
 
       if(this.responseErrors(response)){
-        return this.errorResponse();
+        return this.errorResponse()
       }
 
-      return await response.json();
+      return response;
     }
     catch(error: any){
       this.errors.push({ code: 'exception', message: error.message });
@@ -60,6 +60,8 @@ export class HttpRequest{
   }
 
   private errorResponse(){
-    return { errors: this.errors };
+    let response: HttpRequestError = { errors: this.errors };
+
+    return response;
   }
 }

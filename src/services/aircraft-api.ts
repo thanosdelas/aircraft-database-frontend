@@ -1,5 +1,12 @@
 import { API_BASE_URL } from '@/main.js';
 import { HttpRequest } from '@/services/http-request';
+import {
+  AircraftResults,
+  AircraftDetails,
+  AircraftTypeResults,
+  AircraftManufacturerResults,
+  HttpRequestError
+} from '@/types/types'
 
 export default class AircraftApi{
   private httpRequest: HttpRequest;
@@ -8,30 +15,50 @@ export default class AircraftApi{
     this.httpRequest = httpRequest;
   }
 
-  public async fetchAll(params = {}): Promise<any>{
-    const searchParams = new URLSearchParams(params);
-    const API_URL = `${API_BASE_URL}/aircraft?${ searchParams.toString() }`;
+  public async fetchAll(params = {}): Promise<AircraftResults | HttpRequestError>{
+    let searchParams = new URLSearchParams(params);
+    let API_URL = `${API_BASE_URL}/aircraft?${ searchParams.toString() }`;
+    let response: Response | HttpRequestError = await this.httpRequest.get(API_URL);
 
-    return await this.httpRequest.get(API_URL);
+    if(response instanceof Response){
+      return await response.json();
+    }
+
+    return response;
   }
 
-  public async fetch(id: string): Promise<any>{
-    const API_URL = `${API_BASE_URL}/aircraft/${id}`;
+  public async fetch(id: string): Promise<AircraftDetails | HttpRequestError>{
+    let API_URL = `${API_BASE_URL}/aircraft/${id}`;
+    let response: Response | HttpRequestError = await this.httpRequest.get(API_URL);
 
-    return await this.httpRequest.get(API_URL);
+    if(response instanceof Response){
+      return await response.json();
+    }
+
+    return response;
   }
 
-  public async fetchAircraftManufacturers(params = {}): Promise<any>{
-    const searchParams = new URLSearchParams(params);
-    const API_URL = `${API_BASE_URL}/aircraft-manufacturers?${ searchParams.toString() }`;
+  public async fetchAircraftManufacturers(params = {}): Promise<AircraftManufacturerResults | HttpRequestError>{
+    let searchParams = new URLSearchParams(params);
+    let API_URL = `${API_BASE_URL}/aircraft-manufacturers?${ searchParams.toString() }`;
+    let response: Response | HttpRequestError = await this.httpRequest.get(API_URL);
 
-    return await this.httpRequest.get(API_URL);
+    if(response instanceof Response){
+      return await response.json();
+    }
+
+    return response;
   }
 
-  public async fetchAircraftTypes(params = {}): Promise<any>{
-    const searchParams = new URLSearchParams(params);
-    const API_URL = `${API_BASE_URL}/aircraft-types?${ searchParams.toString() }`;
+  public async fetchAircraftTypes(params = {}): Promise<AircraftTypeResults | HttpRequestError>{
+    let searchParams = new URLSearchParams(params);
+    let API_URL = `${API_BASE_URL}/aircraft-types?${ searchParams.toString() }`;
+    let response: Response | HttpRequestError = await this.httpRequest.get(API_URL);
 
-    return await this.httpRequest.get(API_URL);
+    if(response instanceof Response){
+      return await response.json();
+    }
+
+    return response;
   }
 }
