@@ -43,6 +43,12 @@ const router = createRouter({
 
 const app = createApp(App);
 app.use(router);
+
+if (process.env.NODE_ENV === 'deveopment'){
+  app.config.devtools = true;
+  app.config.strict = true;
+}
+
 app.mount('#app');
 
 app.config.errorHandler = (error) => {

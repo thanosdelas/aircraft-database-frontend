@@ -46,6 +46,11 @@ export class AdminAircraftDetails{
 
   constructor(aircraft: any){
     this.aircraft = aircraft;
+    this.images = [];
+    this.imagesError = '';
+    this.summary = '';
+    this.summary_excerpt = '';
+    this.wikipediaPageResult = '';
     this.httpRequest = new HttpRequest();
     this.authentication = new Authentication();
     this.aircraftApiAdmin = new AircraftApiAdmin(this.httpRequest, this.authentication);

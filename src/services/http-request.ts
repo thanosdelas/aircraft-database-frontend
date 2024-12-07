@@ -17,7 +17,7 @@ export class HttpRequest{
 
       return await response.json();
     }
-    catch(error){
+    catch(error: any){
       this.errors.push({ code: 'exception', message: error.message });
       return this.errorResponse();
     }
@@ -37,7 +37,7 @@ export class HttpRequest{
 
       return await response.json();
     }
-    catch(error){
+    catch(error: any){
       this.errors.push({ code: 'exception', message: error.message });
       return this.errorResponse();
     }
