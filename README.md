@@ -25,3 +25,12 @@ npm run build
 email = 'test@example.com';
 password = 'test';
 ```
+
+### Install jest for testing without affecting package lock
+```
+npm install --no-save jest @types/jest ts-jest ts-node @vue/vue3-jest babel-jest @vue/test-utils typescript jest-environment-jsdom whatwg-fetch @types/whatwg-fetch
+```
+
+```
+npx jest
+```
