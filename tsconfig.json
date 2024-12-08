@@ -1,8 +1,9 @@
 {
   "compilerOptions": {
     "strict": true,
-    "module": "commonjs",
-    "moduleResolution": "node",
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
@@ -16,5 +17,7 @@
     },
     "lib": ["ES2015", "DOM"]
   },
-  "include": ["src/**/*"]
+  "include": [
+    "src/**/*"
+  ]
 }

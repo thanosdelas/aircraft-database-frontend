@@ -28,7 +28,7 @@ password = 'test';
 
 ### Install jest for testing without affecting package lock
 ```
-npm install --no-save jest @types/jest ts-jest ts-node @vue/vue3-jest babel-jest @vue/test-utils typescript jest-environment-jsdom whatwg-fetch @types/whatwg-fetch
+npm install --no-save jest @jest/globals @types/jest ts-jest ts-node @vue/vue3-jest babel-jest @vue/test-utils typescript jest-environment-jsdom whatwg-fetch @types/whatwg-fetch  jest-transform-stub identity-obj-proxy @babel/core @babel/preset-env @babel/preset-typescript
 ```
 
 ```

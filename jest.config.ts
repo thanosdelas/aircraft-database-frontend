@@ -1,5 +1,4 @@
 import type { Config } from 'jest';
-// import 'whatwg-fetch';
 
 const config: Config = {
   verbose: true,
@@ -11,10 +10,17 @@ const config: Config = {
   },
   moduleFileExtensions: ['ts', 'js', 'vue', 'json'],
   testEnvironment: 'jsdom',
-  setupFiles: ['whatwg-fetch'],
+  setupFiles: [
+    'whatwg-fetch',
+    './jest.setup.js'
+  ],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
+     '\\.css$': 'identity-obj-proxy',
   },
+  testEnvironmentOptions: {
+     customExportConditions: ["node", "node-addons"]
+  }
 };
 
 export default config;

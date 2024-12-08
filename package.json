@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite & tsc --watch --noEmit",
+    "test": "jest",
     "build": "vite build",
     "preview": "vite preview"
   },
