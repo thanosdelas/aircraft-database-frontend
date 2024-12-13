@@ -1,0 +1,64 @@
+{
+  "data": [
+    {
+      "id": 98,
+      "aircraft_type": "Fighter Aircraft",
+      "aircraft_count": 84
+    },
+    {
+      "id": 97,
+      "aircraft_type": "Fighter",
+      "aircraft_count": 53
+    },
+    {
+      "id": 154,
+      "aircraft_type": "Military Transport Aircraft",
+      "aircraft_count": 42
+    },
+    {
+      "id": 116,
+      "aircraft_type": "Helicopter",
+      "aircraft_count": 41
+    },
+    {
+      "id": 122,
+      "aircraft_type": "Interceptor Aircraft",
+      "aircraft_count": 38
+    },
+    {
+      "id": 87,
+      "aircraft_type": "Experimental Aircraft",
+      "aircraft_count": 38
+    },
+    {
+      "id": 270,
+      "aircraft_type": "Utility Helicopter",
+      "aircraft_count": 35
+    },
+    {
+      "id": 25,
+      "aircraft_type": "Airliner",
+      "aircraft_count": 34
+    },
+    {
+      "id": 56,
+      "aircraft_type": "Business Jet",
+      "aircraft_count": 33
+    },
+    {
+      "id": 162,
+      "aircraft_type": "Multirole Combat Aircraft",
+      "aircraft_count": 31
+    },
+    {
+      "id": 45,
+      "aircraft_type": "Attack Aircraft",
+      "aircraft_count": 29
+    },
+    {
+      "id": 187,
+      "aircraft_type": "Reconnaissance Aircraft",
+      "aircraft_count": 28
+    }
+  ]
+}
