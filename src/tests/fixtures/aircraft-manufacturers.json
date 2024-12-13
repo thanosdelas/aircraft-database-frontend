@@ -1,0 +1,59 @@
+{
+  "data": [
+    {
+      "id": 420,
+      "manufacturer": "Short Brothers",
+      "aircraft_count": 66
+    },
+    {
+      "id": 290,
+      "manufacturer": "Yakovlev",
+      "aircraft_count": 64
+    },
+    {
+      "id": 173,
+      "manufacturer": "Lockheed Corporation",
+      "aircraft_count": 59
+    },
+    {
+      "id": 113,
+      "manufacturer": "Grumman",
+      "aircraft_count": 44
+    },
+    {
+      "id": 261,
+      "manufacturer": "Sukhoi",
+      "aircraft_count": 44
+    },
+    {
+      "id": 37,
+      "manufacturer": "Bell Helicopter",
+      "aircraft_count": 39
+    },
+    {
+      "id": 111,
+      "manufacturer": "Glenn L. Martin Company",
+      "aircraft_count": 38
+    },
+    {
+      "id": 131,
+      "manufacturer": "Ilyushin",
+      "aircraft_count": 37
+    },
+    {
+      "id": 204,
+      "manufacturer": "North American Aviation",
+      "aircraft_count": 37
+    },
+    {
+      "id": 254,
+      "manufacturer": "Sikorsky Aircraft",
+      "aircraft_count": 35
+    },
+    {
+      "id": 40,
+      "manufacturer": "Boeing",
+      "aircraft_count": 33
+    }
+  ]
+}
