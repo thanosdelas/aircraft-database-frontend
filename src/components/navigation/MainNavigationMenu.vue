@@ -47,7 +47,9 @@
   });
 
   onBeforeRouteUpdate((to, from) => {
-    toggleMenu();
+    if (menu.value !== false) {
+      toggleMenu();
+    }
   });
 
   function toggleMenu(){
